@@ -22,24 +22,25 @@ GENESIS_PARAMS = {
       'nonce': constants.GENESIS_NONCE
 }
 
-klass = MiningChain.configure(
-    __name__='TestChain',
-    vm_configuration=(
-        (constants.GENESIS_BLOCK_NUMBER, ByzantiumVM),
-    ))
-chain = klass.from_genesis(AtomicDB(), GENESIS_PARAMS)
+if __name__ == '__main__':
+    klass = MiningChain.configure(
+        __name__='TestChain',
+        vm_configuration=(
+            (constants.GENESIS_BLOCK_NUMBER, ByzantiumVM),
+        ))
+    chain = klass.from_genesis(AtomicDB(), GENESIS_PARAMS)
 
-# We have to finalize the block first in order to be able read the
-# attributes that are important for the PoW algorithm
-block_result = chain.get_vm().finalize_block(chain.get_block())
-block = block_result.block
+    # We have to finalize the block first in order to be able read the
+    # attributes that are important for the PoW algorithm
+    block_result = chain.get_vm().finalize_block(chain.get_block())
+    block = block_result.block
 
-# based on mining_hash, block number and difficulty we can perform
-# the actual Proof of Work (PoW) mechanism to mine the correct
-# nonce and mix_hash for this block
-nonce, mix_hash = mine_pow_nonce(
-    block.number,
-    block.header.mining_hash,
-    block.header.difficulty)
+    # based on mining_hash, block number and difficulty we can perform
+    # the actual Proof of Work (PoW) mechanism to mine the correct
+    # nonce and mix_hash for this block
+    nonce, mix_hash = mine_pow_nonce(
+        block.number,
+        block.header.mining_hash,
+        block.header.difficulty)
 
-block = chain.mine_block(mix_hash=mix_hash, nonce=nonce)
+    block = chain.mine_block(mix_hash=mix_hash, nonce=nonce)
