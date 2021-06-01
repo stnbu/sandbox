@@ -1,0 +1,344 @@
+** dApps are where it's aTtt
+   :PROPERTIES:
+   :CUSTOM_ID: dapps-are-where-its-attt
+   :END:
+
+A list of some silly ideas that [[mailto:mb@unintuitive.org][I]] have
+that are fit for public consumption (but just barely in most cases.)
+
+*** Possible Real Ideas
+    :PROPERTIES:
+    :CUSTOM_ID: possible-real-ideas
+    :END:
+
+- =ApiPaidAccess.sol= -- It should be possible to make a /simple/ but
+  effective API proxy that charges access to any upstream API. We will
+  call the token used to pay for API services "APICOIN" for now...
+
+  Vocab:
+
+  - *Upstream RPC server* -- (e.g. a Geth client) Provides RPC service
+    to a private network, e.g. =192.168.1.0:8545=
+  - *API Proxy* -- talks to upstream RPC server on the private network.
+    Talks to the internet at large also. When talking to the internet,
+    is responsible for charging value and keeping account of sevices
+    used.
+  - *Consumer* -- (e.g. your dApp, or Metamask) is the agent that is
+    paying API proxy in APICOIN to use services.
+
+  - It /seems/ like, with regard to Ethereum client RPC-API, either one
+    closes it off to the public completely and uses it internally, or
+    one opens it up completely (which most sane admins are unwilling to
+    do.)
+  - A nice middle-ground might be a very simple proxy that you expose to
+    the public. This proxy talks to your RPC server via a private
+    network. On the public network, each request is paid for
+    (.....ssssomehow!)
+  - Could be as simiple as:
+
+    1. You charge up your wallet with APICOIN. Your API /consumer/ has
+       private-key access to this wallet and can programatically spend
+       APICOIN at will.
+    2. You ask the API server (proxy) for data required to pay for and
+       consume services. Among other things, this includes:
+
+       - A wallet address to which you will send APICOIN
+       - Price structure, say "APICOIN per bytes sent". This is the
+         thread to pull if you want things to unravel. KISS for now.
+       - Some secret data is included, and something like
+         [[https://en.wikipedia.org/wiki/HMAC-based_one-time_password][HOTP]]
+         is used to create a series of codes that the proxy and consumer
+         can agree upon.
+       - Each request gets a URL parameter (or HTTP header?)
+         =?spendcode=d4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3=.
+         This gets stripped off by the proxy so the upstream RPC server
+         never sees it. As far as the upstream API server is concerned,
+         it is just serving free RPC requests to the public. The API
+         proxy is 100% responsible for all the accounting. Presumably
+         they would be run by the same organization.
+       - You can check your balance with the proxy any time. The main
+         point is: the amount you owe and the secrets you use to
+         communicate are independant. You get your first and
+         theoretically only secret the first time you pay for /any/
+         amount of services. There should be a "start over" option too
+         in case you lose your secret or no longer trust it (Q: how?)
+
+- It would be nice to have a blockchain browser that can be filtered in
+  special ways
+
+  - Show only transactions /involving/ this address.
+  - Show only transactions with value going /to/ (or from) this
+    address/these addresses
+  - Do explorers already do this? If not, could they be modified on the
+    client side (e.g. browser extension)
+  - Would be fun/instructive to play with OSS block explorers.
+
+- [[https://github.com/ethereum/trinity][Trinity]] could use a "top"
+  command. Show a good summary of your client's stats, processes, what's
+  slow, what's fast...
+- Address [[https://github.com/stnbu/blacklist][blacklisting]],
+  forwarding contract "standard"
+- =losthorde.crypto= (or something)... A service that scans the entire
+  EVM for ERC-20 contracts, and lets you call =getBalance()= on ALL of
+  them with an address of your chosing.
+
+  - Of course could be more than just ERC-20
+  - Holy hell, what about gas costs...
+  - If it's an address you've seen before, catching up is easy.
+  - Maybe start calling them in order of known-value, so as to not waste
+    time.
+  - Maybe once you have an address, keep listening for ERC-20 events to
+    stay current for that address.
+
+- Have a way to verify that email address =bob@example.com= is held by
+  address owner =R=...
+
+  - We send a secret confirmation code to bob@example.com
+  - Bob signs a message with his key that /contains/ that secret code.
+  - We confirm signature and add Bob's email address to our on-chain,
+    confirmed data.
+  - Or off-chain. Would it be too expensive to keep
+    =confirmed["bob@example.com"] = R= on chain? Do we sign something
+    too or just depend on the contract correctness and the security of
+    our key?
+
+- Simple and Useful! A chrome plugin that gives hover-over support
+  (showing a chainlink preview window) of: addresses, *.eth names, ...,
+  BALANCES... Easy hook(s) so that others can hack?
+- There should be a "community governance" kind of contract (not backed
+  by some gee-wiz startup, but like a unix tool from 50 years ago, it is
+  available for anyone to use at any time). A simple example...
+
+  - Uncle Larry deploys the contract with his key.
+  - Uncle Larry invites grandpa Ed to become an admin, grandpa Ed
+    accepts.
+  - Now they are both equally-priviliged admins
+  - They create a rule: anybody else who wants to withdraw from this
+    contract needs unanimous approval from admins.
+  - Ed's great-grandaughter Betty adds some money knowing this
+    arrangement in advance.
+  - Betty gets drunk and wants to buy a 3-Ether hummel figurine, admins
+    wisely decline her request.
+
+- =AnonymousReceive.sol= -- Recieve money anonymously until it's time to
+  drain (at which point you reveal yourself). Two methods:
+
+  - =construct(_hash)= accepts /hash/ of user's address, sets storage
+    var `hash`.
+  - =drain()= is called to withdrawl ALL funds, iff
+    =hash(msg.sender)==hash=
+
+- /Avatar data on the L1??/ We could have a super efficient way of
+  storing [[https://en.wikipedia.org/wiki/Identicon][identicons]] that
+  can GROW as space on L1 gets cheaper. Start out with maybe a 3x3 array
+  of black and white pixels. Have a field that determines how the
+  "avatar" is interpreted. E.g. "0x1" could be "3x3 square of black &
+  white pixels", "0x2" could be "4x4 square of black & white pixels"
+  .... "0xf2b07a" could be "32-bit color 3D GeeWiz Scalable Vector
+  Graphics shape" ... and a method can point to the "next avatar". Or
+  better...have an interface...
+
+  - =avatarData() (bytes[]) // returns the bytes=
+  - =avatarEncoding() (uint256) // returns an identifier of the "interpretation" (encoding)=
+
+- [[https://www.reddit.com/r/solidity/comments/nao7xd/nextversion_contract_method/][A
+  contract upgrading strategy.]]
+- =ethers.Wallet.createRandom= and friends would allow one to make a web
+  site that, maybe reads like a tutorial, where you click along and at
+  the end of the tutial, you have a usable wallet that you fully
+  understand (because in order to proceed N->N+1 you must demonstrate
+  understanding, for example.)
+- I believe e.g. Google Authenticator could be directly hooked up to
+  Ethereum. Doesn't it just come down to storing one big number (data)?
+- The "Merchant Payments!" L2 project:
+
+  1. Merchant gets a piece of hardware that is conneted to the internet.
+     It is both a PoS unit (can also be attached to a computer with a
+     cable or something, for online merchants) and /also/ a client for
+     the "Merchant Payments!" blockchain network.
+  2. Merchant hardware are "full" nodes. Other clients /may/ exist, but
+     the merchant hardware is the 'official' client node solution and is
+     also fully open and audited.
+  3. The transactions that go into the PoS are broadcast to the network
+     (I'm thinking: bitcoin simplicity with staking for validation.
+     wrinkles? yes, many.) A sale is only considered final when we have
+     conirmation on the "Merchant Payments!" network. Again, this is
+     just a blockchain. Whatever design you like. Whatever finality
+     rules you're happy with. Maybe the PoS hardware literally has a
+     progress bar that takes at most 30 seconds to complete. Merchant is
+     free to say "eh, go on, you" when it reaches 50%. That is up to
+     them.
+  4. Payments come from standard Ethereum mainnet addresses. (omg,
+     double spend. now I get it.) But the transactions are as compact
+     and simple as possible. At this point the only goal is to move
+     Ether around.
+  5. As predicted, the "Merchant Payments!" network somehow knows how to
+     automatically settle up with Ethereum mainnet L1, the mother ship.
+  6. When the network settles up, for each recipent address, there is a
+     single row/transaction (inside of a block, inside of a contract,
+     inside of a data structure...whatever). We only need payee+amount
+     tupples. Also very compact and cheap. Importantly, the /network/
+     settles up. The whole thing. Somehow. Batching is King.
+  7. This kind of thing is a productive thinking exercise. The problems
+     reveal themselves quickly.
+
+     - Double spend, obviously. If these are L1 mainnet addresses and
+       Ether, then how the heck do we deal with the fact that this
+       person is, say, deeply in debt with no way to collect. I really
+       feel like the "locking away ether in a contract" way of jumping
+       onto/between/off-of sidechains is an inescapable problem. Not
+       sure how to represent it with greek letters and symbols yet, but
+       I feel like this area could be productively explored! If we can
+       mitigate this problem, it would massivly speed up L2 adoption.
+     - When the senderspender slides their card, we have available:
+
+       - senderspender's address
+       - senderspender's balance (if we look it up on L1)
+       - recipient's address (is this useful? do we have some benefit to
+         see that it exists? maybe it has agreed to be a recipent via
+         some contract on L1? Maybe by putting their address in that
+         contract, they are declaring that they will be collecting money
+         from people, and through Legal Magic they can sue people who
+         double-spent....just like a bank would for writing bad checks?
+         [hmm?])
+       - amount to be sendspent
+       - Time and Location ...? ...! ...?
+       - Possibly a certain degree of certanty of the /person's/
+         identity, maybe a clerk checked an ID. Absurd? ...we do this
+         all the time for dumber reasons.
+       - Many many many things, potentially about both sendspender and
+         recipent, via their wallet address. If they are present (or
+         "present") and they have the private key, the presumably they
+         are the same /agent/ that solely owned the address for all of
+         its history and therefore comes with all that provenance.
+       - Maybe the sendspender /also/ needs to add their address to a
+         contract agreeing to such-n-such. If we assume that.
+         Importantly, we can defer the discussion about "locking up
+         money". Maybe adding their address to this contract does
+         something else? Maybe
+
+     - I feel like this could be "offloading much of the thrashing and
+       burden of trustlessness by injecting a bit of centralization, in
+       a controlled way, where it's most needed/effective."
+     - I feel like if someone could break the ice and bring an Ethereum
+       contract into court somewhere and set some kind of precident (for
+       the zomg absolutely impossible), just like DNA forensic evidence
+       (which also was supposed to never be possible.)
+     - Courts, this is Ethereum. Ethereum, this is the Courts. ALL RISE!
+
+*** Toy/Learning dApps and Ideas
+    :PROPERTIES:
+    :CUSTOM_ID: toylearning-dapps-and-ideas
+    :END:
+
+- =AnimalControl.sol= -- various things that can kill cryptokitties. The
+  owners are more incentivized for CK's to become rarer than they would
+  be worried about the risk of their own kitties (hypothosis). But how
+  to kill...? How...to...kill...
+- Would it be useful to do analysis about the Ethereum zero address? It
+  has a possitive balance, it's referred to in kazillions of places in
+  oodles of contract node. All of these are "links to" the zero address.
+  Is that? Who cares?
+- I don't know what the politics are like out there, but I already have
+  an opinion: companies should freely let teams write in Solidity and
+  Vyper and only consume their bytecode (or some intermediary as
+  necessary). If there's some incompatability, isn't all of Ethereum in
+  trouble? Isn't this dogfooding /for/ Ethereum.
+- If contracts ideintify by their interfaces, then how do you, as a
+  /contract/ say you implement, erc20 "circa some-commit-hash"...? That
+  is, as the ERC was coming along, how do you indicate you implement vX
+  ... the interface? I mean, is the interface really everything? I guess
+  maybe it is. Aren't there ERC's that define behavior behind the
+  interfaces? I swear I've seen...
+- There are now and well be moreso many contracts on ETH L1 that are
+  off/on ramps for sidechains or other L2. Wouldn't it be nice to be
+  able to easily find, index, name, ideintify, understand all of these
+  in an obvious, constent way. Is there /yet another/ contract type that
+  could be created to taxonimize them? Or maybe the contracts themselves
+  should implement some interface... /L2Interaction/
+- If you go [[https://wallet.gnosis.pm/][here]] you can find a little
+  widget that changes to match the name of the current network.
+- Can I: take an address, using that, fetch it's full public key, and
+  then encrypt data only readable by that wallet holder?
+- Walk the block and do some misc "fuel efficiency" analysis.
+- Make a "plugin architecture" that lets you publish longform (say your
+  novel) using validator graffiti.
+- A dead-simple token splitter contract: You put in X ETH and the
+  contract uses exactly half of that value to buy token A and half for
+  token B. Later: rebalance?
+- Encrypt data in a contract with your key, then decrypt. Maybe a
+  contract and UI for this? Free password saver!
+- Absolutely /any/ kind of L2 thing. Side chain? Cache, optomize
+  transactions in a local DB?
+- Have a way, in the distant future, to mirror government elections on
+  the blockhain in a fair, representative way that no one can pick apart
+  (the hard part.) Have in addition to that, what folks gave as their
+  "2nd pick"...stuff like that. "Oh, I voted for Trump but only because
+  I know Johnson can't win."
+- [Of course already exists and is a whole space, but] A geo-library for
+  solidity. Maybe formalizing in Solidity code all of the various
+  concepts like great circle distance, lat+long, plus codes, ..., acres?
+- There should be some thought given on how one could "attack" another
+  contract. Suppose there's some wildly popular contract that helps
+  torture kittens on the blockchain. 90% of the ecosystem wants to take
+  them down. Do we have a way, on-chain, to do that? Could we have
+  contracts opt-in to another contract that has a
+  "isOnKillList(address)" method? So we can store an on-chain blacklist
+  of bad actors? This could be a selling point: "We are at the ethereum
+  ecosystem's mercy. This contract will self-destruct if we're voted out
+  of existance..."
+- Make a my-net-worth contract. Has a list of your assets, uses
+  Chainlink to get a price for each, writes out balances in on-chain
+  storage when you ask it to.
+- There are many, many uses for Chainlink's VFR.
+  [[https://youtu.be/2MLm_uFMS00][Check it out]].
+- If I have a contract that depends on LINK, how do I know when my
+  supply of LINK is getting low? Oportunity for useful thing?
+- Writing a pure-python "GUI" with web3.py might be more fun than
+  browser+web3.js ...
+- If blocks have miner addresses, it'd be possible to write contracts
+  with the miners as an exclusive user-base.
+  =is_miner && address_matches= or "the minor of block number N wins
+  this pot of tokens!"
+- Could we have a contract that does something interesting only when
+  =last_block_number % 7 == 0=? Maybe contract #1 executes on even
+  blocks and #2 executes on odd blocks...?
+- Given address =R=, is it possible to use "public key cryptography" to
+  encrypt something only for holder of the wallet (priv key) associated
+  with =R=?
+- Solidity: =address[] whitelist;= and =address[] blacklist;=... what
+  interesting thing can we do with these?
+- If there's multiple on-chain sources for value X (say USD/ETH) then
+  there's value in having a system that tracks them, compares them,
+  grades them...
+- Dead-simple "savings" contract: You deploy a contract. You send money
+  to that contract. That contract has a method, =cashOut()=. When it's
+  called, if block number > N, it self destructs sending all value back
+  to you.
+- If we can prove two nodes are geographically on opposite sides of the
+  world, what can we say, if anything, about they're relatedness or
+  likely hood to collude about something?
+- If we can keep a list of node identifiers (say the peers of the block
+  proposer) in the block itself, ..., bootstrapping...?
+- Blacklist.sol -- A contract, that's as simple as possible, that stores
+  blacklisted "things" (probably addresses). Obvious contract code,
+  addoption be 100% up to network effect. "Which blacklist do you use?"
+  The idea is that people will voulentarally add /their own/ controlled
+  addresses to help filter some noise. Or are worried about the wallet's
+  security (misplaced hardware wallet? compromised software wallet?).
+  Yes, you can just stop using it, empty it out and everything, but
+  people are going to go on beliving this key is /you/, even though
+  you've lost control of it. You want to blacklist it. Afterall, you
+  can't blacklist someone else's address. You need to be able to proove
+  you (currently) own it.
+- Some thought is needed about how to prove you spent N on expence X.
+  Yes, there's the transaction and recipient to look at. But what if
+  there were a way to "prove" that that was a healthcare expense, for
+  examlpe. When IRS of the future (lol) goes through all your
+  transactions, they might not hunt you down and take some of your money
+  if you can show you spent it on not dying. Can we just have a contract
+  that this goes /through/? Merchant adds their address to the contract
+  saying, "Yes I acknowledge that this is expense for category Y. I did
+  this by signing this novel contract using my already well-known
+  address R." This means there needs to be a mechanism (method) allowing
+  payment of N ETH from key R.

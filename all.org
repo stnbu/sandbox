@@ -1,0 +1,85 @@
+* Notes While Reading Geth Code
+
+** First pass, what parts of the code look most important?
+
+- [[https://github.com/ethereum/go-ethereum/blob/master/ethstats/ethstats.go][ethstats.go]] looks like very productive reading.
+- You should definitely figure out what [CallContext](https://github.com/ethereum/go-ethereum/blob/c73652da0bb0ca4a4ecf3b88b0efed085be9adc4/ethclient/ethclient.go#L66) is.
+- Productive thing to understand: https://eips.ethereum.org/EIPS/eip-778
+- What if the "RLP list" format of node record is `[signature, seq, key]` for example? (iow what if `len(node_record[2:])` is odd?)
+- Why is the "maximum size of an ENR is 300 bytes"? Is that a place where we could put a mechanism in place so we can scale up more easily? A "market solution"?
+- > Finally, node A compares the enr-seq element of the WHOAREYOU challenge against its own node record sequence number. If the sequence number in the challenge is lower, it includes its record into the handshake message packet.
+  - Why? If the if our node record sequence was greater, were we communicating with an imposter?...
+- > If the endpoint cannot be determined (e.g. when the NAT doesn't support 'full-cone' translation), implementations should omit IP address and UDP port from the record.
+  - If that is so, does that mean you can pass these around with USB, say and it would all work? IOW, is the ID really "it" as far as the brain of an ethereum client is concerned? Is IP stuff just stripped away? It is not, but if it's there it's just so many more key/value pairs.
+- > If node A has session keys from prior communication with B, it encrypts its request with those keys.
+  - What if node B is out there and receives the message but cannot decrypt (say A is malicious and just tries this for some reason...)
+- >  If no keys are known, it initiates the handshake by sending an ordinary message packet with random message content.
+  - Does it _need_ to be random? Do we rely on its randomness? What if it's zero bytes?
+
+  
+* Random
+
+- "scatter" and https://everipedia.org/ look interesting.
+- I feeeeel like: The smart place to be right now is in a place where you can dial the "decentralized" up and down with a knob. You can exchange "decentralized" for "performant" most of the time. People are all ga-ga about "decentralized all the things!" but we needn't make it in one jump. It's totally cool to use meatspace to assure users that you are at least X% trustworthy, as the remaining (100-X)% is "decentralized" and control of the knobs is public and auditable. . . . . ?
+- Are the words "swamp" and "swam" related?
+- May be of interest to dbalsley: https://medium.com/finx-vc/finx-pilot-smart-contract-based-weather-index-insurance-in-kenya-part-1-d7a59eba644e
+- Is, is Euclidean distance of [3, 5, 9, 7] and [3, 4, 8, 9] the analog of XOR [0, 1, 0, 1] and [0, 0, 1, 0] (I think it is)
+- Flashmob.sol -- Flashmobz on the blockchain
+  - You call for a flashmob to do flashmob task "task" at place "place" with a minimum number of participants "num_p" via some magic smart contract.
+  - When the critical number sign up, it goes active. There is some future time where flashmob happens and everyone gets "royalties" tokens if all goes as planned.
+  - After flashmob complete, mobsters scan/acknowledge fellow mobsters' QR codes if they appear to have participated in good faith (dressed like a pirate, etc). Maybe each participant needs to both 'get' and 'give' "num_confirm" QR+Meatspace based confirmations.
+  - No one gets paid unless "num_confirm_total" of these scans take place. Or maybe N/M, where M were requested participants.
+  - If they can flashmob then they can write phony amazon reviews. Maybe they sign a hash of the post they made, r somethin.
+- A DHT-like-kademlia-like network could in theory have dupes. They are theoretically negligible, but!!..
+  - If a consumer of a file made up of shards gotten from the network is found to be "bad" somehow (maybe via sig), how do we deal with this?
+  - Can we just append a nonce to the end of the data (and know how to remove it) and declare that this shard has an updated version that deals with possible collision.
+  - Introduces trust and reputation, doesn't it?
+- https://eth.wiki/json-rpc/API defines all the `eth_*` you cannot keep track of.
+- https://in3.readthedocs.io/en/develop/ethereum.html has some big potential imho. Think "PoS device".
+- Weird idea. A network composed entirely of "staker nodes", you must stake something. If you want to include a transaction, you can require that the staker must have more than X at stake. This selects a pool of proposers with deposits>=X. They in turn get their transactions from nodes that the trust proportional to some other value Y. You if you are a staker and someone wants a block from X>=100, you must get your transactions from nodes where sum(f(i)*num_tx) <= 100, where f(i) calculates the cost of getting transaction i. Or something. Inspired by https://in3.readthedocs.io/en/develop/ethereum.html#proof-of-work
+- IronyIndex.sol -- Somehow Or Other(r) allow media companies to "reveal" in the future whether some thing was actually their idea all along. Some absurd product placement comes along in an SNL sketch. You are skeptical. Ironic? Advertiser can "grandly reveal" at a later time (...why?)
+- It should be possible, if not _easy_ to fork Metamask and have it desplay the "abandoned" status of any address.
+- If ENS is a record "about" an address, seems like that's a place to put abandoned info...
+- Why not encryption libraries that wrap wallets? Not a thing? I should be able to ssh to my server and authenticate 'with ethereum'. Right?!
+- If Metamask sticks around and we have the problem of many wallets "only in the browser", we could do the following:
+  1. Have Metamask wallet holder go to some website, connect with Metamask and leave the page open. Metamask is "listening" for signing requests (Maybe just polling a server or something fancier). URL could be something like `https://my.wallet.eth/connect/<their_address>`
+  2. Have an "adapter" that builds a transaction for wallet "R" to sign. Maybe it's a command-line utility. It sends it as JSON to some server. Which knows how to prompt Metamask of the user listening for sign requests.
+  3. When they sign, adapter gets notified with ...the transaction hash or something useful.
+- What kind of fun/useful things can be done with p2p traffic between
+  - An L2 node (say Polygon) and an L1 node?
+  - A "utility" blockchain network (say Chainlink) and L1
+  - Whatever permutation you can think of. IOW, can we do something useful? "I'm about to send this to L1..." Surely it has been done. Fun to explore, probably.
+- There has gotta gotta gotta be some way to take some ethereum parts and assemble a much better BitTorrent.
+  - For example: have seed ratio or some thing that is usually centralized stored "decentralized"
+  - Make it easier for Joe Average to steal Joe Dirt or Mighty Joe Young.
+  - Obviously we start to overlap swarm or ipfs, but that's a good thing. Look for duplication of effort and leverage.
+  - You can prove that you have a slice of a movie if challenged by someone else who has that slice:
+    1. Challenger makes a change to the slice identified by has X (say for example, change the Nth byte to 00)
+    2. You perform that same change to your copy of that slice and send the hash of the modified slice
+    3. If you have the expected hash, challenger knows you (probably) have the slice. What do?
+  - How to elbow your way onto the Ethereum p2p network:
+    1. Make, distribute a thing that implements "topic"
+    2. Use "topic advertisements"
+- Hmm. I don't see a website tracking "the size of the ethereum blockchain". Could be an easy, for-fun thing
+  - All below can have a graph with horizontal axis "time"
+  - "Total size of ethereum blockchain"
+  - When we have shards, track size of shards
+  - Size of all contract storage (..........)
+- Here is a good homework assignment:
+  - You are handed a USB thumb drive containing three things:
+    - An Ethereum wallet.
+    - The last block that contains any transactions involving your address.
+    - The "complete" Ethereum spec written in Human English.
+  - The wallet has unimaginable amount of money. It also has all of your hopes and dreams realized for you in the form of various dApps. True Love via trulove.io/app etc. Or maybe it controls an app that will set loose a swarm of armed drones at some time in the future unless you get access to and figure out Ethereum. Challenge accepted? Good!
+  - Since you have both the spec and a valid block (the last one you care about, so it's recent and you know it contains your wallet). You should be able to implement Ethereum and _find the correct blockchain_ to start syncing to.
+  - How do you find peers that know about _your_ block, which are therefore the right version of Ethereum (and not an evil twin)
+  - :shrug:
+* TODO Things
+
+- [ ] Change Passwords ()
+
+* Uncurated Stuff Beyond Here!
+
+Not garbage, but definitely needs neatening/work.
+
+#+INCLUDE: "./uncurated.org"
