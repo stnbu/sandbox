@@ -342,3 +342,135 @@ that are fit for public consumption (but just barely in most cases.)
   this by signing this novel contract using my already well-known
   address R." This means there needs to be a mechanism (method) allowing
   payment of N ETH from key R.
+
+
+** Pretty Yuck Here...
+
+This is pure spew cpied directly from apple "notes". Again, content is here. Sift through your trough, you data hoarder pig!
+
+*** DIY (This was the header for my "Notes" page. I keep it just for navigational purposes.)
+
+IF we could find some, universal, agreed-upon source of random data, we could use that as a "clock" for participants in a blockchain. Adjusting the local clock a bit, to maximize extractable value, might be a thing. Seems like it should be a thing. What a good source of universal, agreed-upon randomness?
+- Something from space! If we can point radio telescopes at 5 spots in the sky, measure the power of radiation coming from that direction (say in a specific band of the EM spectrum), we measure it in such a way that it falls into one of a finite number of "windows". Say we we are measuring 3Ghz microwave in one particular direction, we have a scale that goes from zero watts to the the most we "expect" to ever measure. We chop up that window into 10 pieces and the power level becomes the first digit of a number. Repeat that for three objects and you've got a "random" number in the range [000, 999]. And, if done right, anyone (......?) can do the same measurement at the same time and get the same number.
+- If we have to write this value into a block and we reject blocks that were "five or more values ago", we have some kind of constraint on the "clock"...I think
+SURELY, SHURLY there is a use for plain old desktop/utility encryption using one's "wallet". Imagine: I have metamask and wallet, therefore I can send and receive strongly-encrypted datq with anyone else with the same!
+- Maybe round #1 is yet-another chrome plugin that uses Metamask? An "app"? did chrome do away with "apps"?
+COULD WE MITIGATE the MEV problem by having a pool of miners that are "guaranteed to behave" because they  WHY NOT have a market for making API calls to a random public node? nodes can
+  1. Expose their API to the public
+  1. Have a system where value is charged for their use
+  1. Maybe they can "prove" that they implement such-n-such and therefor it's worth having a conversation.
+  1. haven't done a survey, but surely most eth clients don't open up rpc to the world.
+  1. Dude
+  - a dead-simple proxy that charges you coin to use another, upstream rpc api server
+YOU PROBABLY want a long-running ganache server for dev purposes. There's a dashboard and stuff.
+BUILD systems should use the idea of a "ledger" for clean-up purposes. What is the comp-sci-y explanation for why we can't do that with pointer references? Is there a "simplest" example of why pointer reference tracking is doomed.
+AT SOME point take a look at go-ethereum "abigen" code. It should be revealing.
+IT WOULD probably be worth setting up your own "full" Infura node. To the extent it's possible... 
+
+SEEMS LIKE there are lots of reasons a "website" would want to run their own set of blockchain nodes. For example: if you are amazon in ten years and you accept direct ethereum payments (I'm sure i'm saying hilarious things from the perspective of future readers. Hello there! Remember, we're not stupid, we're just a long time ago...) you probably will want to have a pool of nodes that just act like regular good-citizen nodes on the network, but you as amazon also have a special API that these same nodes provide, but only through a secret backdoor (private network, all separate). How do we "audit" amazon and their sea of nodes? How do we as concerned blockchain citizens know that amazon is not doing something super secret and scary and crazy? do we care? maybe the public end of the protocol is defined so well that they cannot misbehave. it's been PROVEN MATHEMATICALLY that it's impossible for them to cheat. that sounds better.
+
+THERE SHOULD be a value-neutrality layer available for dapps.
+- I charge N quantity of X for my good. You give my M quantiy of Y, which is equal to "the fair market price" of N.X
+- This is trivially stated but also kind of what 90% of the last 10k years of "economics" is _about_
+- One complicating factor is that the parties have differing opinions about each and every "currency", especially if they are ignorant.
+- But if there exists a healthy market for both X and Y, then you can let the hive decide the price. We do this a lot.
+- Maybe the "currencies" X and Y must also satisfy some clear criteria.
+  - There is plenty of it
+  - Its grade volume every day is "V"
+  - Neither has any sharp bends in its recent price curve that satisfy `bendyness_is_ok(X)`
+SEEMS LIKE if you wanted to keep info private, you could ask a participant to give a hash of <secret>+<random> ... on the theory that if, after the fact, they wanted to compose a <secret2>+<random2> for a different secret. Example: my blind bid for X is "123.4"+"blarg" and I change my mind after the auction closes and want to create a "122.4"+<anything> with the same hash, so I could clam that was the value of my bid the whole time. It's very hard even if you search the space [100.0, 123.4] and are allowed to vary the <random> ... still hard. It gets harder if you declare that both <secret> and <random> be small (data-wise, string-length-wise).
+IT SHOULD be possible to write a suite of tests for each ERC. Implements ERCXXX IFF it passes the tests.
+MAKE YOUR own NFT minting thingie that's yours forever.
+IF WE have a contract that has an interface that controls other contracts that are just "oo-like-objects", if we can have a contract factory contract (not novel, I know), we can sort of "orchestrate" them in the way that say ERC721 orchistrates "id's". Heck, there's no need to change anything, man an NFT where its "tokens" are child contracts. Can be done now. Then what? Profit!
+- If contracts can be class-like, maybe they could be serializations of regular python objects (...), orchestrator loads all the existing contracts into memory, does stuff with them, writes out state as appropriate to the blockchain. Tries to keep up...!
+JUST ... measure the "distance" from one address to another. Just do that!
+CAN a contract "destroy" another address somehow? Say for example there was a magical contract type that, if I agreed to all the terms and added my address, the contract would then gain the privilige to do something nasty to the address. A "stick" to encourage good behavior. I _think_ that all addresses are immutable on ETH and that's that. The address-privkey pair are tied together mathematically, so to "get rid" of an Ethereum address is to "get rid" of the knowledge of the private key, somehow! Lobotomy? Lobotomy.sol?
+- If your address starts out life as one created by a contract, which somehow retains control, then we can yank away the address from you. Maybe:
+  - You have a password that you send to a contract
+  - The contract uses that password to decrypt your private key and do a transaction
+  - Contract retains control of wallet, you have a password that the contract is programmed (it's OSS peepool) to use in a predictable way.
+  - However, this contract has the ability to spank you. There can be put up some kind of roadblock so the contract is never allowed to decrypt your password ever again. A switch that CAN be thrown.
+  - If your password leaks, that's obviously a problem.
+  - The hash of your password becomes your public address, which the contract knows about. It has the hashes for your password, therefore it has that as a key to identify you and your data. And that can be 20 bytes long... It would correspond to a "real" Ethereum address, but that is a (totally) theoretical problem.
+- I am the producer of these kinds of accounts. I....
+  - Create the contract that will represent your account on my "machine". In memory, of course, at some point the private key is just sitting there in memory, yes. But it's encrypted with a password (supplied by "you") and the resulting encrypted private key is all that resides on the blockchain.
+  - But wait, O-M-G... that means that a NODE will be decrypting your private key at some point to execute the transaction.
+  - Geeze, thinking's hard.
+  - Ok, but if it's receive only, the password is revealed only at cash-out time. And the whole point was for this to be suspendible. Having a suspend-able receive-only address doesn't seem exciting or useful. Also, as we are waiting to cash out, our password that can be used to decrypt the private key is sitting in the mempool. You needn't be a miner just to decrypt and spend that account. The transaction might sit there for a while too.
+  - But... hm... if you kept the public key secret somehow. Is that useful? The miner.....
+  - Eh, I am going off the rails. Great, big "dunno".
+- But, but!!... are there other ways to threaten to punish an address if they agree to be punished...?
+  - I mean, you could do embarrassing things... buy some donkey porn? donate money to north korea? (btw, what money? the whole point is to avoid having to lock something down).
+  - Ok, you are only _allowed_ to sign if you have done such-n-such. Maybe signed your boat over to the evil (horned) usurer? Then, once you sign your boat over, usurer inc adds your address to a list of addresses that are _allowed_ to sign the contract. What happens if you never sign or change your mind? You lose your boat. They will not put you in the allowed-to-sign list until they have possession of your boat.
+
+IS THERE A WAY to, maybe in javascript,
+- Make an API call to a "provider" that does something "expensive" like burns much gas or uses ethere.
+- Wallets that are stored on this "provider" are unlocked and usable. the caller is spending our value.
+- "sudo transaction"
+
+DATA SIGNED? -- so so simple! We have a piece of data about which we ask "did key N sign this data?"
+- Hash the data. Now you've got a hash.
+- Ask a contract: Who "approved of" or "signed" this hash? ... it returns an array of addresses
+- Is the address in question in that array.... ....! ....?
+- QED
+
+HOW do I trust some random dapp found on the 'net? It is talking to a local ethereum client(?). maybe that client is malicious? how do I know? is there some cryptographic thing that can be done to establish trust? how do I know that a malicious version of an eth client wasn't swapped in right after I "verified" (however that is done?)
+
+IF a function signature is sha3("myfun(uint,string)")[:4]    ....or whatever.... doesn't that mean there is great chance of collision? must understand.
+
+HOW can I send a _message_ to an (eth) address? (you've got mail!)
+
+CAN I write a python CLI that emits a message every time an event is fired on a contract?
+WHAT does the "indexed" keyword in solidity mean?
+
+WHY do modifiers end with _;  as their last line. why is the ";" sometimes omitted?
+
+WHEN listening to events (currently, stardate 2021) we get a burst of events every time a block is finalized. can we find a way to "artificially" smooth these out over time? The spacing between the events would be arbitrary, just to give a "smoothness". Or maybe some meaningful timestamp can be used...
+
+MAKE a super simple dimple chat thingie:
+- connect to website with metamask
+- click a button that adds your address to a contract
+- If your address is in the contract, that allows you to use the dumb javascript chat window thing
+
+POOR man's L2
+- Collect transactions in a local database
+- Have a way for the user to interact and understand what they are, even years later
+- Identify where one nullifies the other, optomize
+- Look at the block chain and "do things" to keep the database up to date, optimize
+- Let the user "sign" and "write" them to the blockchain whenever
+
+ODDBALL idea:
+- Cryptocurrency eclipse attacks are possible because nodes within a decentralized network are unable to simultaneously connect with all other nodes due to bandwidth constraints and must instead connect with a limited set of neighboring nodes.
+- could could we fill in the gaps with a "pseudo" connection concept? where you at least have some guarantees instead of none? or does this provide additional protection?
+
+NETWORK talk: seems like it'd be good for a node to include a list of its peers in any blocks that it mints. seems like we'd want that. thinking about eclipse attacks and how we might want to know who "this blocks peers were", maybe for forensics. nosure.
+HOW does a node get bootstrapped with peers to connect to? that process could be subject to eclipsing.
+OOO, this might be a way to bootstrap clients that know nothing (I do not know how p2p works). they get the head of the chain from _a_ peer (how?) and then start off with the list of peers in the last block.
+WHAT does this mean: Deterministic node selection: Taking the opposite approach from random node selection, deterministic node selection involves the insertion of specific node IP addresses into their corresponding predetermined fixed slots every time they connect with the network. By fixing the connections of the network’s nodes, an attacker will have a harder time maneuvering malicious nodes through the network and converging around a target, and the repeated insertion of attacker-controlled addresses will not necessarily contribute to the success of an eclipse attack attempt.
+HOW IN THE FUCK does "I am not a robot" work?
+WAIT ~/.local/share/trinity/goerli/pids-eth1/database.pid not cleaned up?
+MAYBE 1) write a general "call to async always has await" linter thing 2) and/or contribute something like that to trinity
+MAKE sure that code does not mix async/trio -- You might wonder whether you can mix-and-match primitives from different async libraries. For example, could we use trio.run() together with asyncio.sleep()? The answer is no, we can’t, and the paragraph above explains why: the two sides of our async sandwich have a private language they use to talk to each other, and different libraries use different languages. So if you try to call asyncio.sleep() from inside a trio.run(), then Trio will get very confused indeed and probably blow up in some dramatic way.
+
+MAYBE do some folks' unit tests once london hard fork reaches ropsen on june 16th
+
+IT WOULD be nice if I could "keep ERC20 tokens in two wallets"...or at least claim them from two different wallets. The idea: If you have a cold wallet in which you would like to keep "everything" but are concerned that you might want to cash out a token because of market conditions...it would be nice to have them in two places. The cold wallet in this story is actually for storing ETH and BTC (thinking of those as the majority of value) the coins want to go in the cold wallet because you want all your stuff in one place (so, tokens too), you want them on your less secure wallet also because you might want to act quickly on them. Of course this means your ERC20 tokens are not really in cold storage in this case.
+
+AVATARS on the L1?? We could have a super efficient way of storing identicons (https://en.wikipedia.org/wiki/Identicon) that can GROW as space on L1 gets cheaper. Start out with maybe a 3x3 array of black and white pixels. Have a field that determines how the "avatar" is interpreted. E.g. "0x1" could be "3x3 square of black & white pixels", "0x2" could be "4x4 square of black & white pixels" .... "0xf2b07a" could be "32-bit color 3D GeeWiz Scalable Vector Graphics shape" ... and a method can point to the "next avatar".
+
+THERE SHOULD be a standard for "get next version of this contract". Maybe a method that's there if 'implements Upgradable" or something. The method only returns the address of the next version of this contract. Consumer needs to figure out what that means...
+
+CAN you create a chrome "app" that interacts with ethereum? (or "Atom" or "Electron" or whatever...)
+
+SOFTWARE release system "on da chain" (sign releases, uris...)
+- I believe git data structure internals have a lot in common with blockchain
+
+CAN you write web3.js or... whatever to check the balance of a token for an address? (not another contract..?)
+
+BLIND donation contract: it has two methods:
+- construct(addr_hash) // user init's contract with HASH of address
+- drain()  // if user calls this and hash(msg.sender)==_hash ... can empty contract, ALL funds come out
+
+THINK ABOUT THE 'structure' of reputation networks. what are the core ideas that could be used to create a general node (let's say an instance of an ethereum contract) on a general trust network?
+
+WOULDN'T it be neat (would it be useful) to have a thing that could be used in association with blacklist which 1) sends all of funds in address B to some other address R and 2) also blacklists B 3) ...atomically
