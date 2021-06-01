@@ -1,3 +1,13 @@
+* You look lost. Can I help you?
+
+[[mailto:mb@unintuitive.org][I]] am Mike Burr. I'm transitioning "everything" to emacs' "org-mode". So, quite a mess/Watch this space.
+
+I'm always happy to get random unsolicited messages from complete strangers (if actual human).
+
+Email? [[mikeburr.eth][Ethereum]], somehow? Drop something in my wallet and I'll be sure and try to track you down.
+
+...email is fine: mb@unintuitive.org
+
 * Notes While Reading Geth Code
 
 ** First pass, what parts of the code look most important?
