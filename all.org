@@ -4,7 +4,7 @@
 
 I'm always happy to get random unsolicited messages from complete strangers (if actual human).
 
-Email? [[mikeburr.eth][Ethereum]], somehow? Drop something in my wallet and I'll be sure and try to track you down.
+Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my wallet and I'll be sure and try to track you down.
 
 ...email is fine: mb@unintuitive.org
 
@@ -29,6 +29,9 @@ Email? [[mikeburr.eth][Ethereum]], somehow? Drop something in my wallet and I'll
   
 * Random
 
+- What happens if, on contract creation, we use the address of a wallet we control? If it were allowed and worked, that would give me the private key for a contract! Why would I want that!?
+- Can one _convert_ an Ethereum wallet address to a contract address? Can a wallet become a contract? Visa versa? What happens to the private keys of a contract? What can you do if you produce a contract with a private key and then 'use' it?
+- I _feel_ like an excellent scifi writing prompt is: two beings dropped into some place. Thunder dome, but only in that it's a big cage. Why are they there? Donno, make something up. The point is they poke and prod and play chess with each other, gradually figuring out, reciprocally, "hey, that dude's all right". One is a human, of course, the other is whatever crazy fucking thing you can imagine. Gigantic bat monkey with the head of a yellow lab... sentient cloud.
 - "scatter" and https://everipedia.org/ look interesting.
 - I feeeeel like: The smart place to be right now is in a place where you can dial the "decentralized" up and down with a knob. You can exchange "decentralized" for "performant" most of the time. People are all ga-ga about "decentralized all the things!" but we needn't make it in one jump. It's totally cool to use meatspace to assure users that you are at least X% trustworthy, as the remaining (100-X)% is "decentralized" and control of the knobs is public and auditable. . . . . ?
 - Are the words "swamp" and "swam" related?

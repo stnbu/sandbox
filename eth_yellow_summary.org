@@ -1,0 +1,90 @@
+I thought it'd be fun to try and trudge through the whole thing, making may deliverable the summary of each and every piece. What could go wrong?
+
+Let's just pause for a moment and appreciate how much information can be packed into a 39-page PDF. Gollee.
+
+* Introduction
+
+Inspired by other projects' use of overloading transactions/accounts with data, Ethereum aims to be a general-use compute platform, generalizing things like Namecoin and Coloured Coins. The final sentence describes Ethereum as an "object messaging compute framework", which is probably a densely-packed idea.
+
+** Driving Factors
+
+#+BEGIN_QUOTE
+Overall, we wish to provide a system such that users can be guaranteed that no matter with which other individuals, systems or organisations they interact, they can do so with absolute confidence in the possible outcomes and how those outcomes might come about.
+#+END_QUOTE
+
+- "facilitate transactions between consenting individuals who would otherwise have no means to trust one another"
+- It is a "state change" system.
+- "we can reasonably expect that an agreement will be thus enforced autonomously" in a trustless way.
+- "The incorruptibility of judgement, often difficult to find, comes naturally from a disinterested algorithmic interpreter."
+- "natural language is necessarily vague"
+
+** Previous Work
+
+- the suspected ground-breaker: http://www.wisdom.weizmann.ac.il/~naor/PAPERS/pvp.pdf
+- [[https://github.com/sstelfox/provingwork][Hashcash]] and friends first implementations.
+- Then came [[https://www.cs.cornell.edu/people/egs/papers/karma.pdf][Karma]].
+- Then came Bitcoin.
+- [[https://www.omnilayer.org/][Omni Layer]], assets on Bitcoin
+- Namecoin, name resolution on Bitcoin
+- "[Early Eth implementation was] a Turing-complete language and an effectively unlimited inter-transaction storage capability". NB isn't the "infinite" part here in theory super important?
+- "Coloured Coins" makes Bitcoin non-fungible. A problem?
+- Ripple ("federated") shows that "high efficiency gains can be made if the decentralisation premise is discarded."
+- "Ethereum may be seen as a general implementation of such a _crypto-law_ system."
+
+* The Blockchain Paradigm
+
+** Value
+
+** Which History
+
+- https://eprint.iacr.org/2013/881.pdf (GHOST proto)
+
+* Conventions
+
+- Top-Level State Values:
+
+  - *\sigma* -- world state
+  - *\mu* -- machine state
+  - \upsih -- state transition function
+  - T -- transaction (tuples are upper case alpha)
+
+no subitems here...
+
+* Blocks, State and Transactions
+
+** World State
+
+- "An account is empty when it has no code, zero nonce and zero balance" Q's...
+  - a) Can we distinguish addresses that have never 'touched' the system (were never discovered/created by anyone, only exist in theory) with b) an account that has no code, zero nonce, and zero balance but have a "record" somewhere with those values explicitly set? Can there be such a thing?
+  - Does this imply that there is no such thing as an "empty" contract account?
+
+#+BEGIN_QUOTE
+If the codeHash field is the Keccak-256 hash of the 􏰁 􏰂
+empty string, i.e. σ[a]c = KEC () , then the node represents a simple account, sometimes referred to as a “non-contract” account.
+#+END_QUOTE
+
+Do they mean /iff/? Is this the /definition/ of a simple ("wallet", right?) account?
+
+Do I understand the definition of DEAD? I don't think I do.
+
+** The Transaction
+
+#+BEGIN_QUOTE
+[For the *to:* field of] a contract creation transaction, $\varnothing$, used here to denote the only member of $\mathbb{B}_0$
+#+END_QUOTE
+
+I'm pretty sure if that wasn't enforced by the protocol, we could specify an address for an account we control. I am deeply curious about the implications, but I'm 100% sure I'm not the first to be.
+
+#+BEGIN_QUOTE
+value: A scalar value equal to the number of Wei to be transferred to the message call’s recipient or, in the case of contract creation, as an endowment to the newly created account
+#+END_QUOTE
+
+I have question. How do we use "endowment"? Why have I never (knowingly) done this when publishing a contract?
+
+#+BEGIN_QUOTE
+v, r, s: Values corresponding to the signature of the transaction and /_*used to determine the sender of the transaction*_/
+#+END_QUOTE
+
+Worth noting!
+
+
