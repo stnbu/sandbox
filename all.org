@@ -26,9 +26,60 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 - >  If no keys are known, it initiates the handshake by sending an ordinary message packet with random message content.
   - Does it _need_ to be random? Do we rely on its randomness? What if it's zero bytes?
 
+* Rust
+
+- "blocks of code evaluate to the last expression in them, and numbers by themselves are also expressions"... really? `x={1;let _ = 3;}` ...? The last expression is "1". What if I do this:
+
+```
+if { 3 } else { "five" }
+```
+without assigning it to anything...?
+
+Is this an error?
+
+```
+if { 2 }
+```
+
+That is, have the if expression evaluate to something but do not assign it. If that's legal, can I still not have `"string"` in the else block?
+
+- Is `loop {}` and expression?..?
+- "because the allocator must first find a big enough space to hold the data and then perform bookkeeping to prepare for the next allocation" but why? Can't some process be in charge of taking the available memory and organizing it a way that you can _quickly_ hand off a pointer to N bytes of memory? Because it's in this tended "pool"?
+
+* Story Themes
+
+"Story Themes" seems like a nice section heading. What goes here are 1) writing ideas of any kind for me to never write about and 2) writing on themes that sound interesting to read. The kind of thing you'd ask about on reddit, "r/books, find me books about X". Again, for me to never take any action on. Importantly.
+
+And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
+
+- [wanted] Books about folks whose carefully nurtured and crafted "persona" falls apart destructively. For example, a grandiose neurosurgeon who's always humble-bragging and knocking down others to maintain HER image as a la-dee-da intellectual has embarrassing stuff exposed, showing HER to be a moron or whatever (see? gender equality!)
+- [wanted] A book about using, not poison, but drugs to fuck with someone's life. For example: want to encourage some positive behavior? Put some opioid in HIS coffee when HE does well. Or... whatever.
   
 * Random
 
+- > Another neat feature of Cargo is that you can run the cargo doc --open command, which will build documentation provided by all of your dependencies locally and open it in your browser.
+- Brockchain to further enhance old school web browsing security:
+  - Shrug. I'm mostly just thinking you can easily store hashes and signatures and so forth, so there surely is potential to record "important information" a about a web site about which you are extra paranoid (your bank...ha!)
+  - For example. Think of a contract that's analogous to ".ssh/authorized_keys". If a web site's cert changes it might be nice to know, that it went from "reputable" to "minimal effort" CA for example.
+- It seems like SOME of the browser stuff that Google, in its benevolence, stores for me on their servers could reasonable go on some kind of blockchain, /I/ think. Not bookmarks, but maybe possibly passwords, or... I'm sure there's lots there.
+- There's the obviously cause-effect world (billiard ball knocking around) and then there's the seemingly non-deterministic, random world (a tree somewhere sprouts a new limb). Computers are deterministic, that's why the "p" in prng. How do you look for the boundary between the two worlds? The boundary is where all the new answers are, "it looked a-deterministic but we pushed back the boundary a bit and now it's not!"
+- If we wanted to use, say, the "from" address of the last transaction in the previous block as a source of "random", we'd have the problem of a miner knowing this and leveraging it somehow to un-random it. If we used the miner's address as a source of random, the miner can also leverage this, "If MY address is the random number, then I can do this and that to get more money". It seems like if somehow you used these TWO addresses together in some way you could break out of the miner-gaming game. Is it theoretically impossible to get "random data" from within the blockchain? Can it be made cryptographically practical?
+- ["comedy"] somehow I think it'd be hilarious to get one of the old Richard Petty "Goodies headache powder" commercials and over-dub it (making a bad-lip-reading level attempt to match mouth movment) with the most foofie, stereotypical gay man voice one can muster. And have him start off with "oh my GOD-duh!! my head hurts thoooo bad right now..." IOW mock the fact that tough-guy RP has a widdle headache!! boo hoo!! I need mes'sin, mama!
+- What about Conway's Game of Life meets weird (penrose?) tiling? i.e., non-square tiles with n neighbors.
+- (Would there be a use for...) Contracts that live on ethereum and interact with each other. I mean, let me re-phrase: Have an array/collection/library of /simple/ contracts that are not much more than transistors, say, each with an address (obviously). You could of course do arbitrarily complex things with this, and the "clock" would only tick at whatever rate blocks are created, but
+  1. It'll get faster, bro.
+  1. It'll get cheaper, bro.
+  1. Would the property of "slowness" be used to some kind of advantage?
+  1. I call this "layer -1" (because I am told layer zero is meatspace.)
+  1. If this is the cpu/memory, what is the interface?
+  1. Recall, these contracts can create arbitrarily many more contracts.
+  1. Could they exist solely for the purpose of foiling bad actors (mev?)
+  1. Could they grow like a fungus and destroy all life forms? (no, because "gas". But really? It'll necessarily get cheaper. It's an ever-changing balance: cost/reward.)
+  1. (Related?) Game of life on the block chain:
+     1. You deploy contracts that have x, y coordinates and aliveness state, setting, "alive" on some to feed the initial pattern.
+     1. You gas up some contract that will pay for all of this.
+     1. Watch things unroll with each block (profit!)
+- Blockchain stuff is iterative. state n+1 is derived from state n (and nothing else). It sure seems like there should be a lot of behavior that can be ...analyzed (?) with "chaos theory". Blockchain is a great big [[https://en.wikipedia.org/wiki/Recurrence_relation][recurrence relation]], which already has billions of human-hours of study and results that could be applied, but no one's thought to...?
 - What happens if, on contract creation, we use the address of a wallet we control? If it were allowed and worked, that would give me the private key for a contract! Why would I want that!?
 - Can one _convert_ an Ethereum wallet address to a contract address? Can a wallet become a contract? Visa versa? What happens to the private keys of a contract? What can you do if you produce a contract with a private key and then 'use' it?
 - I _feel_ like an excellent scifi writing prompt is: two beings dropped into some place. Thunder dome, but only in that it's a big cage. Why are they there? Donno, make something up. The point is they poke and prod and play chess with each other, gradually figuring out, reciprocally, "hey, that dude's all right". One is a human, of course, the other is whatever crazy fucking thing you can imagine. Gigantic bat monkey with the head of a yellow lab... sentient cloud.
