@@ -46,6 +46,25 @@ That is, have the if expression evaluate to something but do not assign it. If t
 - Is `loop {}` and expression?..?
 - "because the allocator must first find a big enough space to hold the data and then perform bookkeeping to prepare for the next allocation" but why? Can't some process be in charge of taking the available memory and organizing it a way that you can _quickly_ hand off a pointer to N bytes of memory? Because it's in this tended "pool"?
 
+#+BEGIN_QUOTE
+A string slice is a reference to part of a String, and it looks like this:
+
+#+BEGIN_SRC rust
+    let s = String::from("hello world");
+
+    let hello = &s[0..5];
+    let world = &s[6..11];
+#+END_SRC
+
+This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.
+#+END_QUOTE
+
+As a "total n00b" this to me is a bit confusing, because the type of `&s` is `&String`, where the type of `&s[0..1]` is "a slice". I probably should just come to terms with this, but it'd be nice for it to be more intuitive. I mean, it is different from other, more casual languages like python.
+
+- Copy vs Drop
+  - > Rust has a special annotation called the Copy trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10). If a type implements the Copy trait, an older variable is still usable after assignment.
+  - > 
+
 * Story Themes
 
 "Story Themes" seems like a nice section heading. What goes here are 1) writing ideas of any kind for me to never write about and 2) writing on themes that sound interesting to read. The kind of thing you'd ask about on reddit, "r/books, find me books about X". Again, for me to never take any action on. Importantly.
