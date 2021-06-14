@@ -59,11 +59,45 @@ A string slice is a reference to part of a String, and it looks like this:
 This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.
 #+END_QUOTE
 
-As a "total n00b" this to me is a bit confusing, because the type of `&s` is `&String`, where the type of `&s[0..1]` is "a slice". I probably should just come to terms with this, but it'd be nice for it to be more intuitive. I mean, it is different from other, more casual languages like python.
+As a "total n00b" this to me is a bit confusing, because the type of `&s` is `&String`, where the type of `&s[0..1]` is "a slice". I probably should just come to terms with this, but it'd be nice for it to be more intuitive. I mean, it is different from other, more casual languages like python. [Update: a slice is type `&str`.
 
 - Copy vs Drop
   - > Rust has a special annotation called the Copy trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10). If a type implements the Copy trait, an older variable is still usable after assignment.
-  - > 
+  - >
+
+- In The Rust Book, it gives as the motivation for slices the fact that, if you had some mechanism for keeping up with indexes in stead, those indexes would get out of sync if the `String` was mutated. But how do slices fix that? Figure 4-6 shows that the slice is just a pointer structure with "len", but if `s` is mutated, we still have that problem, no?!
+
+#+BEGIN_QUOTE
+Packages: A Cargo feature that lets you build, test, and share crates
+Crates: A tree of modules that produces a library or executable
+Modules and use: Let you control the organization, scope, and privacy of paths
+Paths: A way of naming an item, such as a struct, function, or module
+#+END_QUOTE
+
+- Would the following make any kind of sense?
+
+#+BEGIN_SRC rust
+  enum Thing {
+    Halal(bool),
+    Kosher(bool),
+    Regular(bool),
+  }
+#+END_SRC
+
+- Where /more than one/ variant can be ...active ...present for one instance of `Thing`. We initialize the type `Thing` and one or more of those are set. So a `match` statement could include `Halal(y) || Kosher(y) => dothingwith(y)` ...I donno. Isstupid.
+- Is it crazy to think that some day rust could enforce the semantic versioning minor number (api) guarantee?
+- [[https://justin.restivo.me/posts/2021-05-30-nix-rust-riscv-toy-kernel.html][Nice!]]
+- If in [[https://doc.rust-lang.org/stable/book/ch12-03-improving-error-handling-and-modularity.html][Listing 12-7]], `fn new` were outside of `impl Config` ...what would be the difference? I see no difference. Just for neatness' sake? [update] Oh, the `::` makes it pretty obvious that it's "associated" with `Config` which is useful.
+- It looks like lifetimes are super important (duh). For example, when using a library, if you don't understand the lifetimes of what you're calling, you may end up misusing it. Probably worth meditation.
+- I noticed in the "minigrep" example, that they stress that the return value of `search` is a vector /referencing/ the contents of `contents` (the text, a `String`), so it's not an abstract idea, here, the members of the `Vec` are actual references to the data (location+offset), not just "you probably want to keep these two things around for the same length of time."
+- https://doc.rust-lang.org/stable/book/ch13-01-closures.html is it really *required* that you call closures without type annotation?
+  - If you try to call an (unannotated) closure twice with different types: breakage.
+- Why is it called "trait /bounds/". It seems, grammar-wise, to be weird. I know there is a there there. I'm sure this word choice has meaning, but it currently seems weird to me.
+  - Maybe a trait "puts bounds" on something? I was reading "The trait bounds on T" as "The trait's bindings to T" (which is wrong, I know). Maybe "bounds" is "boundaries" and not the past tense of "bind" !!
+- If we print to stdout and try "caching" as in [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]] and only implement `Fn`...what happens? Is printing to output mutating something? Does the macro-ness of `println!` come into play here?
+- How "deep" can generics go? If I define a deeply-nested series of structs using `struct Foo<T>{struct Bar<U>...}`, do I run into a limitation?
+- More confusion about [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]]... `value` is both a method and a field. Somewhere in the text it says that the field `value` is private so that it cannot be directly changed. But `value` the function is also not public, and obviously it can be /read/... ...?
+- When I run the first test shown in https://doc.rust-lang.org/stable/book/ch13-01-closures.html ..
 
 * Story Themes
 
@@ -71,11 +105,14 @@ As a "total n00b" this to me is a bit confusing, because the type of `&s` is `&S
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
+- [idea] Bad historic villager guy: he works at the "printing press", speaks olde english and carefully explains to everyone, "Now, we call these capital letters because we keep them up here in the highest case, which we call 'the capital'..."
 - [wanted] Books about folks whose carefully nurtured and crafted "persona" falls apart destructively. For example, a grandiose neurosurgeon who's always humble-bragging and knocking down others to maintain HER image as a la-dee-da intellectual has embarrassing stuff exposed, showing HER to be a moron or whatever (see? gender equality!)
 - [wanted] A book about using, not poison, but drugs to fuck with someone's life. For example: want to encourage some positive behavior? Put some opioid in HIS coffee when HE does well. Or... whatever.
+- [idea] Scene opens with older man and his wife relaxing at home. It soon becomes obvious that older man has some (hilariously) bizarre behaviors that the wife doesn't even acknowledge. For example, he wears a paper hat (inside) that he made from newspaper. He's put a virgin marry statue on the tip of each of the tv's "rabbit ears" (because it improves reception). He puts 1/2" of ketchup on a plate and then puts a fried egg on top.... Whatever. A guest comes by that subtly questions some of this. Through his increasingly irritated responses, we learn that he's bullied his wife into never questioning him about anything [hilarious!!!]
   
 * Random
 
+- A genuinely weird thought: family metaphors are used to describe hierarchy (thinking mostly of filesystems here). Parent-child, sibling, grandparent... But this is a-sexual. Two files are siblings. Not brother/sister. Parent is "parent" not "mother" or "father"....what do sexual filesystems look like? (waka-waka).
 - > Another neat feature of Cargo is that you can run the cargo doc --open command, which will build documentation provided by all of your dependencies locally and open it in your browser.
 - Brockchain to further enhance old school web browsing security:
   - Shrug. I'm mostly just thinking you can easily store hashes and signatures and so forth, so there surely is potential to record "important information" a about a web site about which you are extra paranoid (your bank...ha!)
