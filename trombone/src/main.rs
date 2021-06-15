@@ -1,17 +1,12 @@
 fn main() {
-    let string2 = String::from("xyz");
-    let result;
-    {
-	let string1 = String::from("long string is long");
-        result = longest(string1.as_str(), string2.as_str());
-	println!("The longest string is {}", result);
-    }
+    let query = "two";
+    let contents = "one two three\nfour five six";
+    let results = search(&query, &contents);
+    println!("results: {:?}", results);
 }
-
-fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
-    if x.len() > y.len() {
-        x
-    } else {
-        y
-    }
+// &'a std::str::Lines<'a> {
+fn search<'a>(query: &str, contents: &'a str) -> std::iter::Filter<&str, |&str| &str> {
+    contents
+        .lines()
+        .filter(|line| line.contains(query))
 }

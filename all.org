@@ -97,7 +97,20 @@ Paths: A way of naming an item, such as a struct, function, or module
 - If we print to stdout and try "caching" as in [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]] and only implement `Fn`...what happens? Is printing to output mutating something? Does the macro-ness of `println!` come into play here?
 - How "deep" can generics go? If I define a deeply-nested series of structs using `struct Foo<T>{struct Bar<U>...}`, do I run into a limitation?
 - More confusion about [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]]... `value` is both a method and a field. Somewhere in the text it says that the field `value` is private so that it cannot be directly changed. But `value` the function is also not public, and obviously it can be /read/... ...?
-- When I run the first test shown in https://doc.rust-lang.org/stable/book/ch13-01-closures.html ..
+- When I run [[https://github.com/stnbu/sandbox/blob/2e86089dd06e2bad2c7948440ed333d5a58b2931/trombone/src/lib.rs][the test]] from [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][chapter 13]] I get "unused" warnings in places that are /obviously/ used (like "new").
+- Does itererating over `myit` always mutate it!? If so, how is an iterator useful if you don't mutate over it? Can you have a different lifetime (and separate) the "part" (`myindex`) that gets mutated? If so you could "iterate over `myit` without mutating it but instead mutating `myindex`... does that make sense? ..."so?"
+- Go back to the audio decoder in [[https://doc.rust-lang.org/stable/book/ch13-04-performance.html][ch13]] and see if you can understand.
+- When searching cargo.io, what "metadata" would I search for to reliably find Ethereum, BT-technology?
+- If a workspace has only one Cargo.lock file, how do you specify the versions if you chose to publish only one of your "sub" packages to cargo.io? Does it "copy" the relevant ones and do the magic for you?
+
+#+BEGIN_QUOTE
+The opt-level setting controls the number of optimizations Rust will apply to your code, with a range of 0 to 3
+#+END_QUOTE
+
+- What do each mean in detail? What gets turned on/off?
+- "invariants" (what's [[https://doc.rust-lang.org/stable/book/ch14-02-publishing-to-crates-io.html][that]]?)
+- You skipped [[https://doc.rust-lang.org/stable/book/ch15-00-smart-pointers.html][smart pointers]]! Go back and read it!
+
 
 * Story Themes
 
@@ -105,6 +118,7 @@ Paths: A way of naming an item, such as a struct, function, or module
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
+- [idea] An male exercise enthusiast who refers to his body as "her" in the way that the captain of a ship would refer to his ship as her: "Took the old girl out for a run this morning...", while being completely unaware of the "implications".
 - [idea] Bad historic villager guy: he works at the "printing press", speaks olde english and carefully explains to everyone, "Now, we call these capital letters because we keep them up here in the highest case, which we call 'the capital'..."
 - [wanted] Books about folks whose carefully nurtured and crafted "persona" falls apart destructively. For example, a grandiose neurosurgeon who's always humble-bragging and knocking down others to maintain HER image as a la-dee-da intellectual has embarrassing stuff exposed, showing HER to be a moron or whatever (see? gender equality!)
 - [wanted] A book about using, not poison, but drugs to fuck with someone's life. For example: want to encourage some positive behavior? Put some opioid in HIS coffee when HE does well. Or... whatever.
