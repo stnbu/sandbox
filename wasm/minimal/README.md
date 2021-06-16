@@ -2,7 +2,7 @@
 
 This is just a ripoff of [this](), but there's so much stuff to keep up with, I wanted an ultra-minimal example, since with this "stack", it seems like things break if you breath on them wrong. If it's useful to you, great!
 
-1. Get `wasm-pack` installed and run `wasm-pack build --target web` the directory containing this README file.
+1. Get `wasm-pack` installed and run `wasm-pack build --target web` in the directory containing this README file.
 1. Somehow serve the directory containing `index.html` on a web server.
 
 Open some developer tools to see what's going on at least look at the JavaScript console output. For me, opening `index.html` from the filesystem in my web browser does not work because of cross-origin something-something.
