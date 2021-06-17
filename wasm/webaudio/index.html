@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+  </head>
+  <body>
+    <input id="play" type="button" value="⏯"/>
+    (headphone users, please make sure your volume is not too loud!)
+
+    <div>
+        Primary frequency: <input type="range" min="30" max="80" value="50" style="width: 400px" id="primary_input"/>
+    </div>
+
+    <div>
+        Modulation frequency: <input type="range" min="0" max="3" value="0" step="0.05"  style="width: 400px" id="fm_freq"/>
+    </div>
+
+    <div>
+        Modulation amount: <input type="range" min="0" max="3" value="0" step="0.05"  style="width: 400px" id="fm_amount"/>
+    </div>
+
+
+    <script type="module">
+      import init, { FmOsc } from './pkg/webaudio.js';
+      async function runjs() {
+          await init();
+	  ///////// from index.js
+	  let fm = null;
+
+	  const play_button = document.getElementById("play");
+	  play_button.addEventListener("click", event => {
+	      if (fm === null) {
+		  fm = new FmOsc();
+		  fm.set_note(50);
+		  fm.set_fm_frequency(0);
+		  fm.set_fm_amount(0);
+		  fm.set_gain(0.8);
+	      } else {
+		  fm.free();
+		  fm = null;
+	      }
+	  });
+
+	  const primary_slider = document.getElementById("primary_input");
+	  primary_slider.addEventListener("input", event => {
+	      if (fm) {
+		  fm.set_note(parseInt(event.target.value));
+	      }
+	  });
+
+	  const fm_freq = document.getElementById("fm_freq");
+	  fm_freq.addEventListener("input", event => {
+	      if (fm) {
+		  fm.set_fm_frequency(parseFloat(event.target.value));
+	      }
+	  });
+
+	  const fm_amount = document.getElementById("fm_amount");
+	  fm_amount.addEventListener("input", event => {
+	      if (fm) {
+		  fm.set_fm_amount(parseFloat(event.target.value));
+	      }
+	  });
+	  ///////// end from
+      }
+      runjs();
+    </script>
+    
+  </body>
+</html>
