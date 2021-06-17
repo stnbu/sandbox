@@ -111,7 +111,6 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 - "invariants" (what's [[https://doc.rust-lang.org/stable/book/ch14-02-publishing-to-crates-io.html][that]]?)
 - You skipped [[https://doc.rust-lang.org/stable/book/ch15-00-smart-pointers.html][smart pointers]]! Go back and read it!
 
-
 * Story Themes
 
 "Story Themes" seems like a nice section heading. What goes here are 1) writing ideas of any kind for me to never write about and 2) writing on themes that sound interesting to read. The kind of thing you'd ask about on reddit, "r/books, find me books about X". Again, for me to never take any action on. Importantly.
@@ -126,6 +125,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   
 * Random
 
+- See if you can adapt [[https://github.com/awalgarg/netmonitor/blob/master/static/background.js][this]] to notify you when someone downloads a `*.wasm` resource. It would be cool to know "who's using wasm?"
 - A genuinely weird thought: family metaphors are used to describe hierarchy (thinking mostly of filesystems here). Parent-child, sibling, grandparent... But this is a-sexual. Two files are siblings. Not brother/sister. Parent is "parent" not "mother" or "father"....what do sexual filesystems look like? (waka-waka).
 - > Another neat feature of Cargo is that you can run the cargo doc --open command, which will build documentation provided by all of your dependencies locally and open it in your browser.
 - Brockchain to further enhance old school web browsing security:
