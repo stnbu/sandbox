@@ -32,6 +32,16 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 :warning: The Rust compiler needs to know how much space every function's return type requires. This means all your functions have to return a concrete type.
 #+END_QUOTE
 
+- wasm:
+  - It took a while to realize that the "idiomatic" way of doing without-a-bundler is:
+
+#+BEGIN_SRC javascript
+import init from './pkg/websockets.js';
+window.addEventListener('load', async () => {
+    await init('./pkg/websockets_bg.wasm');
+});
+#+END_SRC
+
 - "blocks of code evaluate to the last expression in them, and numbers by themselves are also expressions"... really? `x={1;let _ = 3;}` ...? The last expression is "1". What if I do this:
 
 ```
