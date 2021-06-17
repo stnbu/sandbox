@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+  </head>
+  <body>
+    <p>A greeting from rust looks like...</p>
+    <script type="module">
+      import init, { run } from './pkg/dom.js';
+      async function runjs() {
+          await init();
+	  //run();
+      }
+      runjs();
+    </script>
+  </body>
+</html>
