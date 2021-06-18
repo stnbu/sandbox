@@ -28,6 +28,14 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 * Rust
 
+** WASM
+
+- The [[https://rustwasm.github.io/docs/wasm-bindgen/examples/websockets.html][WebSockets]] example looks like it's going to have some overlap with what's needed to do `web3wasm.rs`. It also has a _best_ example of without-a-bundler, that is understandable, simple, sane...
+- [[https://rustwasm.github.io/wasm-bindgen/api/js_sys/index.html][This]] links to the `js_sys` docs. But the main story is these are wasm-bindgen docs. How do I link to "all of wasm-bindgen API docs?" ...TBD
+- You will need [[https://rustwasm.github.io/docs/wasm-bindgen/reference/arbitrary-data-with-serde.html][serialization]].
+
+** Misc
+
 #+BEGIN_QUOTE
 :warning: The Rust compiler needs to know how much space every function's return type requires. This means all your functions have to return a concrete type.
 #+END_QUOTE
