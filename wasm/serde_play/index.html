@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+  </head>
+  <body>
+    <script type="module">
+      import init, { send_example_to_js, Baz } from './pkg/serde_play.js';
+      window.addEventListener('load', async () => {
+	  await init('./pkg/serde_play_bg.wasm');
+	  var x = send_example_to_js();
+	  console.log(x);
+
+	  // Baz has `inspectable`
+	  const obj = new Baz(3);
+	  console.log(obj.toJSON());
+	  console.log(obj.toString());
+      });
+    </script>
+  </body>
+</html>
