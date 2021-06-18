@@ -1,11 +1,12 @@
 use wasm_bindgen::prelude::*;
 use std::collections::HashMap;
 use serde::{Serialize, Deserialize};
+use wasm_bindgen_test::*;
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[test]
+    #[wasm_bindgen_test]
     fn it_works() {
 	let json = send_example_to_js();
 	assert!(!json.is_string())
