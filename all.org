@@ -39,7 +39,13 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 - We probably want to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-js-imports/final.html][final]] on all methods. Disallow JS magic. (oh, wait, does this only apply to imported JS? ok, never mind.)
 - Maybe there are paranoid cases to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/readonly.html][readonly]]...? (same with [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/skip.html][skip]])
 - [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/getter-and-setter.html][setter/getter]] is neat but probably a recipe for a mess.
--
+- It should be possible, via magic, to have a link, or "somethin" that launches a new chrome window that does whatever you want. Behaves like an "app". Two secret ingredients:
+  - /Can/ we just click a link and have that happen? Is that allowed. If not, what do?
+  - How can the user access this again? Same link? A "layer" that lets folks do different things, like write a desktop shortcut or something...?
+- I feel like thoroughly understanding the following would be helpful:
+#+BEGIN_QUOTE
+Callbacks are all represented as js_sys::Function. This means that all callbacks going through web-sys are a raw JS value. You can work with this by either juggling actual js_sys::Function instances or you can create a Closure<dyn FnMut(...)>, extract the underlying JsValue with as_ref, and then use JsCast::unchecked_ref to convert it to a js_sys::Function.
+#+END_QUOTE
 
 ** Misc
 
