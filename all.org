@@ -32,7 +32,9 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 - The [[https://rustwasm.github.io/docs/wasm-bindgen/examples/websockets.html][WebSockets]] example looks like it's going to have some overlap with what's needed to do `web3wasm.rs`. It also has a _best_ example of without-a-bundler, that is understandable, simple, sane...
 - [[https://rustwasm.github.io/wasm-bindgen/api/js_sys/index.html][This]] links to the `js_sys` docs. But the main story is these are wasm-bindgen docs. How do I link to "all of wasm-bindgen API docs?" ...TBD
+  - [[https://docs.rs/wasm-bindgen/0.2.74/wasm_bindgen/][HERE]] it is.
 - You will need [[https://rustwasm.github.io/docs/wasm-bindgen/reference/arbitrary-data-with-serde.html][serialization]].
+- Is it possible to use wasm in a chrome extension...?
 
 ** Misc
 
