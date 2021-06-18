@@ -35,6 +35,9 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
   - [[https://docs.rs/wasm-bindgen/0.2.74/wasm_bindgen/][HERE]] it is.
 - You will need [[https://rustwasm.github.io/docs/wasm-bindgen/reference/arbitrary-data-with-serde.html][serialization]].
 - Is it possible to use wasm in a chrome extension...?
+- This [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/index.html][subsection]] on `#[wasm_bindgen]` is helpful.
+- We probably want to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-js-imports/final.html][final]] on all methods. Disallow JS magic. (oh, wait, does this only apply to imported JS? ok, never mind.)
+- Maybe there are paranoid cases to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/readonly.html][readonly]]...? (same with [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/skip.html][skip]])
 
 ** Misc
 
