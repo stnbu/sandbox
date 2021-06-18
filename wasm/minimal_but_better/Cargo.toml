@@ -1,5 +1,5 @@
 [package]
-name = "foobar"
+name = "minimal_but_better"
 version = "0.1.0"
 authors = ["Mike Burr <mb@unintuitive.org>"]
 edition = "2018"
