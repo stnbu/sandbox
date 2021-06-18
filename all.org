@@ -38,6 +38,8 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 - This [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/index.html][subsection]] on `#[wasm_bindgen]` is helpful.
 - We probably want to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-js-imports/final.html][final]] on all methods. Disallow JS magic. (oh, wait, does this only apply to imported JS? ok, never mind.)
 - Maybe there are paranoid cases to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/readonly.html][readonly]]...? (same with [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/skip.html][skip]])
+- [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/getter-and-setter.html][setter/getter]] is neat but probably a recipe for a mess.
+-
 
 ** Misc
 
