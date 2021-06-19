@@ -11,6 +11,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "abandoned-addresses"
+version = "0.0.1"
+dependencies = [
+ "ethers",
+ "serde_json",
+ "tokio",
+]
+
+[[package]]
 name = "aes"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -200,15 +209,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "12f8e7987cbd042a63249497f41aed09f8e65add917ea6566effbc56578d6801"
 dependencies = [
  "generic-array",
-]
-
-[[package]]
-name = "contraction"
-version = "0.1.0"
-dependencies = [
- "ethers",
- "serde_json",
- "tokio",
 ]
 
 [[package]]
