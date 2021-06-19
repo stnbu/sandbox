@@ -1,4 +1,6 @@
-fn main() {
+
+#[tokio::main]
+async fn main() {
     use ethers::{
 	abi::Abi,
 	utils::Solc,
@@ -24,12 +26,22 @@ fn main() {
 
     println!("contract: {:?}", contract);
 
-    // // Calling constant methods is done by calling `call()` on the method builder.
-    // // (if the function takes no arguments, then you must use `()` as the argument)
-    // let init_value: String = contract
-    // 	.method::<_, String>("getValue", ())?
-    // 	.call()
-    // 	.await?;
+    let check_address = "0xafe8d48DeFC7B96912C638C8900CB71dDB1acEC4".parse::<Address>().unwrap();
+
+    // Calling constant methods is done by calling `call()` on the method builder.
+    // (if the function takes no arguments, then you must use `()` as the argument)
+    let is_abandoned: bool = contract
+	.method::<_, bool>("isAbandoned", check_address)
+	.unwrap()
+	.call()
+	.await
+	.unwrap();
+
+    if is_abandoned {
+	println!("IS abandoned: {:?}", check_address);
+    } else {
+	println!("IS NOT abandoned: {:?}", check_address);
+    }
 
     // // Non-constant methods are executed via the `send()` call on the method builder.
     // let call = contract
