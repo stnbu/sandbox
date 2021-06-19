@@ -49,6 +49,8 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 ** Misc
 
+- Is it possible to include an arbitrary file in rust? For example, if I had a file with exactly the text that I want to use between double-quotes, it would be nice to, at /compile/ time, to `#include` that file.
+
 #+BEGIN_QUOTE
 :warning: The Rust compiler needs to know how much space every function's return type requires. This means all your functions have to return a concrete type.
 #+END_QUOTE
@@ -157,9 +159,27 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - [wanted] Books about folks whose carefully nurtured and crafted "persona" falls apart destructively. For example, a grandiose neurosurgeon who's always humble-bragging and knocking down others to maintain HER image as a la-dee-da intellectual has embarrassing stuff exposed, showing HER to be a moron or whatever (see? gender equality!)
 - [wanted] A book about using, not poison, but drugs to fuck with someone's life. For example: want to encourage some positive behavior? Put some opioid in HIS coffee when HE does well. Or... whatever.
 - [idea] Scene opens with older man and his wife relaxing at home. It soon becomes obvious that older man has some (hilariously) bizarre behaviors that the wife doesn't even acknowledge. For example, he wears a paper hat (inside) that he made from newspaper. He's put a virgin marry statue on the tip of each of the tv's "rabbit ears" (because it improves reception). He puts 1/2" of ketchup on a plate and then puts a fried egg on top.... Whatever. A guest comes by that subtly questions some of this. Through his increasingly irritated responses, we learn that he's bullied his wife into never questioning him about anything [hilarious!!!]
+- [idea] The King's Purse:
+  - Guard to page: The King comeith. Fetch The King's Purse!
+  - Page to guard: What, the whole thing?
+  - Guard to page: Don't argue with me you pissant. Do it now!
+  - <time passes>
+  - Page comes into frame with a wheelbarrow full of gold, jewelry and shit. He's also balancing a large Chest on his head and has a "wench" (peasant's daughter) on his shoulders. She helps to stabalize the chest so he can use both hands on the wheelbarrow. His arms are also draped in gold chains (and shit). Bits of loose change (gold coins) spill over.
+  - Guard to page: What the bloody hell is this!?
+  - Page to guard: You said to fetch The King's Purse (I "eard" you).
+  - King comes around the corner with the cutest little pink purse with white frilly stuff. He holds it by his left pinkie.
+  - King to both: nooooooh! This, thilly!
+  - [notes]
+    - Could well be the Queen's Purse with a different spin (instead of eccentric king).
   
 * Random
 
+- Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the `rust-web3` Github repo.
+- Is there a task that is
+  1. Is something that only a human can reasonably do. Most would agree "it'll be decades before a /machine/ can do it!".
+  1. Can be easily validated by a computer.
+  1. Assumes a closed system where the computer and the human start off with the same knowledge (I think.)
+  1. This could be a sort of proof-of-human-work for BT. If the work had actual value outside of BT, easy incentivization and bootstrapping.
 - See if you can adapt [[https://github.com/awalgarg/netmonitor/blob/master/static/background.js][this]] to notify you when someone downloads a `*.wasm` resource. It would be cool to know "who's using wasm?"
 - A genuinely weird thought: family metaphors are used to describe hierarchy (thinking mostly of filesystems here). Parent-child, sibling, grandparent... But this is a-sexual. Two files are siblings. Not brother/sister. Parent is "parent" not "mother" or "father"....what do sexual filesystems look like? (waka-waka).
 - > Another neat feature of Cargo is that you can run the cargo doc --open command, which will build documentation provided by all of your dependencies locally and open it in your browser.
