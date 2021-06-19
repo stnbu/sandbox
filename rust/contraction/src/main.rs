@@ -1,10 +1,8 @@
 use ethers::{
     abi::Abi,
-    utils::Solc,
-    types::{Address, H256},
+    types::Address,
     contract::Contract,
     providers::{Provider, Http},
-    signers::Wallet,
 };
 use std::convert::TryFrom;
 
