@@ -160,21 +160,22 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - [wanted] A book about using, not poison, but drugs to fuck with someone's life. For example: want to encourage some positive behavior? Put some opioid in HIS coffee when HE does well. Or... whatever.
 - [idea] Scene opens with older man and his wife relaxing at home. It soon becomes obvious that older man has some (hilariously) bizarre behaviors that the wife doesn't even acknowledge. For example, he wears a paper hat (inside) that he made from newspaper. He's put a virgin marry statue on the tip of each of the tv's "rabbit ears" (because it improves reception). He puts 1/2" of ketchup on a plate and then puts a fried egg on top.... Whatever. A guest comes by that subtly questions some of this. Through his increasingly irritated responses, we learn that he's bullied his wife into never questioning him about anything [hilarious!!!]
 - [idea] The King's Purse:
-  - Guard to page: The King comeith. Fetch The King's Purse!
-  - Page to guard: What, the whole thing?
-  - Guard to page: Don't argue with me you pissant. Do it now!
+  - Guard to squire: The King comeith. Fetch The King's Purse!
+  - Squire to guard: What, the whole thing?
+  - Guard to squire: Don't argue with me you pissant. Do it now!
   - <time passes>
-  - Page comes into frame with a wheelbarrow full of gold, jewelry and shit. He's also balancing a large Chest on his head and has a "wench" (peasant's daughter) on his shoulders. She helps to stabalize the chest so he can use both hands on the wheelbarrow. His arms are also draped in gold chains (and shit). Bits of loose change (gold coins) spill over.
-  - Guard to page: What the bloody hell is this!?
-  - Page to guard: You said to fetch The King's Purse (I "eard" you).
+  - Squire comes into frame with a wheelbarrow full of gold, jewelry and shit. He's also balancing a large Chest on his head and has a "wench" (peasant's daughter) on his shoulders. She helps to stabalize the chest so he can use both hands on the wheelbarrow. His arms are also draped in gold chains (and shit). Bits of loose change (gold coins) spill over.
+  - Guard to squire: What the bloody hell is this!?
+  - Squire to guard: You said to fetch The King's Purse (I "eard" you).
   - King comes around the corner with the cutest little pink purse with white frilly stuff. He holds it by his left pinkie.
   - King to both: nooooooh! This, thilly!
   - [notes]
     - Could well be the Queen's Purse with a different spin (instead of eccentric king).
+    - Is there a whole series of these? King's Ransom? King's Rest? ...hapless squire...
   
 * Random
 
-- Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the `rust-web3` Github repo.
+- Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the `rust-web3` Github repo. Sooo... would there be usefulness in a MM "proxy"? It behaves just like MM but talks to other provider on the other end.
 - Is there a task that is
   1. Is something that only a human can reasonably do. Most would agree "it'll be decades before a /machine/ can do it!".
   1. Can be easily validated by a computer.
