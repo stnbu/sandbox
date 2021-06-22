@@ -22,9 +22,12 @@ async fn main() {
 	.unwrap();
 
     if is_abandoned {
-	println!("IS abandoned: {:?}", check_address);
+	println!("IS abandoned: {:?}", check_address.clone());
     } else {
-	println!("IS NOT abandoned: {:?}", check_address);
+	println!("IS NOT abandoned: {:?}", check_address.clone());
     }
 }
 
+let call = contract.method::<_, H256>("abandonAddress", check_address).unwrap();
+let pending_tx = call.send().await.unwrap();
+let receipt = pending_tx.confirmations(6).await.unwrap();
