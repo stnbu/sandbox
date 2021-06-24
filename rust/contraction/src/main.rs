@@ -1,6 +1,6 @@
 use ethers::{
     abi::Abi,
-    types::Address,
+    types::{Address, H256},
     contract::Contract,
     providers::{Provider, Http},
 };
@@ -26,8 +26,7 @@ async fn main() {
     } else {
 	println!("IS NOT abandoned: {:?}", check_address.clone());
     }
+    let call = contract.method::<_, H256>("abandonAddress", check_address).unwrap();
+    let pending_tx = call.send().await.unwrap();
+    let receipt = pending_tx.confirmations(6).await.unwrap();
 }
-
-let call = contract.method::<_, H256>("abandonAddress", check_address).unwrap();
-let pending_tx = call.send().await.unwrap();
-let receipt = pending_tx.confirmations(6).await.unwrap();
