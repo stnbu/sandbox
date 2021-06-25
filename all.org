@@ -28,6 +28,11 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 * Rust
 
+** Rocket
+
+- What the heck is the `options` http method (in routes, rocket attribute...update: [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS][used by CORS]])
+- Rocket cares a lot about whether your methods are async. Make sure they do not block! Standard libraries can contain
+
 ** WASM
 
 - The [[https://rustwasm.github.io/docs/wasm-bindgen/examples/websockets.html][WebSockets]] example looks like it's going to have some overlap with what's needed to do `web3wasm.rs`. It also has a _best_ example of without-a-bundler, that is understandable, simple, sane...
@@ -47,9 +52,33 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 Callbacks are all represented as js_sys::Function. This means that all callbacks going through web-sys are a raw JS value. You can work with this by either juggling actual js_sys::Function instances or you can create a Closure<dyn FnMut(...)>, extract the underlying JsValue with as_ref, and then use JsCast::unchecked_ref to convert it to a js_sys::Function.
 #+END_QUOTE
 
+** Projects
+
+I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
+
+- Calculate a fundamental number like Pi or `e` or... something more 1337.
+- Tetris!
+- Maybe that cool SNARK thing I read about that was implemented in python? (partitioning an array)
+- Maybe cryptopals?
+- Spellchecker
+  - Figure out the ispell/aspell protocol, implement it.
+  - Log spellchecking metrics, like you've always wanted to do!
+  - Fancy ways of dealing with huge word lists.
+  - "Fun" spellchecking? Like, using the same word distance algorithm that others use, find the words in the dictionary that are _most_ distant as suggestions. "the annoying spellchecker"
+- NOEL, Newest Of Everything Laboratory, we write things that run on a purpose-built set of tools that only use the Newest Things. If things break, that's a useful result. If things are awesome, this is how you show off the potential of new things. For example, we only use the following technologies:
+  - http3/QUIC
+  - wss
+  - wasm (no js-wrapping nonsense)
+  - RICK -- Really Impressive Cryptography Keywords -- ecliptic curves, blockchain, encabulators. We specifically do not support a huge set of legacy, broken, brittle web encryption stuff.
+  - Your browser is _assumed_ to have a "wallet" like metamask (and we only support the Ethereum universe, otherwise we're faced with choosing the "newest" blockchain project, which I don't think we want. We just assume it's there all the time, no fiddling around with detecting, holding the users hand to install and set up, etc.
+
+
 ** Misc
 
 - Is it possible to include an arbitrary file in rust? For example, if I had a file with exactly the text that I want to use between double-quotes, it would be nice to, at /compile/ time, to `#include` that file.
+  - `include_str!("path")` (assign `&str` var to contents of file at "path")
+- What the heck does double question mark do (probably what you think) -- `foo()??`
+- the `#[foo
 
 #+BEGIN_QUOTE
 :warning: The Rust compiler needs to know how much space every function's return type requires. This means all your functions have to return a concrete type.
@@ -154,12 +183,15 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
-- [idea] An male exercise enthusiast who refers to his body as "her" in the way that the captain of a ship would refer to his ship as her: "Took the old girl out for a run this morning...", while being completely unaware of the "implications".
-- [idea] Bad historic villager guy: he works at the "printing press", speaks olde english and carefully explains to everyone, "Now, we call these capital letters because we keep them up here in the highest case, which we call 'the capital'..."
-- [wanted] Books about folks whose carefully nurtured and crafted "persona" falls apart destructively. For example, a grandiose neurosurgeon who's always humble-bragging and knocking down others to maintain HER image as a la-dee-da intellectual has embarrassing stuff exposed, showing HER to be a moron or whatever (see? gender equality!)
-- [wanted] A book about using, not poison, but drugs to fuck with someone's life. For example: want to encourage some positive behavior? Put some opioid in HIS coffee when HE does well. Or... whatever.
-- [idea] Scene opens with older man and his wife relaxing at home. It soon becomes obvious that older man has some (hilariously) bizarre behaviors that the wife doesn't even acknowledge. For example, he wears a paper hat (inside) that he made from newspaper. He's put a virgin marry statue on the tip of each of the tv's "rabbit ears" (because it improves reception). He puts 1/2" of ketchup on a plate and then puts a fried egg on top.... Whatever. A guest comes by that subtly questions some of this. Through his increasingly irritated responses, we learn that he's bullied his wife into never questioning him about anything [hilarious!!!]
-- [idea] The King's Purse:
++ [idea] Conservative Hip-Hop: Fox News' Cathy Lee Gifford excitedly announces: "Our next guest is a young man who grew up in /urban/ Detroit and has a very Conservative message in his lyrics that he wants to tell the world about!"
++ [idea] The practicality of buggary in today's military: I think butsecs in the Navy and so fourth is an almost entirely _untapped_ resource of comedy. I imagine two super desperate sweaty, repressed good-ol-boy 20 year olds that have been paling around with machine guns all day finally sitting down with some beers, and doing some horse-trading about who's going to do what to whom and in exchange for what. "...ok, you moan like a woman with the lights off, I will lick your taint for two minutes." etc.
++ Here is a fun scene for probably some lynchian movie: Little boy wonders in out of view of parents. Daddy, who maintains his dignity at all costs, is /begging/ for it. And Johnny has never seen his dad beg before. He pleads and cries and promises to do things he can't possibly deliver on. Johnny knows. And Mommy knows too.
++ [idea] An male exercise enthusiast who refers to his body as "her" in the way that the captain of a ship would refer to his ship as her: "Took the old girl out for a run this morning...", while being completely unaware of the "implications".
++ [idea] Bad historic villager guy: he works at the "printing press", speaks olde english and carefully explains to everyone, "Now, we call these capital letters because we keep them up here in the highest case, which we call 'the capital'..."
++ [wanted] Books about folks whose carefully nurtured and crafted "persona" falls apart destructively. For example, a grandiose neurosurgeon who's always humble-bragging and knocking down others to maintain HER image as a la-dee-da intellectual has embarrassing stuff exposed, showing HER to be a moron or whatever (see? gender equality!)
++ [wanted] A book about using, not poison, but drugs to fuck with someone's life. For example: want to encourage some positive behavior? Put some opioid in HIS coffee when HE does well. Or... whatever.
++ [idea] Scene opens with older man and his wife relaxing at home. It soon becomes obvious that older man has some (hilariously) bizarre behaviors that the wife doesn't even acknowledge. For example, he wears a paper hat (inside) that he made from newspaper. He's put a virgin marry statue on the tip of each of the tv's "rabbit ears" (because it improves reception). He puts 1/2" of ketchup on a plate and then puts a fried egg on top.... Whatever. A guest comes by that subtly questions some of this. Through his increasingly irritated responses, we learn that he's bullied his wife into never questioning him about anything [hilarious!!!]
++ [idea] The King's Purse:
   - Guard to squire: The King comeith. Fetch The King's Purse!
   - Squire to guard: What, the whole thing?
   - Guard to squire: Don't argue with me you pissant. Do it now!
@@ -175,6 +207,9 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   
 * Random
 
+  
+- I'm wondering if there's a way to identify "click the fire hydrants" that is, like, "proven" to have some lasting power. in the way you can "prove" sha3 is "pretty good", can you identify a click-the-fire-hydrants task that by inspection is expected to last a good while before it can be automated. Of course, if you prove that there's one that machines cannot do, you've made a pretty big discovery.
+- Maybe make a `example_crate` for `rust-web3`? [[https://github.com/tomusdrw/rust-web3/issues/505#issuecomment-865743528][here]]
 - Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the `rust-web3` Github repo. Sooo... would there be usefulness in a MM "proxy"? It behaves just like MM but talks to other provider on the other end.
 - Is there a task that is
   1. Is something that only a human can reasonably do. Most would agree "it'll be decades before a /machine/ can do it!".
