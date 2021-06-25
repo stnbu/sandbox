@@ -1,4 +1,6 @@
 use rocket::tokio::time::{sleep, Duration};
+use std::path::{Path, PathBuf};
+use rocket::fs::NamedFile;
 
 #[rocket::get("/")]
 fn hello() -> &'static str {
@@ -20,6 +22,12 @@ fn arbitrary(name: &str, age: u8, cool: bool) -> String {
     } else {
         format!("{}, we need to talk about your coolness.", name)
     }
+}
+
+
+#[rocket::get("/<file..>")]
+async fn files(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("static/").join(file)).await.ok()
 }
 
 // #[rocket::launch]
