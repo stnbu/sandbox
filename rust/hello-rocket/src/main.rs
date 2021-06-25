@@ -25,7 +25,7 @@ fn arbitrary(name: &str, age: u8, cool: bool) -> String {
 }
 
 
-#[rocket::get("/<file..>")]
+#[rocket::get("/files/<file..>")]
 async fn files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("static/").join(file)).await.ok()
 }
@@ -38,7 +38,7 @@ async fn files(file: PathBuf) -> Option<NamedFile> {
 #[rocket::main]
 async fn main() {
     let _ = rocket::build()
-        .mount("/", rocket::routes![delay, arbitrary])
+        .mount("/", rocket::routes![delay, arbitrary, files])
         .launch()
         .await;
 }
