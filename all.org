@@ -32,6 +32,7 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 - What the heck is the `options` http method (in routes, rocket attribute...update: [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS][used by CORS]])
 - Rocket cares a lot about whether your methods are async. Make sure they do not block! Standard libraries can contain
+- Do a better job of understanding [[https://rocket.rs/v0.5-rc/guide/requests/#query-strings][this table]].
 
 ** WASM
 
@@ -56,10 +57,12 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
 
+- Super Silly Us: create a Rocket server that takes a url `/thing/<index>`. When that is recieved, the server ends a responds to one of the HTTP error codes. The status codes are each considered in number system that has a base of total-count-of-http-status-codes. So, say there are 8 status codes (for simplification). A request to `/thing/9` might return a 404. We know that status 404 means ...6. /So the 9th index of thing equals six./ The idea is to be able to send arbitrary data, using the status codes as values. Derp.
 - Calculate a fundamental number like Pi or `e` or... something more 1337.
 - Tetris!
 - Maybe that cool SNARK thing I read about that was implemented in python? (partitioning an array)
 - Maybe cryptopals?
+- It'd be cool if you could mix and match authentication methods for a rocket server. Fancy new stuff Oauth, google authenticator
 - Spellchecker
   - Figure out the ispell/aspell protocol, implement it.
   - Log spellchecking metrics, like you've always wanted to do!
@@ -75,6 +78,7 @@ I am thinking currently "fun" projects that are short, simple (and progressively
 
 ** Misc
 
+- What the heck [[https://api.rocket.rs/v0.5-rc/src/rocket/response/responder.rs.html#198][does this mean]]? (`:` after lifetime specifier).
 - Is it possible to include an arbitrary file in rust? For example, if I had a file with exactly the text that I want to use between double-quotes, it would be nice to, at /compile/ time, to `#include` that file.
   - `include_str!("path")` (assign `&str` var to contents of file at "path")
 - What the heck does double question mark do (probably what you think) -- `foo()??`
