@@ -7,6 +7,18 @@ use std::sync::atomic::Ordering;
 use std::sync::atomic::AtomicUsize;
 use rocket::State;
 
+
+use rocket::fairing::AdHoc;
+use rocket::local::blocking::Client;
+use rocket::serde::{Serialize, Deserialize};
+//use rocket::http::Status;
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[serde(crate = "rocket::serde")]
+struct WordCheck {
+    word: String,
+    suggestions: Vec<String>,
+}
+
 //// For now, we support one word. We would like, e.g.
 ////   /word1/word2/... (silly but looks nice)
 ////   /?word2&word2&... (probably no less silly, actually)
