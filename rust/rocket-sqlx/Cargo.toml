@@ -1,0 +1,18 @@
+[package]
+name = "databases"
+version = "0.0.0"
+#workspace = "/Users/mburr/git/Rocket/examples"
+edition = "2018"
+publish = false
+
+[dependencies]
+rocket = { path = "/Users/mburr/git/Rocket/core/lib", features = ["json"] }
+
+[dependencies.sqlx]
+version = "0.5.1"
+default-features = false
+features = ["runtime-tokio-rustls", "sqlite", "macros", "offline", "migrate"]
+
+[dependencies.rocket_sync_db_pools]
+path = "/Users/mburr/git/Rocket/contrib/sync_db_pools/lib"
+features = ["sqlite_pool"]
