@@ -80,6 +80,7 @@ I am thinking currently "fun" projects that are short, simple (and progressively
 
 ** Misc
 
+- How do I see the post-macro-expansion version of the code?
 - What the heck [[https://api.rocket.rs/v0.5-rc/src/rocket/response/responder.rs.html#198][does this mean]]? (`:` after lifetime specifier).
 - Is it possible to include an arbitrary file in rust? For example, if I had a file with exactly the text that I want to use between double-quotes, it would be nice to, at /compile/ time, to `#include` that file.
   - `include_str!("path")` (assign `&str` var to contents of file at "path")
@@ -213,7 +214,10 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   
 * Random
 
-
+- There has got to be a smart contract solution to 'consulting'
+  - Company mints a contract that gives your key the right to record hours
+  - Company reviews, _approves_ and pays hours in batches. Possibly enforced by contract.
+  - Contract has a failsafe: if company doesn't approve/reject hours that were logged N blocks ago, you automatically get paid in full.
 - It would be nice if in discord you could:
   - Compose a message (but don't post)
   - Notice that there is a bunch of conversations now taking place already..!
