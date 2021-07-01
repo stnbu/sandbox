@@ -16,28 +16,18 @@ fn main() {
     let mut node_G = Node { key: "G".to_string(), children: HashMap::new() };
     let mut node_X = Node { key: "X".to_string(), children: HashMap::new() };
     let mut node_Y = Node { key: "Y".to_string(), children: HashMap::new() };
-    {
-	let mut mut_node_B = node_B;
-	let mut mut_node_C = node_C;
-	let mut mut_node_D = node_D;
-	let mut mut_node_E = node_E;
-	let mut mut_node_F = node_F;
-	let mut mut_node_G = node_G;
-	let mut mut_node_X = node_X;
-	let mut mut_node_Y = node_Y;
-	
-	node_A.children.insert(3, &mut_node_B);
-	node_A.children.insert(3, &mut_node_C);
-	node_A.children.insert(3, &mut_node_D);
 
-	node_B.children.insert(3, &mut_node_E);
-	node_B.children.insert(3, &mut_node_F);
+    node_A.children.insert(3, &node_B);
+    node_A.children.insert(3, &node_C);
+    node_A.children.insert(3, &node_D);
 
-	node_F.children.insert(3, &mut_node_G);
-	
-	node_D.children.insert(3, &mut_node_X);
-	node_D.children.insert(3, &mut_node_Y);
-    }
+    node_B.children.insert(3, &node_E);
+    node_B.children.insert(3, &node_F);
+
+    node_F.children.insert(3, &node_G);
+    
+    node_D.children.insert(3, &node_X);
+    node_D.children.insert(3, &node_Y);
     
     println!("node_A bytes: {:?}", to_bytes(&node_A));
 }
