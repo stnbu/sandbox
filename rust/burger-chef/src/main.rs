@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::convert::AsRef;
+use serde_derive::{Deserialize, Serialize};
 
 /// Trying to implement
 /// [this](https://eli.thegreenplace.net/2011/09/29/an-interesting-tree-serialization-algorithm-from-dwarf)
@@ -17,17 +18,14 @@ fn main() {
     let mut node_X = Node { key: "X".to_string(), children: HashMap::new() };
     let mut node_Y = Node { key: "Y".to_string(), children: HashMap::new() };
 
-    node_A.children.insert(3, &node_B);
-    node_A.children.insert(3, &node_C);
+    node_F.children.insert(6, &node_G);
+    node_B.children.insert(4, &node_E);
+    node_B.children.insert(5, &node_F);
+    node_A.children.insert(1, &node_B);
+    node_A.children.insert(2, &node_C);
+    node_D.children.insert(7, &node_X);
+    node_D.children.insert(8, &node_Y);
     node_A.children.insert(3, &node_D);
-
-    node_B.children.insert(3, &node_E);
-    node_B.children.insert(3, &node_F);
-
-    node_F.children.insert(3, &node_G);
-    
-    node_D.children.insert(3, &node_X);
-    node_D.children.insert(3, &node_Y);
     
     println!("node_A bytes: {:?}", to_bytes(&node_A));
 }
@@ -54,7 +52,7 @@ fn to_bytes(root: &Node) -> Vec<u8> {
 }
 
 
-// How to interpret the data that follows the current node, _with respect to the current_ node.
+// How to interpret the data that follows the current node, _with respect to the current node_.
 enum Next {
     Child, // the node that follows is the current node's child
     Sibling, // the node that follows is the current node's sibling
