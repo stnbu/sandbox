@@ -85,6 +85,8 @@ I am thinking currently "fun" projects that are short, simple (and progressively
 
 ** Misc
 
+- [[https://stackoverflow.com/questions/67899965/how-do-i-implement-an-iterator-from-a-vector-of-stdrcstdrefcellt-smart-p][pub fn iter(&self) -> impl Iterator<Item = &T>]] .. is **this really** legal in California?
+
 - Is there a macro or other solution for, "`this code` if implements trait `Foo`, `that code` if not."
 - How do I see the post-macro-expansion version of the code?
 - What the heck [[https://api.rocket.rs/v0.5-rc/src/rocket/response/responder.rs.html#198][does this mean]]? (`:` after lifetime specifier).
