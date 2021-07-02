@@ -2,6 +2,8 @@ use std::collections::HashMap;
 use std::convert::AsRef;
 use serde_derive::{Deserialize, Serialize};
 
+use serde_cbor::to_vec;
+
 /// Trying to implement
 /// [this](https://eli.thegreenplace.net/2011/09/29/an-interesting-tree-serialization-algorithm-from-dwarf)
 /// in Rust with a twist: Instead of just having a "list" of children, we have the children in a `HashMap`, indexed by a number (their distance, in a HKTree).
@@ -20,24 +22,17 @@ fn main() {
     println!("");
 }
 
-fn ser(key: String) -> Vec<u8> {
-    key.into_bytes()
-}
-
 fn to_bytes(root: &Node) -> Vec<u8> {
     let mut header = Header {
 	records: Vec::new(),
     };
     let mut mem: Vec<u8> = Vec::new();
     fn serialize (pdist: u32, node: &Node, mem: &mut Vec<u8>, header: &mut Header) {
-	// The following append the node "data" (32-bit distance + literal bytes of key)
-
 	let offset = mem.len();
-	let key_data = ser(node.key.clone());
 	let mut next;
 
-	mem.extend(&pdist.to_ne_bytes());
-	mem.extend(&key_data[..]);
+	mem.extend(to_vec(&pdist).unwrap());
+	mem.extend(to_vec(&node.key).unwrap());
 
 	if !node.children.is_empty() {
 	    next = Next::Child;
@@ -56,6 +51,15 @@ fn to_bytes(root: &Node) -> Vec<u8> {
 	});
     }
     serialize(0, &root, &mut mem, &mut header);
+
+    // create serialized header, measure len()
+
+    let _header_bytes = to_vec(&header);
+
+    // MutMap to increment all "offset" by the above size.
+
+
+
     // Easy to miss, subtle to understand! We serialize by starting at root and discending to leaves.
     // Since, when we DEserialize, we must build the tree from the leaves to the root, we just flip
     // this vector right here and only mention so here. The deserialization code need only follow the
