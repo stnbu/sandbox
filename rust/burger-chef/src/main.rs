@@ -9,23 +9,9 @@ use serde_derive::{Deserialize, Serialize};
 fn main() {
 
     let mut node_A = Node { key: "A".to_string(), children: HashMap::new() };
-    let mut node_B = Node { key: "B".to_string(), children: HashMap::new() };
     let mut node_C = Node { key: "C".to_string(), children: HashMap::new() };
-    let mut node_D = Node { key: "D".to_string(), children: HashMap::new() };
-    let mut node_E = Node { key: "E".to_string(), children: HashMap::new() };
-    let mut node_F = Node { key: "F".to_string(), children: HashMap::new() };
-    let mut node_G = Node { key: "G".to_string(), children: HashMap::new() };
-    let mut node_X = Node { key: "X".to_string(), children: HashMap::new() };
-    let mut node_Y = Node { key: "Y".to_string(), children: HashMap::new() };
 
-    node_F.children.insert(6, &node_G);
-    node_B.children.insert(4, &node_E);
-    node_B.children.insert(5, &node_F);
-    node_A.children.insert(1, &node_B);
     node_A.children.insert(2, &node_C);
-    node_D.children.insert(7, &node_X);
-    node_D.children.insert(8, &node_Y);
-    node_A.children.insert(3, &node_D);
 
     let chars = to_bytes(&node_A).iter().map(|value| *value as char).collect::<Vec<_>>();
     for ch in chars {
@@ -39,25 +25,43 @@ fn ser(key: String) -> Vec<u8> {
 }
 
 fn to_bytes(root: &Node) -> Vec<u8> {
-    let mut _header = Header{
+    let mut header = Header {
 	records: Vec::new(),
     };
     let mut mem: Vec<u8> = Vec::new();
-    fn serialize (pdist: u32, node: &Node, mem: &mut Vec<u8>) {
+    fn serialize (pdist: u32, node: &Node, mem: &mut Vec<u8>, header: &mut Header) {
 	// The following append the node "data" (32-bit distance + literal bytes of key)
-	//mem.extend(&pdist.to_ne_bytes());
+
+	let offset = mem.len();
 	let key_data = ser(node.key.clone());
+	let mut next;
+
+	mem.extend(&pdist.to_ne_bytes());
+	mem.extend(&key_data[..]);
+
 	if !node.children.is_empty() {
-	    mem.extend(&key_data[..]); mem.push(b'v'); // children follow
+	    next = Next::Child;
 	    for (dist, child_node) in node.children.iter() {
-		serialize(*dist, child_node, mem);
+		serialize(*dist, child_node, mem, header);
 	    }
-	    mem.push(b'<'); // end children
+	    //next = Next::Pop; // so confuse. how do I encode "pop up one level here er whatever"
 	} else {
-	    mem.extend(&key_data[..]); mem.push(b'>'); // zero or more siblings follow.
+	    next = Next::Sibling;
 	}
+	let size = mem.len() - offset;
+	header.records.push(Record {
+	    offset,
+	    size,
+	    next,
+	});
     }
-    serialize(0, &root, &mut mem);
+    serialize(0, &root, &mut mem, &mut header);
+    // Easy to miss, subtle to understand! We serialize by starting at root and discending to leaves.
+    // Since, when we DEserialize, we must build the tree from the leaves to the root, we just flip
+    // this vector right here and only mention so here. The deserialization code need only follow the
+    // vec and assemble the tree, as one would expect. probably.
+    header.records = header.records.into_iter().rev().collect::<Vec<_>>(); // FIXME: problem! memory.
+    println!("HEADER: {:?}", header);
     mem
 }
 
@@ -65,8 +69,9 @@ fn to_bytes(root: &Node) -> Vec<u8> {
 // How to interpret the data that follows the current node, _with respect to the current node_.
 #[derive(Debug, Serialize, Deserialize)]
 enum Next {
-    Child, // the node that follows is the current node's child
+    Child,   // the node that follows is the current node's child
     Sibling, // the node that follows is the current node's sibling
+    Pop,     // I know, right? Not "father" but the instruction is to "pop", meaning end-of-children.
 }
 
 // This will be a value we get from a HashMap of locations in the data.
@@ -74,7 +79,7 @@ enum Next {
 struct Record {
     offset: usize,
     size: usize,
-    next_comes: Next,
+    next: Next,
 }
 
 // Gets encoded and placed at the beginning of the serialization output.
