@@ -26,25 +26,32 @@ fn main() {
     node_D.children.insert(7, &node_X);
     node_D.children.insert(8, &node_Y);
     node_A.children.insert(3, &node_D);
-    
-    println!("node_A bytes: {:?}", to_bytes(&node_A));
+
+    let chars = to_bytes(&node_A).iter().map(|value| *value as char).collect::<Vec<_>>();
+    for ch in chars {
+	print!("{}", ch);
+    }
+    println!("");
 }
 
+fn ser(key: String) -> Vec<u8> {
+    key.into_bytes()
+}
 
 fn to_bytes(root: &Node) -> Vec<u8> {
     let mut mem: Vec<u8> = Vec::new();
     fn serialize (pdist: u32, node: &Node, mem: &mut Vec<u8>) {
 	// The following append the node "data" (32-bit distance + literal bytes of key)
-	mem.extend(&pdist.to_ne_bytes());
-	mem.extend(&(node.key.clone().into_bytes())[..]);
+	//mem.extend(&pdist.to_ne_bytes());
+	let key_data = ser(node.key.clone());
 	if !node.children.is_empty() {
-	    mem.push(b'v'); // children follow
+	    mem.extend(&key_data[..]); mem.push(b'v'); // children follow
 	    for (dist, child_node) in node.children.iter() {
 		serialize(*dist, child_node, mem);
 	    }
 	    mem.push(b'<'); // end children
 	} else {
-	    mem.push(b'>'); // siblings follow
+	    mem.extend(&key_data[..]); mem.push(b'>'); // zero or more siblings follow.
 	}
     }
     serialize(0, &root, &mut mem);
@@ -53,18 +60,21 @@ fn to_bytes(root: &Node) -> Vec<u8> {
 
 
 // How to interpret the data that follows the current node, _with respect to the current node_.
+#[derive(Debug, Serialize, Deserialize)]
 enum Next {
     Child, // the node that follows is the current node's child
     Sibling, // the node that follows is the current node's sibling
 }
 
 // This will be a value we get from a HashMap of locations in the data.
+#[derive(Debug, Serialize, Deserialize)]
 struct NodeRecordLayout {
     size: usize,
     next_comes: Next,
 }
 
 // Gets encoded and placed at the beginning of the serialization output.
+#[derive(Debug, Serialize, Deserialize)]
 struct OutputPrefix {
     boundries: HashMap<usize, Option<NodeRecordLayout>>,
 }
