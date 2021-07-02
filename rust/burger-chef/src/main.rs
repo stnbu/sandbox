@@ -39,6 +39,9 @@ fn ser(key: String) -> Vec<u8> {
 }
 
 fn to_bytes(root: &Node) -> Vec<u8> {
+    let mut _header = Header{
+	records: Vec::new(),
+    };
     let mut mem: Vec<u8> = Vec::new();
     fn serialize (pdist: u32, node: &Node, mem: &mut Vec<u8>) {
 	// The following append the node "data" (32-bit distance + literal bytes of key)
@@ -68,15 +71,16 @@ enum Next {
 
 // This will be a value we get from a HashMap of locations in the data.
 #[derive(Debug, Serialize, Deserialize)]
-struct NodeRecordLayout {
+struct Record {
+    offset: usize,
     size: usize,
     next_comes: Next,
 }
 
 // Gets encoded and placed at the beginning of the serialization output.
 #[derive(Debug, Serialize, Deserialize)]
-struct OutputPrefix {
-    boundries: HashMap<usize, Option<NodeRecordLayout>>,
+struct Header {
+    records: Vec<Record>,
 }
 
 #[derive(Debug)]
