@@ -22,6 +22,21 @@ fn main() {
     println!("");
 }
 
+// We serialize an HKTree in the following way:
+// 1. Starting with the root node, recursively follow each node and write out bytes
+// ```
+// <distance><node_key>
+// ```
+// where `distance` is the distance (`u32`) to the node's parent and `node_key` is the binary encoding of the node's key.
+// 2. During the above, we record a record for each node in a `Record` struct. We record
+//   * `offset` - location in the stream of the beginning of the encoded node
+//   * `size` - length of encoded node in bytes
+//   * `next` - How to interpret the next record (child, sibling, end of siblings)
+// 3. Reverse the records, because the tree must be constructed in the opposite order.
+// 4. Create a `Header` struct using the above records as its `records` field.
+// 5. Measure the size of the encoded header, and increment the `offset` of each node by the header's size, since the
+// header is prepended to the stream.
+// 6. Create and return a `result: Vec<8>` by concatenating the encoded header and encoded node streams.
 fn to_bytes(root: &Node) -> Vec<u8> {
     let mut header = Header {
 	records: Vec::new(),
@@ -52,21 +67,24 @@ fn to_bytes(root: &Node) -> Vec<u8> {
     }
     serialize(0, &root, &mut mem, &mut header);
 
-    // create serialized header, measure len()
+    let mut header_bytes = to_vec(&header).unwrap();
+    let header_size = header_bytes.len();
 
-    let _header_bytes = to_vec(&header);
-
-    // MutMap to increment all "offset" by the above size.
-
-
-
-    // Easy to miss, subtle to understand! We serialize by starting at root and discending to leaves.
-    // Since, when we DEserialize, we must build the tree from the leaves to the root, we just flip
-    // this vector right here and only mention so here. The deserialization code need only follow the
+    // We serialize  by starting at root and  descending to leaves. Since,  when we DEserialize, we must  build the tree
+    // from the leaves to  the root, we just flip this vector right here. The  deserialization code need only follow the
     // vec and assemble the tree, as one would expect. probably.
     header.records = header.records.into_iter().rev().collect::<Vec<_>>(); // FIXME: problem! memory.
-    println!("HEADER: {:?}", header);
-    mem
+
+    let shifted_records: Vec<Record> = header.records.into_iter().map(|x| Record {
+	offset: x.offset + header_size,
+	..x
+    }).collect();
+
+    let mut result: Vec<u8> = Vec::new();
+
+    result.append(&mut header_bytes);
+    result.append(&mut mem);
+    result
 }
 
 
