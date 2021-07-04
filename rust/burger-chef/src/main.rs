@@ -11,13 +11,13 @@ use serde_cbor::to_vec;
 fn main() {
 
     let mut node_A = Node { key: "A".to_string(), children: HashMap::new() };
-    let mut node_C = Node { key: "C".to_string(), children: HashMap::new() };
+    // let mut node_C = Node { key: "C".to_string(), children: HashMap::new() };
 
-    node_A.children.insert(2, &node_C);
+    // node_A.children.insert(2, &node_C);
 
     let chars = to_bytes(&node_A).iter().map(|value| *value as char).collect::<Vec<_>>();
-    for ch in chars {
-	print!("{}", ch);
+    for (i, ch) in chars.iter().enumerate() {
+	println!("{:06}:{}", i, ch);
     }
     println!("");
 }
@@ -41,31 +41,31 @@ fn to_bytes(root: &Node) -> Vec<u8> {
     let mut header = Header {
 	records: Vec::new(),
     };
-    let mut mem: Vec<u8> = Vec::new();
-    fn serialize (pdist: u32, node: &Node, mem: &mut Vec<u8>, header: &mut Header) {
-	let offset = mem.len();
+    let mut node_stream_bytes: Vec<u8> = Vec::new();
+    fn serialize (pdist: u32, node: &Node, node_stream_bytes: &mut Vec<u8>, header: &mut Header) {
+	let offset = node_stream_bytes.len();
 	let mut next;
 
-	mem.extend(to_vec(&pdist).unwrap());
-	mem.extend(to_vec(&node.key).unwrap());
+	node_stream_bytes.extend(to_vec(&pdist).unwrap());
+	node_stream_bytes.extend(to_vec(&node.key).unwrap());
 
 	if !node.children.is_empty() {
-	    next = Next::Child;
+	    next = Some(Next::Child);
 	    for (dist, child_node) in node.children.iter() {
-		serialize(*dist, child_node, mem, header);
+		serialize(*dist, child_node, node_stream_bytes, header);
 	    }
-	    //next = Next::Pop; // so confuse. how do I encode "pop up one level here er whatever"
+	    //next = None;  // this feels right...where the HECK does it go?
 	} else {
-	    next = Next::Sibling;
+	    next = Some(Next::Sibling);
 	}
-	let size = mem.len() - offset;
+	let size = node_stream_bytes.len() - offset;
 	header.records.push(Record {
 	    offset,
 	    size,
 	    next,
 	});
     }
-    serialize(0, &root, &mut mem, &mut header);
+    serialize(0, &root, &mut node_stream_bytes, &mut header);
 
     let mut header_bytes = to_vec(&header).unwrap();
     let header_size = header_bytes.len();
@@ -83,7 +83,7 @@ fn to_bytes(root: &Node) -> Vec<u8> {
     let mut result: Vec<u8> = Vec::new();
 
     result.append(&mut header_bytes);
-    result.append(&mut mem);
+    result.append(&mut node_stream_bytes);
     result
 }
 
@@ -93,7 +93,6 @@ fn to_bytes(root: &Node) -> Vec<u8> {
 enum Next {
     Child,   // the node that follows is the current node's child
     Sibling, // the node that follows is the current node's sibling
-    Pop,     // I know, right? Not "father" but the instruction is to "pop", meaning end-of-children.
 }
 
 // This will be a value we get from a HashMap of locations in the data.
@@ -101,7 +100,7 @@ enum Next {
 struct Record {
     offset: usize,
     size: usize,
-    next: Next,
+    next: Option<Next>,
 }
 
 // Gets encoded and placed at the beginning of the serialization output.
