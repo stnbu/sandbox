@@ -20,14 +20,17 @@ fn main() {
     let mut node_X = Node { key: "X".to_string(), children: HashMap::new() };
     let mut node_Y = Node { key: "Y".to_string(), children: HashMap::new() };
 
-    node_F.children.insert(6, &node_G);
-    node_B.children.insert(4, &node_E);
-    node_B.children.insert(5, &node_F);
-    node_A.children.insert(1, &node_B);
+    // node_F.children.insert(6, &node_G);
+    // node_B.children.insert(4, &node_E);
+    // node_B.children.insert(5, &node_F);
+    // node_A.children.insert(1, &node_B);
     node_A.children.insert(2, &node_C);
-    node_D.children.insert(7, &node_X);
-    node_D.children.insert(8, &node_Y);
-    node_A.children.insert(3, &node_D);
+    // node_D.children.insert(7, &node_X);
+    // node_D.children.insert(8, &node_Y);
+    // node_A.children.insert(3, &node_D);
+
+    let mut bytes = to_bytes(&node_A);
+    let _ = from_bytes(&mut bytes);
 
     //let mut chars = to_bytes(&node_A).iter().map(|value| *value as char).collect::<Vec<_>>();
     // for (i, ch) in chars.iter().enumerate() {
@@ -104,27 +107,23 @@ fn to_bytes(root: &Node) -> Vec<u8> {
 
     let mut result: Vec<u8> = vec![];
     result.append(&mut node_stream_bytes);
+    println!("before: [{}]{:?}", header_size, &header_bytes);
     result.append(&mut header_bytes);
     result.push(header_size);
     result
 }
 
 fn from_bytes<'a>(bytes: &mut Vec<u8>) -> Node<'a> {
-    let fork = false;
-    if fork {
-	for ch in bytes {
-	    println!(" ===> {}", ch);
-	    break;
-	}
-    } else {
-	let header_size: u8 = bytes.pop().unwrap().into();
-	println!(" ===>  {}", header_size);
-    }
+    let header_size: usize = bytes.pop().unwrap().into();
 
-    //let elems: &[u8] = &bytes[bytes.len() - header_size ..]; //.into().unwrap();
-    //print_vec8(elems);
-    // let header: Header = from_slice(elems).unwrap();
-    // bytes.truncate(bytes.len() - header_size);
+    // FIXME: what!? why do I need to subtract two...?
+    let elems: &[u8] = &bytes[bytes.len() - header_size - 2 ..]; //.into().unwrap();
+    println!("after:  [{}]{:?}", header_size, &elems);
+
+    let header: Header = from_slice(elems).unwrap();
+    bytes.truncate(bytes.len() - header_size);
+
+    println!("---> {:?}", header);
 
     Node { children: HashMap::new(), key: "x".to_string() }
 }
