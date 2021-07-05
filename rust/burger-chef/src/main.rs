@@ -1,7 +1,6 @@
 //! 🤦
 
 use std::collections::HashMap;
-use std::convert::AsRef;
 use serde_derive::{Deserialize, Serialize};
 
 use serde_cbor::{to_vec, from_slice};
@@ -13,25 +12,26 @@ struct Node {
 }
 
 fn main() {
-    let mut node_A = Node { key: "A".to_string(), children: HashMap::new() };
-    let mut node_B = Node { key: "B".to_string(), children: HashMap::new() };
-    let mut node_C = Node { key: "C".to_string(), children: HashMap::new() };
-    let mut node_D = Node { key: "D".to_string(), children: HashMap::new() };
-    let mut node_E = Node { key: "E".to_string(), children: HashMap::new() };
-    let mut node_F = Node { key: "F".to_string(), children: HashMap::new() };
-    let mut node_G = Node { key: "G".to_string(), children: HashMap::new() };
-    let mut node_X = Node { key: "X".to_string(), children: HashMap::new() };
-    let mut node_Y = Node { key: "Y".to_string(), children: HashMap::new() };
-    node_F.children.insert(6, Box::new(node_G));
-    node_B.children.insert(4, Box::new(node_E));
-    node_B.children.insert(5, Box::new(node_F));
-    node_A.children.insert(1, Box::new(node_B));
-    node_A.children.insert(2, Box::new(node_C));
-    node_D.children.insert(7, Box::new(node_X));
-    node_D.children.insert(8, Box::new(node_Y));
-    node_A.children.insert(3, Box::new(node_D));
+    // leafs need not be `mut`
+    let mut node_a = Node { key: "a".to_string(), children: HashMap::new() };
+    let mut node_b = Node { key: "b".to_string(), children: HashMap::new() };
+    let     node_c = Node { key: "c".to_string(), children: HashMap::new() };
+    let mut node_d = Node { key: "d".to_string(), children: HashMap::new() };
+    let     node_e = Node { key: "e".to_string(), children: HashMap::new() };
+    let mut node_f = Node { key: "f".to_string(), children: HashMap::new() };
+    let     node_g = Node { key: "g".to_string(), children: HashMap::new() };
+    let     node_x = Node { key: "x".to_string(), children: HashMap::new() };
+    let     node_y = Node { key: "y".to_string(), children: HashMap::new() };
+    node_f.children.insert(6, Box::new(node_g));
+    node_b.children.insert(4, Box::new(node_e));
+    node_b.children.insert(5, Box::new(node_f));
+    node_a.children.insert(1, Box::new(node_b));
+    node_a.children.insert(2, Box::new(node_c));
+    node_d.children.insert(7, Box::new(node_x));
+    node_d.children.insert(8, Box::new(node_y));
+    node_a.children.insert(3, Box::new(node_d));
 
-    let bytes = to_vec(&node_A).unwrap();
+    let bytes = to_vec(&node_a).unwrap();
     println!("Vec<u8> size: {}", bytes.len());
     let rerisen: Node = from_slice(&bytes[..]).unwrap();
     println!("TADA: {:?}", rerisen);
