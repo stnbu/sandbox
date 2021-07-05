@@ -85,7 +85,7 @@ I am thinking currently "fun" projects that are short, simple (and progressively
 
 ** Misc
 
-- [[https://stackoverflow.com/questions/67899965/how-do-i-implement-an-iterator-from-a-vector-of-stdrcstdrefcellt-smart-p][pub fn iter(&self) -> impl Iterator<Item = &T>]] .. is **this really** legal in California?
+- [[https://stackoverflow.com/questions/67899965/how-do-i-implement-an-iterator-from-a-vector-of-stdrcstdrefcellt-smart-p][pub fn iter(&self) -> impl Iterator<Item = &T>]] .. is **this really** legal in Californiab?
 
 - Is there a macro or other solution for, "`this code` if implements trait `Foo`, `that code` if not."
 - How do I see the post-macro-expansion version of the code?
@@ -223,6 +223,13 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   
 * Random
 
+- A "fun" thing to do would be to make a sort of browser plugin factory, that lets you:
+  - Make a small edit to someone's CSS (or JS...)
+    - Supply info like
+      - description, "FixLazyCoWebUX plugin fixes problems that lazyco.com are too lazy to fix themselves".
+      - version...whatever else it takes to make it look like a "real" plugin and not one generated with a gag script.
+  - Wrap the change in a polished, complete, published chrome plugin.
+  - Send google store plugin link to admin@badsite.com or whatever.
 - A data serialization concept thingie (probably unoriginal): one 8-bit byte can store 256 values. You could have a system that takes away some number of those to reserve as "control characters". You can then just map whatever data you have onto the remaining values. That means that when a "control character" is encountered in a stream, it can be guaranteed to not be part of the data (...probably invented in the 50's).
 - Wouldn't it be nice if you could examine your "stack" at any time? 
 - There has got to be a smart contract solution to 'consulting'
