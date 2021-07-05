@@ -27,7 +27,7 @@ fn main() {
     node_A.children.insert(2, &node_C);
     // node_D.children.insert(7, &node_X);
     // node_D.children.insert(8, &node_Y);
-    // node_A.children.insert(3, &node_D);
+    node_A.children.insert(3, &node_D);
 
     let mut bytes = to_bytes(&node_A);
     let _ = from_bytes(&mut bytes);
@@ -90,24 +90,15 @@ fn to_bytes(root: &Node) -> Vec<u8> {
     let mut header = Header { records: Vec::new() };
     serialize(pdist, &root, &mut node_stream_bytes, &mut header);
 
-    // Save the size the serialized header, _will be_. Changes are made below, but the size does not change.
-    let header_size: u8 = to_vec(&header).unwrap().len() as u8;
-    println!("serialization header size: {}", &header_size);
     // We serialize  by starting at root and  descending to leaves. Since,  when we DEserialize, we must  build the tree
     // from the leaves to  the root, we just flip this vector right here. The deserialization code need only follow the
     // vec and assemble the tree, as one would expect.
     header.records = header.records.into_iter().rev().collect::<Vec<_>>(); // FIXME: problem! memory.
-    // The header goes ahead of the node stream, so we increment each record by the size of the seralized header.
-    // Importantly, this does not change the size of the header.
-    header.records = header.records.into_iter().map(|x| Record {
-	offset: x.offset + header_size as usize + 1, // Because we prefix the whole thing with header length.
-	..x
-    }).collect(); // FIXME: again, memory. This shold be doable in-place.
     let mut header_bytes = to_vec(&header).unwrap();
+    let header_size = header_bytes.len() as u8;
 
     let mut result: Vec<u8> = vec![];
     result.append(&mut node_stream_bytes);
-    println!("before: [{}]{:?}", header_size, &header_bytes);
     result.append(&mut header_bytes);
     result.push(header_size);
     result
@@ -117,8 +108,7 @@ fn from_bytes<'a>(bytes: &mut Vec<u8>) -> Node<'a> {
     let header_size: usize = bytes.pop().unwrap().into();
 
     // FIXME: what!? why do I need to subtract two...?
-    let elems: &[u8] = &bytes[bytes.len() - header_size - 2 ..]; //.into().unwrap();
-    println!("after:  [{}]{:?}", header_size, &elems);
+    let elems: &[u8] = &bytes[bytes.len() - header_size ..];
 
     let header: Header = from_slice(elems).unwrap();
     bytes.truncate(bytes.len() - header_size);
