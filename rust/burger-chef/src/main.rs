@@ -2,7 +2,6 @@
 
 use std::collections::HashMap;
 use serde_derive::{Deserialize, Serialize};
-
 use serde_cbor::{to_vec, from_slice};
 
 #[derive(Debug, Serialize, Deserialize)]
