@@ -9,9 +9,30 @@ use serde_cbor::{to_vec, from_slice};
 /// in Rust with a twist: Instead of just having a "list" of children, we have the children in a `HashMap`, indexed by a number (their distance, in a HKTree).
 
 fn main() {
+
     let mut node_A = Node { key: "A".to_string(), children: HashMap::new() };
-    let mut bytes = to_bytes(&node_A);
-    let _ = from_bytes(&mut bytes);
+    let mut node_B = Node { key: "B".to_string(), children: HashMap::new() };
+    let mut node_C = Node { key: "C".to_string(), children: HashMap::new() };
+    let mut node_D = Node { key: "D".to_string(), children: HashMap::new() };
+    let mut node_E = Node { key: "E".to_string(), children: HashMap::new() };
+    let mut node_F = Node { key: "F".to_string(), children: HashMap::new() };
+    let mut node_G = Node { key: "G".to_string(), children: HashMap::new() };
+    let mut node_X = Node { key: "X".to_string(), children: HashMap::new() };
+    let mut node_Y = Node { key: "Y".to_string(), children: HashMap::new() };
+    node_F.children.insert(6, Box::new(node_G));
+    node_B.children.insert(4, Box::new(node_E));
+    node_B.children.insert(5, Box::new(node_F));
+    node_A.children.insert(1, Box::new(node_B));
+    node_A.children.insert(2, Box::new(node_C));
+    node_D.children.insert(7, Box::new(node_X));
+    node_D.children.insert(8, Box::new(node_Y));
+    node_A.children.insert(3, Box::new(node_D));
+
+
+    let bytes = to_vec(&node_A).unwrap();
+    println!("Vec<u8> size: {}", bytes.len());
+    let rerisen: Node = from_slice(&bytes[..]).unwrap();
+    println!("TADA: {:?}", rerisen);
 }
 
 //fn print_vec8(v: &Vec<u8>) {
@@ -87,6 +108,12 @@ fn from_bytes(bytes: &mut Vec<u8>) -> Node {
 
     let mut header: Header = from_slice(elems).unwrap();
     bytes.truncate(bytes.len() - header_size);
+
+    // let mut root;
+    // for record in header.records {
+    // 	let node_bytes = &bytes[record.offset..record.size];
+    // 	let node: Node = from_slice(node_bytes).unwrap();
+    // }
 
     let node_record = header.records.pop().unwrap();
     let size = node_record.size;
