@@ -9,34 +9,9 @@ use serde_cbor::{to_vec, from_slice};
 /// in Rust with a twist: Instead of just having a "list" of children, we have the children in a `HashMap`, indexed by a number (their distance, in a HKTree).
 
 fn main() {
-
     let mut node_A = Node { key: "A".to_string(), children: HashMap::new() };
-    let mut node_B = Node { key: "B".to_string(), children: HashMap::new() };
-    let mut node_C = Node { key: "C".to_string(), children: HashMap::new() };
-    let mut node_D = Node { key: "D".to_string(), children: HashMap::new() };
-    let mut node_E = Node { key: "E".to_string(), children: HashMap::new() };
-    let mut node_F = Node { key: "F".to_string(), children: HashMap::new() };
-    let mut node_G = Node { key: "G".to_string(), children: HashMap::new() };
-    let mut node_X = Node { key: "X".to_string(), children: HashMap::new() };
-    let mut node_Y = Node { key: "Y".to_string(), children: HashMap::new() };
-
-    // node_F.children.insert(6, &node_G);
-    // node_B.children.insert(4, &node_E);
-    // node_B.children.insert(5, &node_F);
-    // node_A.children.insert(1, &node_B);
-    node_A.children.insert(2, &node_C);
-    // node_D.children.insert(7, &node_X);
-    // node_D.children.insert(8, &node_Y);
-    node_A.children.insert(3, &node_D);
-
     let mut bytes = to_bytes(&node_A);
     let _ = from_bytes(&mut bytes);
-
-    //let mut chars = to_bytes(&node_A).iter().map(|value| *value as char).collect::<Vec<_>>();
-    // for (i, ch) in chars.iter().enumerate() {
-    // 	println!("{:06}:{}", i, ch);
-    // }
-    // println!("");
 }
 
 //fn print_vec8(v: &Vec<u8>) {
@@ -67,7 +42,7 @@ fn to_bytes(root: &Node) -> Vec<u8> {
 	let offset = node_stream_bytes.len();
 	let mut next;
 	node_stream_bytes.extend(to_vec(&pdist).unwrap());
-	node_stream_bytes.extend(to_vec(&node.key).unwrap());
+	node_stream_bytes.extend(to_vec(node).unwrap());
 	if !node.children.is_empty() {
 	    next = Some(Next::Child);
 	    for (dist, child_node) in node.children.iter() {
@@ -98,22 +73,33 @@ fn to_bytes(root: &Node) -> Vec<u8> {
     let header_size = header_bytes.len() as u8;
 
     let mut result: Vec<u8> = vec![];
+    println!("node before: {:?}", &node_stream_bytes);
     result.append(&mut node_stream_bytes);
     result.append(&mut header_bytes);
     result.push(header_size);
     result
 }
 
-fn from_bytes<'a>(bytes: &mut Vec<u8>) -> Node<'a> {
+fn from_bytes(bytes: &mut Vec<u8>) -> Node {
     let header_size: usize = bytes.pop().unwrap().into();
 
-    // FIXME: what!? why do I need to subtract two...?
     let elems: &[u8] = &bytes[bytes.len() - header_size ..];
 
-    let header: Header = from_slice(elems).unwrap();
+    let mut header: Header = from_slice(elems).unwrap();
     bytes.truncate(bytes.len() - header_size);
 
-    println!("---> {:?}", header);
+    let node_record = header.records.pop().unwrap();
+    let size = node_record.size;
+    println!("size: {}", size);
+    let node_bytes = &bytes[1..size];
+    println!("node len {}", node_bytes.len());
+    println!("node after:  {:?}", &node_bytes);
+    for ch in node_bytes {
+	print!("{}", *ch as char);
+    }
+    println!("");
+    let node: Node = from_slice(node_bytes).unwrap();
+
 
     Node { children: HashMap::new(), key: "x".to_string() }
 }
@@ -140,14 +126,8 @@ struct Header {
     records: Vec<Record>,
 }
 
-#[derive(Debug)]
-struct Node<'a> {
+#[derive(Debug, Serialize, Deserialize)]
+struct Node {
     key: String,
-    children: HashMap<u32, &'a Node<'a>>,
-}
-
-impl<'a> AsRef<Node<'a>> for Node<'a> {
-    fn as_ref(&self) -> &Self {
-        self
-    }
+    children: HashMap<u32, Box<Node>>,
 }
