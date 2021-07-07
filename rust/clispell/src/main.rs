@@ -1,3 +1,5 @@
+//! Pass a single command line argument <word> and have all words of distance=1 printed.
+
 use bk_tree::{BKTree, BKNode, metrics};
 use std::env;
 use std::io::prelude::*;
@@ -5,7 +7,6 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
-//! Pass a single command line argument <word> and have all words of distance=1 printed.
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
