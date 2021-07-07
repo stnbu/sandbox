@@ -1,19 +1,31 @@
-use bk_tree::{BKTree, metrics};
+use bk_tree::{BKTree, BKNode, metrics};
 
-use serde_derive::{Deserialize, Serialize};
 use std::error::Error;
 
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
-#[derive(Debug, Serialize, Deserialize)]
-struct StringBKTree {
-    tree: BKTree<String>
-}
-
 fn main() {
     let mut tree: BKTree<String> = BKTree::new(metrics::Levenshtein);
+
+    let bytes = read();
+    //println!(" --> {:?}", bytes);
+    let x = match BKNode::from_slice(&bytes) {
+	Ok(node) => {
+	    println!("Oh nooode!");
+	    node
+	},
+	Err(why) => { println!("deserialize error: {:?}", why); return; },
+    };
+
+    tree.root = Some(x);
+    //println!("--> {:?}", &tree);
+    let benchlike = tree.find("bench", 2).collect::<Vec<_>>();
+    println!("distance-2 from bench: {:?}", benchlike);
+
+    return (());
+    
     let filename = "/usr/share/dict/words";
     let file = File::open(filename).unwrap();
     let lines = io::BufReader::new(file).lines();
@@ -25,11 +37,40 @@ fn main() {
     let size = std::mem::size_of_val(&tree);
     println!("\nDone! ({} bytes)", size);
 
-    let benchlike = tree.find("bench", 2).collect::<Vec<_>>();
-    println!("distance-2 from bench: {:?}", benchlike)
+    let bytes = &tree.root.unwrap().to_vec().unwrap();
+    write(bytes);
+    //println!("serialized bytes: {}", bytes.len());
+
+    // let benchlike = tree.find("bench", 2).collect::<Vec<_>>();
+    // println!("distance-2 from bench: {:?}", benchlike)
 }
 
+//use std::fs::File;
+use std::io::prelude::*;
+//use std::path::Path;
 
+fn write(bytes: &Vec<u8>) {
+    let path = Path::new("dict.dat");
+    let mut file = match File::create(&path) {
+        Err(why) => panic!("Create Err: {}", why),
+        Ok(file) => file,
+    };
+    match file.write_all(&bytes) {
+        Err(why) => panic!("Write Err: {}", why),
+        Ok(_) => {},
+    }
+}
+
+fn read() -> Vec<u8> {
+    let path = Path::new("dict.dat");
+    let mut file = match File::open(&path) {
+        Err(why) => panic!("Open Err: {}", why),
+        Ok(file) => file,
+    };
+    let mut result: Vec<u8> = Vec::new();
+    let bytes_read = file.read_to_end(&mut result);
+    result
+}
 
 // fn main2() -> Result<(), Box<dyn Error>> {
 //     let ferris = Mascot {

@@ -6,7 +6,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bk-tree = "0.4.0"
+bk-tree = { path = "/Users/mburr/git/rust-bk-tree", features = ["serde-support"] }
+#bk-tree = "0.4.0"
 serde = "1.0.126"
 serde_cbor = "0.11.1"
 serde_derive = "1.0.126"
