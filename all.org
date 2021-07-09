@@ -33,6 +33,7 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 - When you see `use Foo;` at the top of a file, it means: all the public things defined in this file will be accessible as `Foo::thing`.
 - Turn off warnings and such: `RUSTFLAGS="$RUSTFLAGS -A unused_variables -A dead_code -A unused_mut" cargo test tree_serialize`
 - Some [[https://discord.com/channels/273534239310479360/273541522815713281/862334231883677736][really enlightening discussion on `&` and friends]].
+- `echo nightly > rust-toolchain`
 
 ** Rocket
 
@@ -199,6 +200,7 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
++ [idea] A social movement forms around a person who is a "free spirit" that is oppressed and drug down by the system. Judge makes you do this or that...folks who don't get it are mad because you said this or that..."the media" thinks you're mentally unstable because of this or that... Meanwhile, a growing group of people come to support this person. "Free Jimmy!" they say, "I AM Jimmy!" the tee shirt reads. Jimmy is a free and open spirit that will not be brought down by life ...but turns out Jimmy is just regular fucking crazy. Some time around the peak of "Free Jimmy!", folks have to keep increasing the latitude they will give Jimmy, of which he gradually demands more. People start to drop off when Jimmy is torturing animals (or whatever) so increasingly a selection bias causes the remaining supporters, over time, to be complete nutjobs. (Am I thinking of Britney Spears or Donald Trump...now even I don't know).
 + [idea] A chunky white woman form Minnianpolis is on vacation in Paris. She sees a very typical French street food vender with sausages being cooked on the griddle. He flips and cares for them. A big sign in front says "Assuage!". He is saying "assuage!", "assuage!" She comes up and says "oooo. I'd like a sausage please." He says, "Oh, I'm a so sorry you so hungry" <French accent>. Her: "yup. I'd like one." Him: "We all want things, it's not so bad. No one knows what the future holds." [He is assuaging her, which is the service he is providing. The sausages have nothing to do with it. Everyone is confused.]
 + [idea] Conservative Hip-Hop: Fox News' Cathy Lee Gifford excitedly announces: "Our next guest is a young man who grew up in /urban/ Detroit and has a very Conservative message in his lyrics that he wants to tell the world about!"
 + [idea] The practicality of buggary in today's military: I think butsecs in the Navy and so fourth is an almost entirely _untapped_ resource of comedy. I imagine two super desperate sweaty, repressed good-ol-boy 20 year olds that have been paling around with machine guns all day finally sitting down with some beers, and doing some horse-trading about who's going to do what to whom and in exchange for what. "...ok, you moan like a woman with the lights off, I will lick your taint for two minutes." etc.
