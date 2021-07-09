@@ -17,13 +17,16 @@ static SYSTEM_WORD_FILE: &str = "/usr/share/dict/words";
 static SEARCH_DISTANCE: u32 = 1;
 
 /// Pass your query `word` and get a `Vec<String>` of words that are `odistance` or nearer your word.
-pub fn search(word: &str, odistance: Option<u32>) -> Result<Vec<String>, &str> {
+pub fn search<'a>(tree: &'a BKTree<String>, word: &str, odistance: Option<u32>) -> Result<Vec<String>, &'a str> {
     let distance: u32 = match odistance {
 	None => SEARCH_DISTANCE,
 	Some(d) => d,
     };
-    let tree = get_tree();
-    Ok(tree.find(word, distance).map(|pair| {pair.1.to_string()}).collect())
+    let mut results: Vec<String> = Vec::new();
+    for (_, result) in tree.find(word, distance) {
+	results.push(result.to_string());
+    }
+    Ok(results)
 }
 
 fn get_tree() -> BKTree<String> {
@@ -73,4 +76,26 @@ fn read_serialized_bknode() -> Vec<u8> {
     let mut result: Vec<u8> = Vec::new();
     let _ = file.read_to_end(&mut result);
     result
+}
+
+#[cfg(test)]
+mod tests {
+    // use std::fmt::Debug;
+    // use {BKNode, BKTree};
+    use crate::{
+	search,
+	get_tree,
+	BKTREE_STORE_FILE,
+	SYSTEM_WORD_FILE,
+	SEARCH_DISTANCE,
+    };
+
+    #[test]
+    fn foo() {
+	use std::fs;
+	fs::remove_file(BKTREE_STORE_FILE).ok();
+	let tree = get_tree();
+	let results: Vec<String> = search(&tree, "robert", None).unwrap().into_iter().collect();
+	assert!(results.len() == 5)
+    }
 }
