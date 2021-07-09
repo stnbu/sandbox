@@ -21,6 +21,7 @@ fn main() {
 
 fn get_tree() -> BKTree<String> {
     if !Path::new("dict.dat").exists() {
+	eprintln!("Performing a one-time import of the words file...");
 	let mut tree: BKTree<String> = BKTree::new(metrics::Levenshtein);
 	let filename = "/usr/share/dict/words";
 	let file = File::open(filename).unwrap();
