@@ -1,0 +1,7 @@
+[package]
+name = "spelib"
+version = "0.0.1"
+edition = "2018"
+
+[dependencies]
+bk-tree = { path = "/Users/mburr/git/rust-bk-tree", features = ["serde-support"] }
