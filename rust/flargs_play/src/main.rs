@@ -1,35 +1,15 @@
-/// * Practical use of the From trait.
+/// * Practical use of the Into trait.
 /// * One way to generalzie returned errors.
 
-#[derive(Debug)]
-enum VaryInt {
-    Some(u8)
-}
-
-impl From<u8> for VaryInt {
-    fn from(value: u8) -> Self {
-        Self::Some(value)
+// thank you, sir: https://discord.com/channels/273534239310479360/273541522815713281/865704536287084555
+fn test(x: impl Into<Option<u8>>) {
+    match x.into() {
+        Some(n) => println!("got {}", n),
+        None => println!("got None"),
     }
-}
-
-impl From<Option<u8>> for VaryInt {
-    fn from(o: Option<u8>) -> Self {
-	match o {
-	    Some(value) => {
-		VaryInt::Some(value)
-	    },
-	    None => {
-		VaryInt::Some(0)
-	    },
-	}
-    }
-}
-
-fn test(x: VaryInt) {
-    println!("--> {:?}", x);
 }
 
 fn main() {
-    test(None);
     test(3);
+    test(None);
 }
