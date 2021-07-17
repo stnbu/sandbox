@@ -1,5 +1,6 @@
 [package]
-name = "flargs_play"
+name = "flargs"
+description = "fl[exible] arg[ument]s -- a one-off-er that might become a useful macro some day or something."
 version = "0.1.0"
 authors = ["Mike Burr <mb@unintuitive.org>"]
 edition = "2018"
