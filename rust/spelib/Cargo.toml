@@ -4,4 +4,6 @@ version = "0.0.1"
 edition = "2018"
 
 [dependencies]
+anyhow = "1.0.41"
 bk-tree = { path = "/Users/mburr/git/rust-bk-tree", features = ["serde-support"] }
+serde_cbor = "0.11.1"
