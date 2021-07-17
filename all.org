@@ -233,6 +233,19 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   - On a serious note: health care, food, ~~hookers,~~ housing... there is enough capital in blockspace to do this. It'd
     be so fucking cool to pull it off. An army of slackers. A hive mind of neckbeards. A smug look backwards at "social welfare".
   - Radical flat-ism? If all votes count weighted by address balance, then the visionary capitalist are in control of the treasury, and the grateful slackers have more than zero vote, and are always welcome to "collectivize" (!!!). Try it, bro. Worker bees are paid in exactly the same coin, so if you want influence, become a badass programmer.
+  - A Github user could cryptographically prove ownership of their account in numerous ways. That could be in a contract with a `{address("0x..."): "github/myorg/myrepo"}` record.
+  - Obvious problems:
+    - Confirming "productive" work has been done.
+      - We could just have them sign their code with their private key. Proving
+	1. At least THEY signed it. It may only prove that they signed it but they did prove that they are the ones who did the signing.
+	1. If the code, signed by them, passes the smell test for N voters who attest such (or...something), that confirms:
+	   1. Code has value (part of their job)
+	   1. Code is original (also part of their job)
+    - Valuating that work.
+      - Github or Git<code>X</code> could offer to cryptographically attest to various stats about the project.
+	- Effective downloads per unique repo path. Total, rate, history, average.
+	- Issue, Wiki, CI/CD, Pull Request activity and such.
+	- If the user has proven org/user account ownership, why can't we just "trust" whatever stats Github can provide. That could be a chainlink "adapter" probably.
 - Does [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate][this stuff]] actually run on the browser? If so, could you fetch a wasm file with JS and "install" and use it? It would allow bypassing of all the js "bindgen" glue code required. One succinct, obvious bit of JS code could be all that's required when "bundling" all your logic. Your website could be only "some http" and "some simple javascipt code" that could bootstrap itself into just about anything (right??)
 - A "fun" thing to do would be to make a sort of browser plugin factory, that lets you:
   - Make a small edit to someone's CSS (or JS...)
