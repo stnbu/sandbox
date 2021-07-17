@@ -227,6 +227,12 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   
 * Random
 
+- SlackerHackerDAO -- A Distributed Autonomous Organization whose aim is to provide beer and pizza for kids that just wanna code (be they 19 or 90 ...aka, "a [[https://youtu.be/9Qh9AUF6EMU][gentleman programmer]]".
+  - This is what git coin and "DAO X grant program" already do, granted. But 11 all the things.
+  - Must be cryptographically proven beer and pizza and only in reasonable quantities. An actual safety net for folks who prefer to create and learn than to make [[https://youtu.be/JCiPMIViylw][money]], that is 100% voluntary in every aspect. End-run this dangerous UBI talk.
+  - On a serious note: health care, food, ~~hookers,~~ housing... there is enough capital in blockspace to do this. It'd
+    be so fucking cool to pull it off. An army of slackers. A hive mind of neckbeards. A smug look backwards at "social welfare".
+- Does [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate][this stuff]] actually run on the browser? If so, could you fetch a wasm file with JS and "install" and use it? It would allow bypassing of all the js "bindgen" glue code required. One succinct, obvious bit of JS code could be all that's required when "bundling" all your logic. Your website could be only "some http" and "some simple javascipt code" that could bootstrap itself into just about anything (right??)
 - A "fun" thing to do would be to make a sort of browser plugin factory, that lets you:
   - Make a small edit to someone's CSS (or JS...)
     - Supply info like
