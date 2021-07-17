@@ -83,6 +83,7 @@ I am thinking currently "fun" projects that are short, simple (and progressively
   - Your browser is _assumed_ to have a "wallet" like metamask (and we only support the Ethereum universe, otherwise we're faced with choosing the "newest" blockchain project, which I don't think we want. We just assume it's there all the time, no fiddling around with detecting, holding the users hand to install and set up, etc.
 - Create a modulo arithmetic type. If set to 7, `3+4=0`, `3+5=1`, `20+3=2`...
 - Create a "capped" numeric type. Cannot be initialized to greater than MAX, if arithmetic operations that result in greater than MAX panic (and/or fail to compile).
+- A self-serve faucet contract. Do a transaction, get sent some xETH. However, this doesn't help with bootstrapping wallets from zero. How?
 
 
 ** Misc
