@@ -64,6 +64,7 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
 
+- How hard would it be to make a "flight simulator"? I'm thinking like the thing that was an Excel easter egg. Super simple. Might be a way too get familiar with the GPU too.
 - Super Silly Us: create a Rocket server that takes a url `/thing/<index>`. When that is recieved, the server ends a responds to one of the HTTP error codes. The status codes are each considered in number system that has a base of total-count-of-http-status-codes. So, say there are 8 status codes (for simplification). A request to `/thing/9` might return a 404. We know that status 404 means ...6. /So the 9th index of thing equals six./ The idea is to be able to send arbitrary data, using the status codes as values. Derp.
 - Calculate a fundamental number like Pi or `e` or... something more 1337.
 - Tetris!
