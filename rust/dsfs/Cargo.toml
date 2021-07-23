@@ -1,6 +1,14 @@
+version = "0.1.0"
+authors = ["Mike Burr <mb@unintuitive.org>"]
+edition = "2018"
+description = "Dead Simple File Server -- The missing Rust development web server."
+license = "Unlicense"
+readme = "README.md"
+repository = "https://github.com/stnbu/dsfs"
+
 [package]
 name = "dsfs"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2018"
 
 [dependencies]

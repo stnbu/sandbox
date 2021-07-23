@@ -1,12 +1,16 @@
-/*
-Best-in-class CLI web server:
-
-```
-dsfs ./   # serves current directory at localhost:8000
-dsfs      # serves current directory at localhost:8000
-dsfs /tmp # serves /tmp/ localhost:8000
-```
- */
+/// `dsfs`
+///
+/// The "missing" rust webdev utility server (pre-alpha)
+///
+/// If you cannot `cargo install dsfs`, I have failed. The quality to improve!
+///
+/// It re-uses existing tools and is dead-simple as a "feature".
+///
+/// ```
+/// dsfs ./   # serves current directory at localhost:8000
+/// dsfs      # serves current directory at localhost:8000
+/// dsfs /tmp # serves /tmp/ localhost:8000
+/// ```
 
 use std::env;
 use rocket_contrib::serve::StaticFiles;
