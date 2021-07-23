@@ -40,11 +40,11 @@ fn main() {
         .unwrap();
 
     let mut cursor = connection
-        .prepare("SELECT * FROM users WHERE age > ?")
+        .prepare("SELECT * FROM events WHERE time >= ?")
         .unwrap()
         .into_cursor();
-    cursor.bind(&[sqlite::Value::Integer(50)]).unwrap();
-    while let Some(row) = cursor.next().unwrap() {
+    cursor.bind(&[sqlite::Value::Integer(0)]).unwrap();
+    while let Ok(Some(row)) = cursor.next() {
         println!("name = {}", row[0].as_string().unwrap());
         println!("age = {}", row[1].as_integer().unwrap());
     }

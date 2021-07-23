@@ -1,3 +1,5 @@
+#+title: FYI, you were not invited here. I never share this link. You are snooping! You edited a URL just to see... good for you! Just keep in mind though, if you walk into somewhere uninvited, you may end up stepping on something nasty. Paper towels and bleach over there.
+
 * You look lost. Can I help you?
 
 [[mailto:mb@unintuitive.org][I]] am Mike Burr. I'm transitioning "everything" to emacs' "org-mode". So, quite a mess/Watch this space.
@@ -30,9 +32,10 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 ** Nuts That Were Hard To Crack
 
+- rustup database is here: `~/.rustup/settings.toml` (including default, overrides...)
 - When you see `use Foo;` at the top of a file, it means: all the public things defined in this file will be accessible as `Foo::thing`.
 - Turn off warnings and such: `RUSTFLAGS="$RUSTFLAGS -A unused_variables -A dead_code -A unused_mut" cargo test tree_serialize`
-- Some [[https://discord.com/channels/273534239310479360/273541522815713281/862334231883677736][really enlightening discussion on `&` and friends]].
+- Some [[https://discord.com/channels/273534239310479360/273541522815713281/862333243650342922][really enlightening discussion]] on `&` and friends].
 - `echo nightly > rust-toolchain`
 
 ** Rocket
@@ -64,6 +67,21 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
 
+- Making a super simple game in rust-wasm would be badass. Remember "Soat"??!
+- Hey, maybe you can formalize criteria for "good use-case for wasm". I was thinking: blockchian explorer. And then I thought, why not just your usual website thing? ...because sometimes calculating locally gives a better user experience than ask->wait->get_result. Maybe there's some kind of "high dimensional space" you could work out that would let you find the "wasm sweet spot". This is under "projects" because, this is how you /find/ your projects.
+- You were thinking about a libp2p chat thing? Maybe [[https://medium.com/perlin-network/build-a-decentralized-chat-using-javascript-rust-webassembly-c775f8484b52][this]] is close or at least worth reading.
+- It seems like you could do a lot toward including contract code directly in Rust code and making them "one thing". You've got ethereum contract code (from which all contract stuff flows, so it is the "only thing" the developer should have to worry about) and you've got rust "web3" code that interacts with that contract. So!? Using cargo, macros and all the fancy rust stuff in the right ways, you should be able to for example:
+  - Maybe some simple small subset of rust, along with a collection of fancy macros, you should be able to (even if you "compile to solidity") pretty easily write rust code that becomes EVM code.
+  - A simple, database that needs NO human fiddling that keeps of with, say a tuple:
+    - `evnID: &str` A unique identifier for a chain. When referring to a public testnet (which is a singleton), it's obvious: there's only one "rinkeby". Dev environments probably already have good scheme. The main point is: Uniquely identify a chain (for which "chain ID" is insufficient)
+    - `bytecode_hash` -- whatever's optimal for "identifying some EVM byte code output" (the result of a compilation)
+    - `deployments: HashMap<bytecode_hash, Vec<envID>>` -- A mapping. "This particular compiled contract is deployed in /these/ environments."
+    - `abi` -- just compute this and store with the byte code for `bytecode_hash`
+    - With these pieces, it should be possible to adapt `cargo` to do pretty much everything [[https://github.com/eth-brownie/brownie][Brownie]] does, for example. That's the way it should be, damnit.
+- [japanezeu] How useful would it be, if you are learning words, to use a tree to find other words to add to your list?
+  - Maybe just let's call "distance" still just the Levenshtein distance (how many one-char changes to transform word A into word B).
+  - But separate from "distance", and a property that every node has, is "popularity" (how frequently is the word used and therefore how much should you worry about it). This is not new, but when choosing a "random" next word to study, in addition to wanting a "popular" (and therefore productive to study) word, you might want a /nearby/ word (Because you want words that share a character, because it helps to reinforce if it's "" season, say. Get while the getting is good.) Or, you might want a /far away/ word, because it's maybe it becomes confusing if you are learning many words at once that share a character (the opposite of the former. I can see both being ..helpful?)
+  - BTW, maybe "distance" here can be defined as (size character intersection; how many chars in common, and nothing else.)
 - How hard would it be to make a "flight simulator"? I'm thinking like the thing that was an Excel easter egg. Super simple. Might be a way too get familiar with the GPU too.
 - Super Silly Us: create a Rocket server that takes a url `/thing/<index>`. When that is recieved, the server ends a responds to one of the HTTP error codes. The status codes are each considered in number system that has a base of total-count-of-http-status-codes. So, say there are 8 status codes (for simplification). A request to `/thing/9` might return a 404. We know that status 404 means ...6. /So the 9th index of thing equals six./ The idea is to be able to send arbitrary data, using the status codes as values. Derp.
 - Calculate a fundamental number like Pi or `e` or... something more 1337.
@@ -195,13 +213,14 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 - What do each mean in detail? What gets turned on/off?
 - "invariants" (what's [[https://doc.rust-lang.org/stable/book/ch14-02-publishing-to-crates-io.html][that]]?)
 - You skipped [[https://doc.rust-lang.org/stable/book/ch15-00-smart-pointers.html][smart pointers]]! Go back and read it!
-  
+
 * Story Themes
 
 "Story Themes" seems like a nice section heading. What goes here are 1) writing ideas of any kind for me to never write about and 2) writing on themes that sound interesting to read. The kind of thing you'd ask about on reddit, "r/books, find me books about X". Again, for me to never take any action on. Importantly.
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
++ I'm just sayin, this would be good to include in some grand soliloquy: "We may not X now. Sure, maybe not! Maybe not today, maybe not tomorrow... maybe not next year... maybe not ever, but one day we will! And then you'll seee!"
 + [idea] A social movement forms around a person who is a "free spirit" that is oppressed and drug down by the system. Judge makes you do this or that...folks who don't get it are mad because you said this or that..."the media" thinks you're mentally unstable because of this or that... Meanwhile, a growing group of people come to support this person. "Free Jimmy!" they say, "I AM Jimmy!" the tee shirt reads. Jimmy is a free and open spirit that will not be brought down by life ...but turns out Jimmy is just regular fucking crazy. Some time around the peak of "Free Jimmy!", folks have to keep increasing the latitude they will give Jimmy, of which he gradually demands more. People start to drop off when Jimmy is torturing animals (or whatever) so increasingly a selection bias causes the remaining supporters, over time, to be complete nutjobs. (Am I thinking of Britney Spears or Donald Trump...now even I don't know).
 + [idea] A chunky white woman form Minnianpolis is on vacation in Paris. She sees a very typical French street food vender with sausages being cooked on the griddle. He flips and cares for them. A big sign in front says "Assuage!". He is saying "assuage!", "assuage!" She comes up and says "oooo. I'd like a sausage please." He says, "Oh, I'm a so sorry you so hungry" <French accent>. Her: "yup. I'd like one." Him: "We all want things, it's not so bad. No one knows what the future holds." [He is assuaging her, which is the service he is providing. The sausages have nothing to do with it. Everyone is confused.]
 + [idea] Conservative Hip-Hop: Fox News' Cathy Lee Gifford excitedly announces: "Our next guest is a young man who grew up in /urban/ Detroit and has a very Conservative message in his lyrics that he wants to tell the world about!"
@@ -225,9 +244,13 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   - [notes]
     - Could well be the Queen's Purse with a different spin (instead of eccentric king).
     - Is there a whole series of these? King's Ransom? King's Rest? ...hapless squire...
-  
+
 * Random
 
+- Seems like there should/should be a simple device that you can just pop into any OTS product. It just needs to be wired in somewhere that:
+  - Stays powered while the device is in use
+  - Causes the device do be unusable if the wire in question has its power interrupted. Lack of power to this circuit renders device unusable.
+  You could wire into the above a device that does some kind of crypto-handshake with a cell phone over bluetooth (say). It is powered by this device it sits inside of (it's an organelle!) If it is being used for the first time, it will try to crypto-handshake with your smartphone and is special app that created for this purpose. As soon as it manages to "crypto-bind" to a device, that binding is somehow made permanent on the little organelle bluetooth device. When the parent device (the "cell" in this analogy) is powered up, organelle gizmo tries to find and re-handshake with it's permanently bound smartphone. If it cannot do so in N seconds, it chops power. The device (cell) is useless now, unless you can bind it to your phone!
 - SlackerHackerDAO -- A Distributed Autonomous Organization whose aim is to provide beer and pizza for kids that just wanna code (be they 19 or 90 ...aka, "a [[https://youtu.be/9Qh9AUF6EMU][gentleman programmer]]".
   - This is what git coin and "DAO X grant program" already do, granted. But 11 all the things.
   - Must be cryptographically proven beer and pizza and only in reasonable quantities. An actual safety net for folks who prefer to create and learn than to make [[https://youtu.be/JCiPMIViylw][money]], that is 100% voluntary in every aspect. End-run this dangerous UBI talk.
@@ -259,7 +282,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   - Wrap the change in a polished, complete, published chrome plugin.
   - Send google store plugin link to admin@badsite.com or whatever.
 - A data serialization concept thingie (probably unoriginal): one 8-bit byte can store 256 values. You could have a system that takes away some number of those to reserve as "control characters". You can then just map whatever data you have onto the remaining values. That means that when a "control character" is encountered in a stream, it can be guaranteed to not be part of the data (...probably invented in the 50's).
-- Wouldn't it be nice if you could examine your "stack" at any time? 
+- Wouldn't it be nice if you could examine your "stack" at any time?
 - There has got to be a smart contract solution to 'consulting'
   - Company mints a contract that gives your key the right to record hours
   - Company reviews, _approves_ and pays hours in batches. Possibly enforced by contract.
