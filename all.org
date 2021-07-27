@@ -1,5 +1,7 @@
 #+title: FYI, you were not invited here. I never share this link. You are snooping! You edited a URL just to see... good for you! Just keep in mind though, if you walk into somewhere uninvited, you may end up stepping on something nasty. Paper towels and bleach over there.
 
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
+
 * You look lost. Can I help you?
 
 [[mailto:mb@unintuitive.org][I]] am Mike Burr. I'm transitioning "everything" to emacs' "org-mode". So, quite a mess/Watch this space.
@@ -17,7 +19,7 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 - [[https://github.com/ethereum/go-ethereum/blob/master/ethstats/ethstats.go][ethstats.go]] looks like very productive reading.
 - You should definitely figure out what [CallContext](https://github.com/ethereum/go-ethereum/blob/c73652da0bb0ca4a4ecf3b88b0efed085be9adc4/ethclient/ethclient.go#L66) is.
 - Productive thing to understand: https://eips.ethereum.org/EIPS/eip-778
-- What if the "RLP list" format of node record is `[signature, seq, key]` for example? (iow what if `len(node_record[2:])` is odd?)
+- What if the "RLP list" format of node record is =[signature, seq, key]= for example? (iow what if =len(node_record[2:])= is odd?)
 - Why is the "maximum size of an ENR is 300 bytes"? Is that a place where we could put a mechanism in place so we can scale up more easily? A "market solution"?
 - > Finally, node A compares the enr-seq element of the WHOAREYOU challenge against its own node record sequence number. If the sequence number in the challenge is lower, it includes its record into the handshake message packet.
   - Why? If the if our node record sequence was greater, were we communicating with an imposter?...
@@ -32,26 +34,26 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 ** Nuts That Were Hard To Crack
 
-- rustup database is here: `~/.rustup/settings.toml` (including default, overrides...)
-- When you see `use Foo;` at the top of a file, it means: all the public things defined in this file will be accessible as `Foo::thing`.
-- Turn off warnings and such: `RUSTFLAGS="$RUSTFLAGS -A unused_variables -A dead_code -A unused_mut" cargo test tree_serialize`
-- Some [[https://discord.com/channels/273534239310479360/273541522815713281/862333243650342922][really enlightening discussion]] on `&` and friends].
-- `echo nightly > rust-toolchain`
+- rustup database is here: =~/.rustup/settings.toml= (including default, overrides...)
+- When you see =use Foo;= at the top of a file, it means: all the public things defined in this file will be accessible as =Foo::thing=.
+- Turn off warnings and such: =RUSTFLAGS="$RUSTFLAGS -A unused_variables -A dead_code -A unused_mut" cargo test tree_serialize=
+- Some [[https://discord.com/channels/273534239310479360/273541522815713281/862333243650342922][really enlightening discussion]] on =&= and friends].
+- =echo nightly > rust-toolchain=
 
 ** Rocket
 
-- What the heck is the `options` http method (in routes, rocket attribute...update: [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS][used by CORS]])
+- What the heck is the =options= http method (in routes, rocket attribute...update: [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS][used by CORS]])
 - Rocket cares a lot about whether your methods are async. Make sure they do not block! Standard libraries can contain
 - Do a better job of understanding [[https://rocket.rs/v0.5-rc/guide/requests/#query-strings][this table]].
 
 ** WASM
 
-- The [[https://rustwasm.github.io/docs/wasm-bindgen/examples/websockets.html][WebSockets]] example looks like it's going to have some overlap with what's needed to do `web3wasm.rs`. It also has a _best_ example of without-a-bundler, that is understandable, simple, sane...
-- [[https://rustwasm.github.io/wasm-bindgen/api/js_sys/index.html][This]] links to the `js_sys` docs. But the main story is these are wasm-bindgen docs. How do I link to "all of wasm-bindgen API docs?" ...TBD
+- The [[https://rustwasm.github.io/docs/wasm-bindgen/examples/websockets.html][WebSockets]] example looks like it's going to have some overlap with what's needed to do =web3wasm.rs=. It also has a _best_ example of without-a-bundler, that is understandable, simple, sane...
+- [[https://rustwasm.github.io/wasm-bindgen/api/js_sys/index.html][This]] links to the =js_sys= docs. But the main story is these are wasm-bindgen docs. How do I link to "all of wasm-bindgen API docs?" ...TBD
   - [[https://docs.rs/wasm-bindgen/0.2.74/wasm_bindgen/][HERE]] it is.
 - You will need [[https://rustwasm.github.io/docs/wasm-bindgen/reference/arbitrary-data-with-serde.html][serialization]].
 - Is it possible to use wasm in a chrome extension...?
-- This [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/index.html][subsection]] on `#[wasm_bindgen]` is helpful.
+- This [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/index.html][subsection]] on =#[wasm_bindgen]= is helpful.
 - We probably want to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-js-imports/final.html][final]] on all methods. Disallow JS magic. (oh, wait, does this only apply to imported JS? ok, never mind.)
 - Maybe there are paranoid cases to use [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/readonly.html][readonly]]...? (same with [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/skip.html][skip]])
 - [[https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/getter-and-setter.html][setter/getter]] is neat but probably a recipe for a mess.
@@ -67,24 +69,31 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
 
+- [rando] -- if you had a match statement inside of a loop, and could match each byte and assign different values (for the next pass)... THING?
+- Can you make a program that takes "forever" to compile? Why does (or does) the "compiler" (pick your stage) /not/ have the halting problem? I thinking something that grows in memory or "storage" or binary size is cheating. Maybe. Because that seems easier. I /feel/ like this is related to why functions must return concrete types. That means all the piece of memory, the size of the binary, can be determined, um, deterministically. 
+- It gets confusing: =docs.rs=, =crates.io= (but not =cargo.io=), =github.com= ... I think there are more. For most crates there are 3-4 (...or more) URLs that you can reliably deduce from =Cargo.io= and/or elsewhere. It would be nice to have a library that does that for you that's usable in a =cargo urls <package>= command. If it is a /package/ with multiple /crates/ and those have their own URLs...account for that. Just a "website" that does this would be useful /for me/. =crates.io= is supposed to be the launchpad for any given crate, but it lacks some stuff (no? I should learn how to use it.)
+  - Make =cargo browser=
+    - =cargo browser doc <fuzzy_identifier>=
+    - =cargo browser repo <fuzzy_identifier>=
+    - =cargo browser crates <fuzzy_identifier>=
 - Making a super simple game in rust-wasm would be badass. Remember "Soat"??!
 - Hey, maybe you can formalize criteria for "good use-case for wasm". I was thinking: blockchian explorer. And then I thought, why not just your usual website thing? ...because sometimes calculating locally gives a better user experience than ask->wait->get_result. Maybe there's some kind of "high dimensional space" you could work out that would let you find the "wasm sweet spot". This is under "projects" because, this is how you /find/ your projects.
 - You were thinking about a libp2p chat thing? Maybe [[https://medium.com/perlin-network/build-a-decentralized-chat-using-javascript-rust-webassembly-c775f8484b52][this]] is close or at least worth reading.
 - It seems like you could do a lot toward including contract code directly in Rust code and making them "one thing". You've got ethereum contract code (from which all contract stuff flows, so it is the "only thing" the developer should have to worry about) and you've got rust "web3" code that interacts with that contract. So!? Using cargo, macros and all the fancy rust stuff in the right ways, you should be able to for example:
   - Maybe some simple small subset of rust, along with a collection of fancy macros, you should be able to (even if you "compile to solidity") pretty easily write rust code that becomes EVM code.
   - A simple, database that needs NO human fiddling that keeps of with, say a tuple:
-    - `evnID: &str` A unique identifier for a chain. When referring to a public testnet (which is a singleton), it's obvious: there's only one "rinkeby". Dev environments probably already have good scheme. The main point is: Uniquely identify a chain (for which "chain ID" is insufficient)
-    - `bytecode_hash` -- whatever's optimal for "identifying some EVM byte code output" (the result of a compilation)
-    - `deployments: HashMap<bytecode_hash, Vec<envID>>` -- A mapping. "This particular compiled contract is deployed in /these/ environments."
-    - `abi` -- just compute this and store with the byte code for `bytecode_hash`
-    - With these pieces, it should be possible to adapt `cargo` to do pretty much everything [[https://github.com/eth-brownie/brownie][Brownie]] does, for example. That's the way it should be, damnit.
+    - =evnID: &str= A unique identifier for a chain. When referring to a public testnet (which is a singleton), it's obvious: there's only one "rinkeby". Dev environments probably already have good scheme. The main point is: Uniquely identify a chain (for which "chain ID" is insufficient)
+    - =bytecode_hash= -- whatever's optimal for "identifying some EVM byte code output" (the result of a compilation)
+    - =deployments: HashMap<bytecode_hash, Vec<envID>>= -- A mapping. "This particular compiled contract is deployed in /these/ environments."
+    - =abi= -- just compute this and store with the byte code for =bytecode_hash=
+    - With these pieces, it should be possible to adapt =cargo= to do pretty much everything [[https://github.com/eth-brownie/brownie][Brownie]] does, for example. That's the way it should be, damnit.
 - [japanezeu] How useful would it be, if you are learning words, to use a tree to find other words to add to your list?
   - Maybe just let's call "distance" still just the Levenshtein distance (how many one-char changes to transform word A into word B).
   - But separate from "distance", and a property that every node has, is "popularity" (how frequently is the word used and therefore how much should you worry about it). This is not new, but when choosing a "random" next word to study, in addition to wanting a "popular" (and therefore productive to study) word, you might want a /nearby/ word (Because you want words that share a character, because it helps to reinforce if it's "" season, say. Get while the getting is good.) Or, you might want a /far away/ word, because it's maybe it becomes confusing if you are learning many words at once that share a character (the opposite of the former. I can see both being ..helpful?)
   - BTW, maybe "distance" here can be defined as (size character intersection; how many chars in common, and nothing else.)
 - How hard would it be to make a "flight simulator"? I'm thinking like the thing that was an Excel easter egg. Super simple. Might be a way too get familiar with the GPU too.
-- Super Silly Us: create a Rocket server that takes a url `/thing/<index>`. When that is recieved, the server ends a responds to one of the HTTP error codes. The status codes are each considered in number system that has a base of total-count-of-http-status-codes. So, say there are 8 status codes (for simplification). A request to `/thing/9` might return a 404. We know that status 404 means ...6. /So the 9th index of thing equals six./ The idea is to be able to send arbitrary data, using the status codes as values. Derp.
-- Calculate a fundamental number like Pi or `e` or... something more 1337.
+- Super Silly Us: create a Rocket server that takes a url =/thing/<index>=. When that is recieved, the server ends a responds to one of the HTTP error codes. The status codes are each considered in number system that has a base of total-count-of-http-status-codes. So, say there are 8 status codes (for simplification). A request to =/thing/9= might return a 404. We know that status 404 means ...6. /So the 9th index of thing equals six./ The idea is to be able to send arbitrary data, using the status codes as values. Derp.
+- Calculate a fundamental number like Pi or =e= or... something more 1337.
 - Tetris!
 - Maybe that cool SNARK thing I read about that was implemented in python? (partitioning an array)
 - Maybe cryptopals?
@@ -100,7 +109,7 @@ I am thinking currently "fun" projects that are short, simple (and progressively
   - wasm (no js-wrapping nonsense)
   - RICK -- Really Impressive Cryptography Keywords -- ecliptic curves, blockchain, encabulators. We specifically do not support a huge set of legacy, broken, brittle web encryption stuff.
   - Your browser is _assumed_ to have a "wallet" like metamask (and we only support the Ethereum universe, otherwise we're faced with choosing the "newest" blockchain project, which I don't think we want. We just assume it's there all the time, no fiddling around with detecting, holding the users hand to install and set up, etc.
-- Create a modulo arithmetic type. If set to 7, `3+4=0`, `3+5=1`, `20+3=2`...
+- Create a modulo arithmetic type. If set to 7, =3+4=0=, =3+5=1=, =20+3=2=...
 - Create a "capped" numeric type. Cannot be initialized to greater than MAX, if arithmetic operations that result in greater than MAX panic (and/or fail to compile).
 - A self-serve faucet contract. Do a transaction, get sent some xETH. However, this doesn't help with bootstrapping wallets from zero. How?
 
@@ -109,13 +118,13 @@ I am thinking currently "fun" projects that are short, simple (and progressively
 
 - [[https://stackoverflow.com/questions/67899965/how-do-i-implement-an-iterator-from-a-vector-of-stdrcstdrefcellt-smart-p][pub fn iter(&self) -> impl Iterator<Item = &T>]] .. is **this really** legal in Californiab?
 
-- Is there a macro or other solution for, "`this code` if implements trait `Foo`, `that code` if not."
+- Is there a macro or other solution for, "=this code= if implements trait =Foo=, =that code= if not."
 - How do I see the post-macro-expansion version of the code?
-- What the heck [[https://api.rocket.rs/v0.5-rc/src/rocket/response/responder.rs.html#198][does this mean]]? (`:` after lifetime specifier).
-- Is it possible to include an arbitrary file in rust? For example, if I had a file with exactly the text that I want to use between double-quotes, it would be nice to, at /compile/ time, to `#include` that file.
-  - `include_str!("path")` (assign `&str` var to contents of file at "path")
-- What the heck does double question mark do (probably what you think) -- `foo()??`
-- the `#[foo
+- What the heck [[https://api.rocket.rs/v0.5-rc/src/rocket/response/responder.rs.html#198][does this mean]]? (=:= after lifetime specifier).
+- Is it possible to include an arbitrary file in rust? For example, if I had a file with exactly the text that I want to use between double-quotes, it would be nice to, at /compile/ time, to =#include= that file.
+  - =include_str!("path")= (assign =&str= var to contents of file at "path")
+- What the heck does double question mark do (probably what you think) -- =foo()??=
+- the =#[foo
 
 #+BEGIN_QUOTE
 :warning: The Rust compiler needs to know how much space every function's return type requires. This means all your functions have to return a concrete type.
@@ -131,22 +140,22 @@ window.addEventListener('load', async () => {
 });
 #+END_SRC
 
-- "blocks of code evaluate to the last expression in them, and numbers by themselves are also expressions"... really? `x={1;let _ = 3;}` ...? The last expression is "1". What if I do this:
+- "blocks of code evaluate to the last expression in them, and numbers by themselves are also expressions"... really? =x={1;let _ = 3;}= ...? The last expression is "1". What if I do this:
 
-```
+===
 if { 3 } else { "five" }
-```
+===
 without assigning it to anything...?
 
 Is this an error?
 
-```
+===
 if { 2 }
-```
+===
 
-That is, have the if expression evaluate to something but do not assign it. If that's legal, can I still not have `"string"` in the else block?
+That is, have the if expression evaluate to something but do not assign it. If that's legal, can I still not have ="string"= in the else block?
 
-- Is `loop {}` and expression?..?
+- Is =loop {}= and expression?..?
 - "because the allocator must first find a big enough space to hold the data and then perform bookkeeping to prepare for the next allocation" but why? Can't some process be in charge of taking the available memory and organizing it a way that you can _quickly_ hand off a pointer to N bytes of memory? Because it's in this tended "pool"?
 
 #+BEGIN_QUOTE
@@ -162,13 +171,13 @@ A string slice is a reference to part of a String, and it looks like this:
 This is similar to taking a reference to the whole String but with the extra [0..5] bit. Rather than a reference to the entire String, it’s a reference to a portion of the String.
 #+END_QUOTE
 
-As a "total n00b" this to me is a bit confusing, because the type of `&s` is `&String`, where the type of `&s[0..1]` is "a slice". I probably should just come to terms with this, but it'd be nice for it to be more intuitive. I mean, it is different from other, more casual languages like python. [Update: a slice is type `&str`.
+As a "total n00b" this to me is a bit confusing, because the type of =&s= is =&String=, where the type of =&s[0..1]= is "a slice". I probably should just come to terms with this, but it'd be nice for it to be more intuitive. I mean, it is different from other, more casual languages like python. [Update: a slice is type =&str=.
 
 - Copy vs Drop
   - > Rust has a special annotation called the Copy trait that we can place on types like integers that are stored on the stack (we’ll talk more about traits in Chapter 10). If a type implements the Copy trait, an older variable is still usable after assignment.
   - >
 
-- In The Rust Book, it gives as the motivation for slices the fact that, if you had some mechanism for keeping up with indexes in stead, those indexes would get out of sync if the `String` was mutated. But how do slices fix that? Figure 4-6 shows that the slice is just a pointer structure with "len", but if `s` is mutated, we still have that problem, no?!
+- In The Rust Book, it gives as the motivation for slices the fact that, if you had some mechanism for keeping up with indexes in stead, those indexes would get out of sync if the =String= was mutated. But how do slices fix that? Figure 4-6 shows that the slice is just a pointer structure with "len", but if =s= is mutated, we still have that problem, no?!
 
 #+BEGIN_QUOTE
 Packages: A Cargo feature that lets you build, test, and share crates
@@ -187,21 +196,21 @@ Paths: A way of naming an item, such as a struct, function, or module
   }
 #+END_SRC
 
-- Where /more than one/ variant can be ...active ...present for one instance of `Thing`. We initialize the type `Thing` and one or more of those are set. So a `match` statement could include `Halal(y) || Kosher(y) => dothingwith(y)` ...I donno. Isstupid.
+- Where /more than one/ variant can be ...active ...present for one instance of =Thing=. We initialize the type =Thing= and one or more of those are set. So a =match= statement could include =Halal(y) || Kosher(y) => dothingwith(y)= ...I donno. Isstupid.
 - Is it crazy to think that some day rust could enforce the semantic versioning minor number (api) guarantee?
 - [[https://justin.restivo.me/posts/2021-05-30-nix-rust-riscv-toy-kernel.html][Nice!]]
-- If in [[https://doc.rust-lang.org/stable/book/ch12-03-improving-error-handling-and-modularity.html][Listing 12-7]], `fn new` were outside of `impl Config` ...what would be the difference? I see no difference. Just for neatness' sake? [update] Oh, the `::` makes it pretty obvious that it's "associated" with `Config` which is useful.
+- If in [[https://doc.rust-lang.org/stable/book/ch12-03-improving-error-handling-and-modularity.html][Listing 12-7]], =fn new= were outside of =impl Config= ...what would be the difference? I see no difference. Just for neatness' sake? [update] Oh, the =::= makes it pretty obvious that it's "associated" with =Config= which is useful.
 - It looks like lifetimes are super important (duh). For example, when using a library, if you don't understand the lifetimes of what you're calling, you may end up misusing it. Probably worth meditation.
-- I noticed in the "minigrep" example, that they stress that the return value of `search` is a vector /referencing/ the contents of `contents` (the text, a `String`), so it's not an abstract idea, here, the members of the `Vec` are actual references to the data (location+offset), not just "you probably want to keep these two things around for the same length of time."
+- I noticed in the "minigrep" example, that they stress that the return value of =search= is a vector /referencing/ the contents of =contents= (the text, a =String=), so it's not an abstract idea, here, the members of the =Vec= are actual references to the data (location+offset), not just "you probably want to keep these two things around for the same length of time."
 - https://doc.rust-lang.org/stable/book/ch13-01-closures.html is it really *required* that you call closures without type annotation?
   - If you try to call an (unannotated) closure twice with different types: breakage.
 - Why is it called "trait /bounds/". It seems, grammar-wise, to be weird. I know there is a there there. I'm sure this word choice has meaning, but it currently seems weird to me.
   - Maybe a trait "puts bounds" on something? I was reading "The trait bounds on T" as "The trait's bindings to T" (which is wrong, I know). Maybe "bounds" is "boundaries" and not the past tense of "bind" !!
-- If we print to stdout and try "caching" as in [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]] and only implement `Fn`...what happens? Is printing to output mutating something? Does the macro-ness of `println!` come into play here?
-- How "deep" can generics go? If I define a deeply-nested series of structs using `struct Foo<T>{struct Bar<U>...}`, do I run into a limitation?
-- More confusion about [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]]... `value` is both a method and a field. Somewhere in the text it says that the field `value` is private so that it cannot be directly changed. But `value` the function is also not public, and obviously it can be /read/... ...?
+- If we print to stdout and try "caching" as in [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]] and only implement =Fn=...what happens? Is printing to output mutating something? Does the macro-ness of =println!= come into play here?
+- How "deep" can generics go? If I define a deeply-nested series of structs using =struct Foo<T>{struct Bar<U>...}=, do I run into a limitation?
+- More confusion about [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][Listing 13-10]]... =value= is both a method and a field. Somewhere in the text it says that the field =value= is private so that it cannot be directly changed. But =value= the function is also not public, and obviously it can be /read/... ...?
 - When I run [[https://github.com/stnbu/sandbox/blob/2e86089dd06e2bad2c7948440ed333d5a58b2931/trombone/src/lib.rs][the test]] from [[https://doc.rust-lang.org/stable/book/ch13-01-closures.html][chapter 13]] I get "unused" warnings in places that are /obviously/ used (like "new").
-- Does itererating over `myit` always mutate it!? If so, how is an iterator useful if you don't mutate over it? Can you have a different lifetime (and separate) the "part" (`myindex`) that gets mutated? If so you could "iterate over `myit` without mutating it but instead mutating `myindex`... does that make sense? ..."so?"
+- Does itererating over =myit= always mutate it!? If so, how is an iterator useful if you don't mutate over it? Can you have a different lifetime (and separate) the "part" (=myindex=) that gets mutated? If so you could "iterate over =myit= without mutating it but instead mutating =myindex=... does that make sense? ..."so?"
 - Go back to the audio decoder in [[https://doc.rust-lang.org/stable/book/ch13-04-performance.html][ch13]] and see if you can understand.
 - When searching cargo.io, what "metadata" would I search for to reliably find Ethereum, BT-technology?
 - If a workspace has only one Cargo.lock file, how do you specify the versions if you chose to publish only one of your "sub" packages to cargo.io? Does it "copy" the relevant ones and do the magic for you?
@@ -247,6 +256,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 
 * Random
 
+- An AI that insults you: it seems like it should be /real/ easy to find training data: picture with accompanying nasty remarks about appearance. Takes a picture of a human, face, full body, fully clothed, taking a sweet jump on a bike: insult-bot consults its circuits and tells you how stupid you look.
 - Seems like there should/should be a simple device that you can just pop into any OTS product. It just needs to be wired in somewhere that:
   - Stays powered while the device is in use
   - Causes the device do be unusable if the wire in question has its power interrupted. Lack of power to this circuit renders device unusable.
@@ -257,7 +267,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   - On a serious note: health care, food, ~~hookers,~~ housing... there is enough capital in blockspace to do this. It'd
     be so fucking cool to pull it off. An army of slackers. A hive mind of neckbeards. A smug look backwards at "social welfare".
   - Radical flat-ism? If all votes count weighted by address balance, then the visionary capitalist are in control of the treasury, and the grateful slackers have more than zero vote, and are always welcome to "collectivize" (!!!). Try it, bro. Worker bees are paid in exactly the same coin, so if you want influence, become a badass programmer.
-  - A Github user could cryptographically prove ownership of their account in numerous ways. That could be in a contract with a `{address("0x..."): "github/myorg/myrepo"}` record.
+  - A Github user could cryptographically prove ownership of their account in numerous ways. That could be in a contract with a ={address("0x..."): "github/myorg/myrepo"}= record.
   - Obvious problems:
     - Confirming "productive" work has been done.
       - We could just have them sign their code with their private key. Proving
@@ -294,16 +304,16 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   - Have Discord notify you when the chat has been quiet for N minutes
   - Tab back to discord and press [enter].
   - Of course you could have discord submit on your behalf. I wouldn't want that.
-- You could sit and think through things like the above (discord Notif) and find other ways you could make your day more "interrupt driven" (but with the wisdom to know that needs to be done sparingly and predictably!) Maybe all these features turn themselves off over he weekend...! I'm thinking a "framework" for such things, during your workday. Download taking a long time? What is the least painful and most effective way of being made known when it finishes? You wouldn't want to `right-click-icon > notify me in 5 mins` (painful). You wouldn't want it to just simply _always_ throw up a window when a download finishes (ineffective, because annoying). It would be nice to just _think_, "I want to know when that's done". What's the closest we can get to that? (step #2, all the things!)
+- You could sit and think through things like the above (discord Notif) and find other ways you could make your day more "interrupt driven" (but with the wisdom to know that needs to be done sparingly and predictably!) Maybe all these features turn themselves off over he weekend...! I'm thinking a "framework" for such things, during your workday. Download taking a long time? What is the least painful and most effective way of being made known when it finishes? You wouldn't want to =right-click-icon > notify me in 5 mins= (painful). You wouldn't want it to just simply _always_ throw up a window when a download finishes (ineffective, because annoying). It would be nice to just _think_, "I want to know when that's done". What's the closest we can get to that? (step #2, all the things!)
 - I'm wondering if there's a way to identify "click the fire hydrants" that is, like, "proven" to have some lasting power. in the way you can "prove" sha3 is "pretty good", can you identify a click-the-fire-hydrants task that by inspection is expected to last a good while before it can be automated. Of course, if you prove that there's one that machines cannot do, you've made a pretty big discovery.
-- Maybe make a `example_crate` for `rust-web3`? [[https://github.com/tomusdrw/rust-web3/issues/505#issuecomment-865743528][here]]
-- Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the `rust-web3` Github repo. Sooo... would there be usefulness in a MM "proxy"? It behaves just like MM but talks to other provider on the other end.
+- Maybe make a =example_crate= for =rust-web3=? [[https://github.com/tomusdrw/rust-web3/issues/505#issuecomment-865743528][here]]
+- Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the =rust-web3= Github repo. Sooo... would there be usefulness in a MM "proxy"? It behaves just like MM but talks to other provider on the other end.
 - Is there a task that is
   1. Is something that only a human can reasonably do. Most would agree "it'll be decades before a /machine/ can do it!".
   1. Can be easily validated by a computer.
   1. Assumes a closed system where the computer and the human start off with the same knowledge (I think.)
   1. This could be a sort of proof-of-human-work for BT. If the work had actual value outside of BT, easy incentivization and bootstrapping.
-- See if you can adapt [[https://github.com/awalgarg/netmonitor/blob/master/static/background.js][this]] to notify you when someone downloads a `*.wasm` resource. It would be cool to know "who's using wasm?"
+- See if you can adapt [[https://github.com/awalgarg/netmonitor/blob/master/static/background.js][this]] to notify you when someone downloads a =*.wasm= resource. It would be cool to know "who's using wasm?"
 - A genuinely weird thought: family metaphors are used to describe hierarchy (thinking mostly of filesystems here). Parent-child, sibling, grandparent... But this is a-sexual. Two files are siblings. Not brother/sister. Parent is "parent" not "mother" or "father"....what do sexual filesystems look like? (waka-waka).
 - > Another neat feature of Cargo is that you can run the cargo doc --open command, which will build documentation provided by all of your dependencies locally and open it in your browser.
 - Brockchain to further enhance old school web browsing security:
@@ -346,7 +356,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   - If a consumer of a file made up of shards gotten from the network is found to be "bad" somehow (maybe via sig), how do we deal with this?
   - Can we just append a nonce to the end of the data (and know how to remove it) and declare that this shard has an updated version that deals with possible collision.
   - Introduces trust and reputation, doesn't it?
-- https://eth.wiki/json-rpc/API defines all the `eth_*` you cannot keep track of.
+- https://eth.wiki/json-rpc/API defines all the =eth_*= you cannot keep track of.
 - https://in3.readthedocs.io/en/develop/ethereum.html has some big potential imho. Think "PoS device".
 - Weird idea. A network composed entirely of "staker nodes", you must stake something. If you want to include a transaction, you can require that the staker must have more than X at stake. This selects a pool of proposers with deposits>=X. They in turn get their transactions from nodes that the trust proportional to some other value Y. You if you are a staker and someone wants a block from X>=100, you must get your transactions from nodes where sum(f(i)*num_tx) <= 100, where f(i) calculates the cost of getting transaction i. Or something. Inspired by https://in3.readthedocs.io/en/develop/ethereum.html#proof-of-work
 - IronyIndex.sol -- Somehow Or Other(r) allow media companies to "reveal" in the future whether some thing was actually their idea all along. Some absurd product placement comes along in an SNL sketch. You are skeptical. Ironic? Advertiser can "grandly reveal" at a later time (...why?)
@@ -354,7 +364,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - If ENS is a record "about" an address, seems like that's a place to put abandoned info...
 - Why not encryption libraries that wrap wallets? Not a thing? I should be able to ssh to my server and authenticate 'with ethereum'. Right?!
 - If Metamask sticks around and we have the problem of many wallets "only in the browser", we could do the following:
-  1. Have Metamask wallet holder go to some website, connect with Metamask and leave the page open. Metamask is "listening" for signing requests (Maybe just polling a server or something fancier). URL could be something like `https://my.wallet.eth/connect/<their_address>`
+  1. Have Metamask wallet holder go to some website, connect with Metamask and leave the page open. Metamask is "listening" for signing requests (Maybe just polling a server or something fancier). URL could be something like =https://my.wallet.eth/connect/<their_address>=
   2. Have an "adapter" that builds a transaction for wallet "R" to sign. Maybe it's a command-line utility. It sends it as JSON to some server. Which knows how to prompt Metamask of the user listening for sign requests.
   3. When they sign, adapter gets notified with ...the transaction hash or something useful.
 - What kind of fun/useful things can be done with p2p traffic between
