@@ -32,6 +32,28 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 * Rust
 
+** WebGL
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL][Good starting place]].
+   - [[https://youtube.com/playlist?list=PLLzD0qOST3AFAttSewEFXB1WQ2STvM0sQ][Great Web Series]]
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Data][Data]] (lots of key concepts)
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants][Constants]] (here lies good learning)
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext/getIndexedParameter][Parameters]] are also tantalizing. Is "parameters" used in any other way?
+   - [[https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)][On data types]].
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection][WebGL model view projection]].
+     
+*** Clip Space
+    - A 2 unit wide cube, centered at =(0,0,0)=, and with corners that range from =(-1,-1,-1)= to =(1,1,1)=.
+    - Transformations of points and polygons in space in WebGL are handled by the basic transformation matrices like translation, scale, and rotation. ["like"?]
+
+*** Vertex Shader
+    - Attributes are GLSL variables which are only available to the vertex shader (as variables) and the JavaScript code.
+    - Varyings are variables that are declared by the vertex shader and used to pass data from the vertex shader to the fragment shader.
+    - Uniforms are set by the JavaScript code and are available to both the vertex and fragment shaders.
+
+*** Fragment Shader
+    - Varyings are variables that are declared by the vertex shader and used to pass data from the vertex shader to the fragment shader.
+    - Uniforms are set by the JavaScript code and are available to both the vertex and fragment shaders.
+    
 ** Nuts That Were Hard To Crack
 
 - rustup database is here: =~/.rustup/settings.toml= (including default, overrides...)
@@ -69,6 +91,18 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
 
+- Some kind of fancy macro that maps WebGL (and OtherGL) syntax to a subset of the rust syntax. Add an attribute. =#[shader(main)]= or some such. That just automatically gets assigned to a variable of a predictable name. Or maybe it goes straight to the GPU. I am ignorants.
+- A "Simple" WebGL project. Modeling all the physics... make ball that rolls down a hill, away from the viewer. The viewer and the ball are rolling down the hill at the same speed, from the perspective of just above the ball (above in the gravity sense). If the slope is perfectly smooth, then you're basically watch a ball stand in place, there's no apparent movement. But if you add random bumps in the plane (made visible by shading), the ball will do interesting, mesmerizing stuff (in the fish tank/fire place sense). To make it clear, it's like this: you are on the side of a tree-less hill that has bumps and gullies and such. It has a, let's say, 30-deg slope. So the ball (picture a zorb painted like maybe a bowling ball, so you can watch how it rolls _and_ spins) reaches terminal speed pretty quickly and just rolls down the hill, ducking and weaving at a leisurely 15 mph. You are seeing this from a drone that is above the ball. It would actually be more interesting for the drone to follow a straight track down the average path of the ball, the ball goes left and right in the screen, forward/backward movement is canceled by the drone going downhill at the same speed. Have fun, kids!
+- A project could be to use an existing game emulator to play FooBar2 on the browser with webgl.
+- At the risk of being vague... A nice set of tools to for my environment (maybe includes lots of stuff, who knows)
+  - Automatically give me my rust environment, no mussing around. /Bang!/ one command and you've got all the rust stuff.
+  - Emacs.
+  - Full control over the "environment" and some clear idea of which /Bash/ files should contain what.
+  - Does Bash automagically eliminate duplicate path entries. You always worry about it but you've never simply checked! If not, add that.
+  - Support Linux Ubuntu and Mac and just let God in other cases.
+  - Include a installations of my favorite `crate` commands along at their preferred versions.
+  - Have a sense of "update". If data flows in one direction, we can just update willy-nilly.
+- Make a macro that takes the contents (as a =&str=) of a file named =./what/ever/MY_NAME.ext= and binds it to a =const= called =MY_NAME=. (Like =include_str= except it also determines the identifier name from the file name.)
 - Could you make a nice "electronic book" that is just one file (executable) that you run and (/tada/) it displays a nice "ebook" UI on your desktop that's a joy to use and contains all the text. When you threatens to delete your book if you don't supply an email address of someone else to send it to (a download link). Um, as an added feature.
 - [Inspired by above] If you made a WASM app whose "init('path_to.wasm')" promise took control of the whole browser's screen, you could do "whole ebook in wasm", or better, other things. The idea could be, if you do the above init call, you are running an "app". There's no other JS garbage. It just creates a `window` and `document` and starts going to town. What are the limitations? Would you ever need to go back into JS land (yes for networking currently). This is probably why a lot of WASM stuff are "games" right now, and not "chat apps", say. Games can be self-contained and still fun/interesting.
 - [rando] -- if you had a match statement inside of a loop, and could match each byte and assign different values (for the next pass)... THING?
