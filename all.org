@@ -32,7 +32,7 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 
 * Rust
 
-** WebGL
+** WebGL (does not really belong under "Rust" but who cares)
    - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL][Good starting place]].
    - [[https://youtube.com/playlist?list=PLLzD0qOST3AFAttSewEFXB1WQ2STvM0sQ][Great Web Series]]
    - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Data][Data]] (lots of key concepts)
@@ -40,7 +40,22 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
    - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext/getIndexedParameter][Parameters]] are also tantalizing. Is "parameters" used in any other way?
    - [[https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)][On data types]].
    - [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection][WebGL model view projection]].
-     
+
+**** Hard-to-crack nuts
+
+   - =gl.LUMINANCE= sounds interesting: "the perceived brightness of a surface. It is often calculated as a weighted average of red, green, and blue color values that gives the perceived brightness of the surface." -- Does this mean "given regular sunlight"? Given that sunlight has a characteristic spectrum, RGB would "light up" a surface more or less depending on their representation in natural sunlight. Know what I mean? Doesn't matter. I do. If GPUs have "sunlight calculations" built in, that seems super useful (but would also be widely used...)
+   - after calling =gl.enableVertexAttribArray(location)=, you cannot use e.g. =gl.vertexAttrib4f(...location...)= until you have called =gl.disableVertexAttribArray(location)=.
+   - The reason you might want to use =gl.someFunc1f()= or =gl.someFunc2f()= is because the X-Y plane is the screen, and just using the =2= family of functions, you can draw on the plane as you would expect. The =2= is for /num dimensions/.
+   - Setting =gl_PointSize= only has an effect if you are /drawing a point/!
+   - =gl.uniformMatrix4fv=: the second argument must be false.
+   - "Model Transformation" means "uses linear algebra" (afaict)
+   - =gl.vertexAttribPointer()= with different args (omitting location):
+     | size | type     | normalized | stride  |  offset | English                           |
+     |------+----------+------------+---------+---------+-----------------------------------|
+     |    3 | gl.FLOAT | false      | foo * 3 |       0 | (All) three, starting from zero   |
+     |    2 | gl.FLOAT | false      | foo * 3 |       0 | First two of three                |
+     |    1 | gl.FLOAT | false      | foo * 3 | foo * 2 | One, starting from index 2 (last) |
+   - "varying variables" (what a /great/ name!) -- Define as global in vertex shader (=varying float x=), assign inside of =main()= (=x = 7.0=), declare a global variable of the same name and type in the /fragment/ shader: =varying float x=
 *** Clip Space
     - A 2 unit wide cube, centered at =(0,0,0)=, and with corners that range from =(-1,-1,-1)= to =(1,1,1)=.
     - Transformations of points and polygons in space in WebGL are handled by the basic transformation matrices like translation, scale, and rotation. ["like"?]
@@ -91,6 +106,9 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
 
+- It would be really, really cool to run [[https://rustwasm.github.io/book/game-of-life/introduction.html][this]] on a GPU... but hoow!
+- Here is how a devel web server cli tool should work (maybe): The first one to start binds to your favorite =address:port=, you supply a mandatory positional arg for the URL suffix, =myproject= say. When you run another it coordinates with the first one to serve the data from that 2nd instance at =myotherproj=. That lets you have multiple ones running without having to memorize port numbers.
+  - Also, you could have it spit out URLs for all of the files in the directory being served, for you to click on.
 - Some kind of fancy macro that maps WebGL (and OtherGL) syntax to a subset of the rust syntax. Add an attribute. =#[shader(main)]= or some such. That just automatically gets assigned to a variable of a predictable name. Or maybe it goes straight to the GPU. I am ignorants.
 - A "Simple" WebGL project. Modeling all the physics... make ball that rolls down a hill, away from the viewer. The viewer and the ball are rolling down the hill at the same speed, from the perspective of just above the ball (above in the gravity sense). If the slope is perfectly smooth, then you're basically watch a ball stand in place, there's no apparent movement. But if you add random bumps in the plane (made visible by shading), the ball will do interesting, mesmerizing stuff (in the fish tank/fire place sense). To make it clear, it's like this: you are on the side of a tree-less hill that has bumps and gullies and such. It has a, let's say, 30-deg slope. So the ball (picture a zorb painted like maybe a bowling ball, so you can watch how it rolls _and_ spins) reaches terminal speed pretty quickly and just rolls down the hill, ducking and weaving at a leisurely 15 mph. You are seeing this from a drone that is above the ball. It would actually be more interesting for the drone to follow a straight track down the average path of the ball, the ball goes left and right in the screen, forward/backward movement is canceled by the drone going downhill at the same speed. Have fun, kids!
 - A project could be to use an existing game emulator to play FooBar2 on the browser with webgl.
@@ -259,12 +277,19 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 - "invariants" (what's [[https://doc.rust-lang.org/stable/book/ch14-02-publishing-to-crates-io.html][that]]?)
 - You skipped [[https://doc.rust-lang.org/stable/book/ch15-00-smart-pointers.html][smart pointers]]! Go back and read it!
 
+* Emacs
+
+  - Crack Nuts
+    - =ibuffer= -- "d" to set row for deletion, "x" to commit deletions
+
 * Story Themes
 
 "Story Themes" seems like a nice section heading. What goes here are 1) writing ideas of any kind for me to never write about and 2) writing on themes that sound interesting to read. The kind of thing you'd ask about on reddit, "r/books, find me books about X". Again, for me to never take any action on. Importantly.
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
+- Hugh Ginsite
+- Inside the Very Religious Mind -- When people say things like "I prayed to god and he said 'go with it!'", can we wonder what's actually happening in the mind of that person. Does they knowist that it's bullshit or do they genuine believe it? Or... Do they say it like you might say "god bless you" to someone that sneezes. Let's be clear: same amount of pointlessness, same amount of god-ness. Is it just a question of degree? Are those people fucking crazy, or what?
 - Title: `Ogg said, "rock stick"` -- A dramedy set in cave man days (tongue in cheek allusion to what we thought "cave men" were back when we were primitive people in, say, the 1950's) where we learn about their preferences and concerns about the use of certain words in a long-forgotten culture. As always, there are some dead-enders that would not think a thing of burning someone at the stake for saying "snake moss", there are also a lot of indolent dummies who just "have" certain opinions on other words in order to not make waves with their neighbors. Most folks will let a casual "gods be mounted" pass in pleasant conversation, but in any case, they eventually come up with lots of ways of enforcing the preferences of /most/ people, so there would not be any unnecessary burning or wife stealing.
   - The "Banana Word Control Committee" is formed to put some plausible formality on what's already been going on for all appendage moons.
   - ...more hilarity...
@@ -302,6 +327,20 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 
 * Random
 
+- A windowing idea: there be an ACL system that lets you decide just how much freedom apps have when running on your windows system. Maybe that's like in all of them. It probably is. But if the user had more direct access to that stuff, you could choose between "only make very sane windows with buttons and text" and the other extreme of "let an app create destroy (still only their own) windows at will and paint literally anything it them."
+- This keeps bothering me: If you take only the prime numbers, you can construct ratios: 3/7. This is like saying the whole is composed of two parts, three...
+- AirBNB time shares, futures, and more via blockchain
+  - Step #1, ABB opens their entire system to me.
+  - Me and ABB invent a ERC20 token that can be used for ABB accommodations.
+  - Define "distance" from some location to ABB in a fair, useful way.
+  - You can buy N tokens to guarantee you accommodations within X miles of point P, for some definition of accommodations.
+  - Host can receive a fixed price still for any stay.
+  - But how? The signals have been decoupled. Who decides what a stay is worth?
+  - The location is still on the market and can be bought with ABB tokens directly.
+  - If you bought some kind of accommodations futures device, they are still bound to host you and will get paid "fairly"
+  - Q: Why is this so hard to work out?
+  - Q: Why do I still have a sneaking suspicion that there's a there there.
+  - There is a missing quantity: I will call them "convenience-miles", it's a factor that adjust for how convenient it is to /you/ because of your current "distance" from it.
 - An AI that insults you: it seems like it should be /real/ easy to find training data: picture with accompanying nasty remarks about appearance. Takes a picture of a human, face, full body, fully clothed, taking a sweet jump on a bike: insult-bot consults its circuits and tells you how stupid you look.
 - Seems like there should/should be a simple device that you can just pop into any OTS product. It just needs to be wired in somewhere that:
   - Stays powered while the device is in use
