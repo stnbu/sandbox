@@ -106,6 +106,7 @@ Callbacks are all represented as js_sys::Function. This means that all callbacks
 
 I am thinking currently "fun" projects that are short, simple (and progressively less simple) and would be good rust programming exercises.
 
+- Why is there not a "cargo lldb"? (or is there?)
 - It would be really, really cool to run [[https://rustwasm.github.io/book/game-of-life/introduction.html][this]] on a GPU... but hoow!
 - Here is how a devel web server cli tool should work (maybe): The first one to start binds to your favorite =address:port=, you supply a mandatory positional arg for the URL suffix, =myproject= say. When you run another it coordinates with the first one to serve the data from that 2nd instance at =myotherproj=. That lets you have multiple ones running without having to memorize port numbers.
   - Also, you could have it spit out URLs for all of the files in the directory being served, for you to click on.
@@ -288,6 +289,13 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
+- "He's the David Blane of sounding smart."
+- Studies in Macaroni and Glue:
+  - Make a "family photo" using pet heads (and our heads), photoshopped onto actual kids in itchy cloths.
+  - Photoshop: Tucker Carlson and Louis Farrakhan making out, wearing nothing but their bow ties.
+  - US Politics Sock Puppet Show (or a "Charles and Judy Show"): Sock puppets, obviously meant to be "world leaders" acting out their antics in sock puppet style, with periodic cuts to a bunch of toddlers screaming and laughing and jeering at the right times. Booooo random person!
+  - A "stand up set" with lots of fancy cgi stuff to make it look like an HBO standup comedy show: a night a The Apollo. Perhaps /I/, as a fat, bald white guy wear a full leather suit, a la Eddie Murphy.
+- Scene: someone is sneaking through the woods, trying to avoid a crazed killer that's been stalking him for days. It's night and the victim is only armed with an "LED flashlight" that ways about 5 pounds for some reason. It has an "on" button and is in desperate need for just a bit of light to see his the inside of his knapsack that may contain the ticket to his salvation. Not having used this heavy flashlight, he is careful to put /three/ layers of his shirt over the lens before experimenting with the buttons. For good measure, he gives the lens yet a /fourth/ layer of shirt. He purposefully clicks the "on" button. In addition to being blinded and highly visible, now his shirt finally melts through and causes a panicked jerk backwards at the pain of molten polyester on his tender stomach. The flashlight, having responded to the last panicked click, is in "cycle" mode as it's flung into the air, strobe, colors, sweeping the dark woods and lighting up thousand-yard swaths of forest with LEDaylight.
 - Hugh Ginsite
 - Inside the Very Religious Mind -- When people say things like "I prayed to god and he said 'go with it!'", can we wonder what's actually happening in the mind of that person. Does they knowist that it's bullshit or do they genuine believe it? Or... Do they say it like you might say "god bless you" to someone that sneezes. Let's be clear: same amount of pointlessness, same amount of god-ness. Is it just a question of degree? Are those people fucking crazy, or what?
 - Title: `Ogg said, "rock stick"` -- A dramedy set in cave man days (tongue in cheek allusion to what we thought "cave men" were back when we were primitive people in, say, the 1950's) where we learn about their preferences and concerns about the use of certain words in a long-forgotten culture. As always, there are some dead-enders that would not think a thing of burning someone at the stake for saying "snake moss", there are also a lot of indolent dummies who just "have" certain opinions on other words in order to not make waves with their neighbors. Most folks will let a casual "gods be mounted" pass in pleasant conversation, but in any case, they eventually come up with lots of ways of enforcing the preferences of /most/ people, so there would not be any unnecessary burning or wife stealing.
@@ -327,6 +335,19 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 
 * Random
 
+- [100% obvious and already thought of 9000 times] It seems like, in addition to "making money" by hooking up a micro-payment system to something like Stackexchange would have a much /bigger/ (compare this to getting paid to suffer through extra ads or whatever) impact by incentivizing good answers and making it (more) possible for me to just pay, possibly "big" money and throw a question out on SE and expect to get an answer. It would cause an increase in overall engagement (maybe some CS school dropout is smart but frustrated and now needs an income! bigger pool.), raise the quality of answers (which is damned good already), and generally cause all kinds of compounding growth of SE quality and usefulness (again, both amazing already, which is amazing). Can something like this be tacked onto something entirely without the cooperation of the site/system? As in, a browser plugin that
+  - For the answerer: Gives a place to add a pay address and connect it to their account.
+  - For the questioner: Gives a place to enter a quantity and press the "thanks!" button.
+  - All the vagueness needs to be scrubbed away but this is the general idea.
+
+    What up with this text?
+    
+- Which sounds more productive?
+  1. As the owner of a mind, introspect the best you can to find out all the tricks and what makes your mind 'tick'. Maybe via some methods or chemicals or, yes, electrical probes you find ways to be ever more productive trying to understand how your mind works. As a "science" or maybe a "discipline". Maybe just an attempt to write down all the ideas: how would you yourself go about finding out how your mind works?
+  1. The owner of a mind uses it to make a bunch of physical tools and instruments to try and discover how the brain (which contains(?) the mind) works.
+- If you have too fuck with uploading shittons of cunt files to a server somewhere, and this is an ongoing task, maybe maybe there is still a call for a simple piece of network hardware (but not cheap because few people actually have this problem) that intercepts big file uploads, saves them _locally_ and then does the dirty work of making sure that they all eventually (hook or crook) make it to thier destination. Meanwhile, your upload took just a few seconds. Lots of holes in this. Authentication? Encryption? Also if you are using a site that has js code to do something when the upload completes, it will get confused. I think. In any case the UI of the site you're using won't match your computer's conception of what happened. Probably a big mess. Probably even wants to be a browser plugin, sadly. If anything.
+- "Stumbleforth" ...heh lol wat (is there a call for "parody" sites that do silly things with your money?)
+- In addition to creating and using your own ENS system (BTW, it should be easy to find every occurrence of an ENS contract, shouldn't it?), it should also be possible to somehow only ...view...(?) it if your address is on a whitelist..."somehow er other!" It would solve the problem of "where are all the BitTorrent servers with the /Sony/ movies?!" (because those are the best!) If the special club you belonged to was just a contract, it would make organizing all this stuff easier. It is not a "natural smart contract idea" (i.e. it can done without blockchain) but there is the benefit of a one-stop-shop. Egh. =#idonnoisstupid=
 - A windowing idea: there be an ACL system that lets you decide just how much freedom apps have when running on your windows system. Maybe that's like in all of them. It probably is. But if the user had more direct access to that stuff, you could choose between "only make very sane windows with buttons and text" and the other extreme of "let an app create destroy (still only their own) windows at will and paint literally anything it them."
 - This keeps bothering me: If you take only the prime numbers, you can construct ratios: 3/7. This is like saying the whole is composed of two parts, three...
 - AirBNB time shares, futures, and more via blockchain
