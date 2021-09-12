@@ -7,12 +7,12 @@
 * auto smart quotes
 * auto make-text-inside-quotes-subtly-different.
 * supported content:
-** markdown, markup, marksideways
-** org-mode
-** html
-** just plain text. some auto-pretty features available
+   * markdown, markup, marksideways
+   * org-mode
+   * html
+   * just plain text. some auto-pretty features available
 thingie
-** URIs to any of that.
+   * URIs to any of that.
 * your settings are all just cookie based. you can export and save them or something, but there is no logging in of any kind **
 * same with user-suppled (contrast author-supplied) css and simple preferences and and can be zipped up as a you-own-it portable config.
 * the ability to right-click anywhere and just say "yo author" (no comments) or an dead-easy box to write your comment. "don't say this".
