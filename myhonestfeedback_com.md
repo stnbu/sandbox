@@ -31,7 +31,10 @@ Um. I had a lot to drink, didn't I. Was great seeing the whole team together lik
 ```
 
 Bob creates the `drunken-office-christmas-party` url slug, explaining what he wants feedback about.
-*
+
+### GET `https://myhonestfeedback.com/bob/drunken-office-christmas-party` (as `anon`)
+
+Someone anonymously checks out what `bob` needs Christmas party feedback about ("I thought he was a perfect gentleman").
 
 ---
 
