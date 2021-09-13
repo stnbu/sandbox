@@ -40,7 +40,7 @@ Someone anonymously checks out what `bob` needs Christmas party feedback about (
 
 ### POST `https://myhonestfeedback.com/bob/drunken-office-christmas-party/publish` (as `bob`)
 
-Bob decides to air the whole embarrassing mess to anyone anywhere, and replies to some feedback with comments and apologies (probably).
+Bob decides to air the whole embarrassing mess to anyone anywhere, and replies to some feedback with comments and apologies (probably) and a tasteful amount of mitigation.
 
 ---
 
