@@ -1,6 +1,6 @@
 # My (Totally) Honest Feedback dot Com
 
-The domain name is registured to a totally-not-squatter. But it needn't be so on the nose anyhow, eh Twitter?
+The domain name is registered to a totally-not-squatter. But it needn't be so on the nose anyhow, eh Twitter?
 
 ## The Idea in URLs
 
@@ -21,7 +21,7 @@ PUT `https://myhonestfeedback.com/bob/drunken-office-christmas-party` (as `bob`)
 Body:
 
 ```
-Um. I had a lot to drink, didn't I. Was great seeing the whole team together like that. Feel free to drop me social ediquite tips of any kind here.
+Um. I had a lot to drink, didn't I. Was great seeing the whole team together like that. Feel free to drop me social etiquette tips of any kind here.
 ```
 
 Bob creates the `drunken-office-christmas-party` url slug, explaining what he wants feedback about.
@@ -29,7 +29,7 @@ Bob creates the `drunken-office-christmas-party` url slug, explaining what he wa
 
 POST `https://myhonestfeedback.com/bob/drunken-office-christmas-party/publish` (as `bob`)
 
-Bob decieds to air the whole embarrasing mess to anyone anywhere, and replies to some feedback with comments and appoligies (probably).
+Bob decides to air the whole embarrassing mess to anyone anywhere, and replies to some feedback with comments and apologies (probably).
 
 POST `https://myhonestfeedback.com/bob/haircut/01234/respond` (as `bob`)
 
