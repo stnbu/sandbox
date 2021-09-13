@@ -22,7 +22,7 @@ Someone anonymously gives bob feedback on his haircut. The `/haircut/` slug need
 
 ---
 
-### PUT `https://myhonestfeedback.com/bob/drunken-office-christmas-party` (as `bob`)
+### POST `https://myhonestfeedback.com/bob/drunken-office-christmas-party` (as `bob`)
 
 Body:
 
