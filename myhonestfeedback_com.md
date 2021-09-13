@@ -6,9 +6,11 @@ The domain name is registered to a totally-not-squatter. But it needn't be so on
 
 `bob`: The username of a user that has an account
 
+`anon`: An _actually_ anonymous user of the site.
+
 ---
 
-### POST `https://myhonestfeedback.com/bob/haircut/new` (as anon)
+### POST `https://myhonestfeedback.com/bob/haircut/new` (as `anon`)
 
 Body:
 
@@ -51,8 +53,8 @@ Bob responds to a particular piece of nasty haircut commentary.
 
 ---
 
-### GET `https://myhonestfeedback.com/bob` (as anon)
+### GET `https://myhonestfeedback.com/bob` (as `anon`)
 
-Responds with Bob's "dashboard" of whatever kind. Probably whatever he wants to publish, whatever you can see as anon.
+Responds with Bob's "dashboard" of whatever kind. Probably whatever he wants to publish, whatever you can see as `anon`.
 
 Probably would be best to not let `bob` have any special permissions with regard to `alice`. If someone posts some feedback about `user_x`, they are _always_ anonymous, even if they are logged in to the site as `user_x`.
