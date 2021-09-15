@@ -1,6 +1,16 @@
 #+title: FYI, you were not invited here. I never share this link. You are snooping! You edited a URL just to see... good for you! Just keep in mind though, if you walk into somewhere uninvited, you may end up stepping on something nasty. Paper towels and bleach over there.
+#+STARTUP: overview
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
+
+* Org-Mode
+  - 
+  - M-RET
+  - C-c ^
+  - M-UP/DOWN
+  - org-catch-invisible-edits
+  - org-list-demote-modify
+  - org-insert-drawer, which is bound to C-c C-x d
 
 * You look lost. Can I help you?
 
@@ -282,6 +292,12 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 
   - Crack Nuts
     - =ibuffer= -- "d" to set row for deletion, "x" to commit deletions
+  - The ideal authoring set-up-aroo. Probably js something.
+    1. Make some changes.
+    1. Push a button.
+    1. Preview pane, along with showing the usual, pretty, marked-up text, has a neat and unobtrusive way of showing diff-like info. Like: use the diff output species that shows light red/green for changed lines and dark red/green for changed characters /in/ a line. Using that info, just only do:
+      - Where things disappear: [light] red text background. Subtle!
+      - Where things appear: [light] green text background. Subtle!
 
 * Story Themes
 
@@ -289,6 +305,24 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
+- True Believer in Nixon's (or someone's) War-On-Drugs is abducted by aliens and questioned about his beliefs. Something something so he must be honest. Sodium Barbasol.
+- Insert sharp object to reset device: stabs a gremlin, prompting better behavior.
+- Angry guy done wrong by land-speculator/politician building a highway though his land ('emenent domain'). He buys land adjacent to the fancy plantation of said politician. The friendly neighbors that owned 1000 empty acres on one side, rather close up, were just good people and could be relied upon to just let Senetor Eau de Bouffon gauze upon his land and enjoy the view at no charge. Guy Done Wrong, creates a Mule-Team class tractor-trailer tractor factory literally next to senator's house, having bought nice neighbor's land, where they just figure, let us scale everything up and sell these for austrualian roadtrains or something. Big, Loud, Deisel. He creates the world's largest industrial automotive testing treadmill and tests his loud semis right next to bad congo man.
+- Achritectural feature: The Hatrium 
+- [video] In the future, when all this is a bit less raw, we can have the following entertaining skit "on tv": A bunch of white men, of various ages, but none especially young, are milling around somewhere "conservative" being "conservative". They probably are all back-slappers who are skilled in the art of sarcastic-dog-whistling and all that. Real gladhanders, very aw-shucks. Maybe it's a "prayer breakfast" for Senator-Reverend Pat Bouffant, with guest speaker NASCAR driver Dank Mudferts. They are all milling around smiling, getting some sausages (the sausage tray is were all the muz-lim jokes are made) and French pastries (where all the fagit jokes are made), everyone has the identical diaper-load in their jeans. There is camo and monochrome american flags fucking everywhere. Shots of the parking lot show about 3 different makes of pickup trucks, with all kinds of stickers (sssstikerss!). Everyone is wearing a familiar-looking red hat with a familiar-looking white text on the front. From a distance, it's obvious that this is that same mandatory cult garb...except, no. On closer inspections, the white text says other things. As the camera captures some back-and-forth conversations, switching perspective from speaker to speaker, all with [in]sincere smiles, we can see and read the text. The red hats with white text say things like:
+  - I was molested by my uncle.
+  - I forced my rental Prius to have a fiery accident, to avoid being seen in it.
+  - I impregnated my sister.
+  - I killed a black prostitute out of shame.
+  - I once kicked a dog to death because I was made fun of at work.
+  - My dad's deep insecurity ruined my life.
+  - I have a complex about my voice and force a "manly" tone.
+  - I constantly feel like I don't belong and am here because "may as well".
+  - My penis is so small I fantasize that it's a clitorus.
+  - I put on this hat one day and instantly had a new persona, like magic.
+  - My wife secretly hates me and only pretends to wash my skid-marked underwear.
+  - My dad called me a "faggit" all my life and is now openly gay, but still won't talk to me.
+  - I found out last week that I am a result of an affair my now evangelical mother had.
 - "He's the David Blane of sounding smart."
 - Studies in Macaroni and Glue:
   - Make a "family photo" using pet heads (and our heads), photoshopped onto actual kids in itchy cloths.
@@ -335,6 +369,14 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 
 * Random
 
+- A shifty, thickly mustachioed white guy in a brown suit with a thick tie and possibly a bit of coke evident on his nose and/or fingers owns a car wash (in the year 2022) with all black employees, who also look like they came from 1979 plays "Car Wash" on a loop, loudly as all of his employees joyously wash the cars. There are no machines here. He is jiving along friendfully with his employees, doing the occasional hip-bump. There is lots of head-bobbing. For some reason the music abruptly stops. Everyone, including whitie, looks perplexed and very gradually more paranoid and angry, as everyone, frozen, looks suspiciously at the other. The black employees, start to get angry at the white guy. "Why the fuck are we out here washing cars for a dollar an hour!?" "I got better things to do than this." "When did I start thinking washing cars was fun?" Now angry white guy is getting defensive and, realizing he is operating a car wash apparently, starts telling people to get back to wor... SUDDENLY THE MUSIC STARTS AGAIN. Instant smiles, scrubbing and hip-bumps, shacka-shacka. (You-need-to-visualize-it-in-the-theater-of-your-mind-while-you-listen-to-the-song is why you think it's "stupid" or "racist")
+- There needs to be a framework that goes-all-the-way-down with regard to all the /possible/ places you could have money, given a single wallet (of any kind, really, but Ethereum in my example). If a hierarchical wallet, you have infinity accounts that could have a balance (I think), but by convention, they are ordered and by convention they are used in order (I think). So checking the first N of those might be a thing (applies to other chains). Then for any one chain species there are many potential places to check: Hardforks, side-chains, L2's, propriaary "semi-decentralized" scams, etc. And there are test networks that may not have "money" but might conceivably have value. And on most chains there are other /types/ of things to look for: Tokens, other contracts, wrapped coins, probably DEXes or some shit. It's super complicated. I doubt there will be "a software" for this, but a framework or an effort to at least clearly document and explain te chaos would be a good first step. It would be nice to have ONE wallet and not have to go bonkers thinking about what, what, what, where, what, why,...were's my money?
+- Some bank-like institution should give away NFTs when you "open an account", like a NFT toaster or an NFT mantle clock.
+- A "Singularity Weather" app: If for example there's evidence of paniced behavior do to a sharp tick in multiple global markets, this is an "alert". App only tells you "this alert append and here is why..." Or maybe within 10 minutes 90% of news sites are using a novel word or phrase. "aliens attack".
+- Model-of-Mind: sys1/2 ... conveyor ... inspection ... reinjection ...
+- How hard would it be to add a "get out of my way" command to my roomba? Sure seems nearly smart enough.
+- Chevy -v Ford -- The "narcism of small differences" that always boils down to /two/ opposing choices have always, I mean since toddlerhood, /always/ fucking irked me. You know exactly what I'm talking about. Here's an observation, both have their bragging points, but they necessarally both have an equally heavy flaw: "If it is so great, why then, good sir, do you sill have any competition? The fact that there is still any question about wich-is-duh-best is a /bragging/ point for you? Oh, because it gives you an opportunity to go on about how much /they/ suck. Yay, your pointless game has reached equilibrium!!"
+- `DitchDigger.sol` -- a LoL Sol. Crypto whales and other large aquatic mamals fund people to do literally pointless stuff. Maybe you have to log in every day and type in a number. Egh. There is something down below here about FlashMob.sol ... which would be funner.
 - [100% obvious and already thought of 9000 times] It seems like, in addition to "making money" by hooking up a micro-payment system to something like Stackexchange would have a much /bigger/ (compare this to getting paid to suffer through extra ads or whatever) impact by incentivizing good answers and making it (more) possible for me to just pay, possibly "big" money and throw a question out on SE and expect to get an answer. It would cause an increase in overall engagement (maybe some CS school dropout is smart but frustrated and now needs an income! bigger pool.), raise the quality of answers (which is damned good already), and generally cause all kinds of compounding growth of SE quality and usefulness (again, both amazing already, which is amazing). Can something like this be tacked onto something entirely without the cooperation of the site/system? As in, a browser plugin that
   - For the answerer: Gives a place to add a pay address and connect it to their account.
   - For the questioner: Gives a place to enter a quantity and press the "thanks!" button.
