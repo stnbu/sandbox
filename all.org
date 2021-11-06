@@ -335,13 +335,22 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 
 * Random
 
+- Forget about "gas" specifically; all crypto transactions "cost" something. Importantly they cost the signer something. As things get more complex, it seems like there will always be a call for "optimizing", even if it's cheap, some big organization will want optimizatin because of their volume and time horizon. So: this needs to be mechanized, I think. And it is a /network/ of options. You could route transactions all over the place, hopping from chain to chain... maybe there is a path-optimizer out there. Maybe it can "search a space" of paths from A to B. Some /thing/ should be able to examine all the chains and their connections (if relevant to transaction), understand the cost of this and that (which is always application-specific), and try to find the "shortest" path. UPDATE: if you could include CEX fees in here, it'd be much more helpful.
+- RememberTheMilk.sol -- A contract stores blocknumber + ipfshash pairs. When blocknumber is the current block number, we know or "any compatible system knows": now is the time to process the data at ipfshash. Simple system #1 is RememberTheMilk.sol, where a host will watch the block chain send the contents of ipfshash to "your email" (where) for zero or more ipfshash's. ipfshash could instead contain something "executable" in some sense. Why? ...well, an eggtimer is not exciting, but it's useful.
+- Why can't blockchain project A store some checkpointing information on blockchain project B? For example, if I could get (forgets name) the data necessary to bootstrap an Ethereum node (without starting from genisis, is the point) from both Bitcoin and Solana, and then only have to calculate the last 20 blocks... can't I just forget about all the history before that? Can't we just chain these chains together for added safety, with no judgement? For selfish reasons?
+- What if you could safely swap say... gmail accounts with a stranger? What if you could swap a bunch more...like banks!!?... There MUST be a way of swapping two accounts that use username/password. MUST MUST. I suspect that the brand new "trustlesss" ecosystem can facilitate this. You could also talk in terms of exchanging money. YOU give up your gmail account plus some amount of money; positive or /negative/, in exchange you get someone else's account.
+  - You want to fake your own death.
+  - You are twelve and are able to get an account with that score in, like, a day.
+  - You want to pretend to be a 90 year old black man (substitude any age, race and gender you like...)
+  - You want to see what kind of interesting recommendation someone else's youtube gives
+  - You want to use netflix, just a bit, and someone has paid for a year and plans to throw away the account afters. (you just /pay/ in this case?)
 - [100% obvious and already thought of 9000 times] It seems like, in addition to "making money" by hooking up a micro-payment system to something like Stackexchange would have a much /bigger/ (compare this to getting paid to suffer through extra ads or whatever) impact by incentivizing good answers and making it (more) possible for me to just pay, possibly "big" money and throw a question out on SE and expect to get an answer. It would cause an increase in overall engagement (maybe some CS school dropout is smart but frustrated and now needs an income! bigger pool.), raise the quality of answers (which is damned good already), and generally cause all kinds of compounding growth of SE quality and usefulness (again, both amazing already, which is amazing). Can something like this be tacked onto something entirely without the cooperation of the site/system? As in, a browser plugin that
   - For the answerer: Gives a place to add a pay address and connect it to their account.
   - For the questioner: Gives a place to enter a quantity and press the "thanks!" button.
   - All the vagueness needs to be scrubbed away but this is the general idea.
 - Which sounds more productive?
   1. As the owner of a mind, introspect the best you can to find out all the tricks and what makes your mind 'tick'. Maybe via some methods or chemicals or, yes, electrical probes you find ways to be ever more productive trying to understand how your mind works. As a "science" or maybe a "discipline". Maybe just an attempt to write down all the ideas: how would you yourself go about finding out how your mind works?
-  1. The owner of a mind uses it to make a bunch of physical tools and instruments to try and discover how the brain (which contains(?) the mind) works.
+  2. The owner of a mind uses it to make a bunch of physical tools and instruments to try and discover how the brain (which contains(?) the mind) works.
 - If you have too fuck with uploading shittons of cunt files to a server somewhere, and this is an ongoing task, maybe maybe there is still a call for a simple piece of network hardware (but not cheap because few people actually have this problem) that intercepts big file uploads, saves them _locally_ and then does the dirty work of making sure that they all eventually (hook or crook) make it to thier destination. Meanwhile, your upload took just a few seconds. Lots of holes in this. Authentication? Encryption? Also if you are using a site that has js code to do something when the upload completes, it will get confused. I think. In any case the UI of the site you're using won't match your computer's conception of what happened. Probably a big mess. Probably even wants to be a browser plugin, sadly. If anything. Maybe a better idea is, when forced to use some browser upload, what things can you do to ensure that it does its thing. One would probably be right in thinking that you can't just close the tab as the progress bar moves along...for example.
 - "Stumbleforth" ...heh lol wat (is there a call for "parody" sites that do silly things with your money?)
 - In addition to creating and using your own ENS system (BTW, it should be easy to find every occurrence of an ENS contract, shouldn't it?), it should also be possible to somehow only ...view...(?) it if your address is on a whitelist..."somehow er other!" It would solve the problem of "where are all the BitTorrent servers with the /Sony/ movies?!" (because those are the best!) If the special club you belonged to was just a contract, it would make organizing all this stuff easier. It is not a "natural smart contract idea" (i.e. it can done without blockchain) but there is the benefit of a one-stop-shop. Egh. =#idonnoisstupid=
@@ -375,17 +384,17 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
     - Confirming "productive" work has been done.
       - We could just have them sign their code with their private key. Proving
 	1. At least THEY signed it. It may only prove that they signed it but they did prove that they are the ones who did the signing.
-	1. If the code, signed by them, passes the smell test for N voters who attest such (or...something), that confirms:
+	2. If the code, signed by them, passes the smell test for N voters who attest such (or...something), that confirms:
 	   1. Code has value (part of their job)
-	   1. Code is original (also part of their job)
+	   2. Code is original (also part of their job)
     - Valuating that work.
       - Github or Git<code>X</code> could offer to cryptographically attest to various stats about the project.
 	- Effective downloads per unique repo path. Total, rate, history, average.
 	- Issue, Wiki, CI/CD, Pull Request activity and such.
 	- If the user has proven org/user account ownership, why can't we just "trust" whatever stats Github can provide. That could be a chainlink "adapter" probably.
-   - It'd be cool if this had a "social" aspect where folks could brows projects, and send "likes" that have a small amount of value...like Line's "stickers" but not a dead-loss :-| ... Your thumbs up could come with 5 microtokens. You could have a "slider" to adjust your like value...you could have a lot of things. But it could be thought of as a "game" if it's only using pennies a day or something. These token values (maybe/hopefully just a fraction of The One Token) will float in value just like any crypto asset, which, if everyone is a true belieber, should also go up in _desirability_ with time. Kind of like reddit, kind of like etsy, kind of like hot-or-not...but hopefully fun and productive. Like a thumbs up on Github that's monkey-patched in!!? how hard is that?!
-   - Maybe the plugin widget has a NxM set of pixels that the dev has control over. It can be periodically updated with anything at all, but imagine download graphs and various "proofs" of how useful the project is. Just voting on "it's cool" will not encourage the right things to happen.
-   - How the heck do you measure someone's work's value!? Age old question. Can you do it cryptographically? If it's an EVM contract, it can be analyzed for "originality" or something. But adoption has to drive it. That's objective. Why can't we measure that in a "good enough" way? Involving humans as little as possible.
+  - It'd be cool if this had a "social" aspect where folks could brows projects, and send "likes" that have a small amount of value...like Line's "stickers" but not a dead-loss :-| ... Your thumbs up could come with 5 microtokens. You could have a "slider" to adjust your like value...you could have a lot of things. But it could be thought of as a "game" if it's only using pennies a day or something. These token values (maybe/hopefully just a fraction of The One Token) will float in value just like any crypto asset, which, if everyone is a true belieber, should also go up in _desirability_ with time. Kind of like reddit, kind of like etsy, kind of like hot-or-not...but hopefully fun and productive. Like a thumbs up on Github that's monkey-patched in!!? how hard is that?!
+    - Maybe the plugin widget has a NxM set of pixels that the dev has control over. It can be periodically updated with anything at all, but imagine download graphs and various "proofs" of how useful the project is. Just voting on "it's cool" will not encourage the right things to happen.
+    - How the heck do you measure someone's work's value!? Age old question. Can you do it cryptographically? If it's an EVM contract, it can be analyzed for "originality" or something. But adoption has to drive it. That's objective. Why can't we measure that in a "good enough" way? Involving humans as little as possible.
 - Does [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate][this stuff]] actually run on the browser? If so, could you fetch a wasm file with JS and "install" and use it? It would allow bypassing of all the js "bindgen" glue code required. One succinct, obvious bit of JS code could be all that's required when "bundling" all your logic. Your website could be only "some http" and "some simple javascipt code" that could bootstrap itself into just about anything (right??)
 - A "fun" thing to do would be to make a sort of browser plugin factory, that lets you:
   - Make a small edit to someone's CSS (or JS...)
@@ -413,9 +422,9 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the =rust-web3= Github repo. Sooo... would there be usefulness in a MM "proxy"? It behaves just like MM but talks to other provider on the other end.
 - Is there a task that is
   1. Is something that only a human can reasonably do. Most would agree "it'll be decades before a /machine/ can do it!".
-  1. Can be easily validated by a computer.
-  1. Assumes a closed system where the computer and the human start off with the same knowledge (I think.)
-  1. This could be a sort of proof-of-human-work for BT. If the work had actual value outside of BT, easy incentivization and bootstrapping.
+  2. Can be easily validated by a computer.
+  3. Assumes a closed system where the computer and the human start off with the same knowledge (I think.)
+  4. This could be a sort of proof-of-human-work for BT. If the work had actual value outside of BT, easy incentivization and bootstrapping.
 - See if you can adapt [[https://github.com/awalgarg/netmonitor/blob/master/static/background.js][this]] to notify you when someone downloads a =*.wasm= resource. It would be cool to know "who's using wasm?"
 - A genuinely weird thought: family metaphors are used to describe hierarchy (thinking mostly of filesystems here). Parent-child, sibling, grandparent... But this is a-sexual. Two files are siblings. Not brother/sister. Parent is "parent" not "mother" or "father"....what do sexual filesystems look like? (waka-waka).
 - > Another neat feature of Cargo is that you can run the cargo doc --open command, which will build documentation provided by all of your dependencies locally and open it in your browser.
@@ -429,17 +438,17 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - What about Conway's Game of Life meets weird (penrose?) tiling? i.e., non-square tiles with n neighbors.
 - (Would there be a use for...) Contracts that live on ethereum and interact with each other. I mean, let me re-phrase: Have an array/collection/library of /simple/ contracts that are not much more than transistors, say, each with an address (obviously). You could of course do arbitrarily complex things with this, and the "clock" would only tick at whatever rate blocks are created, but
   1. It'll get faster, bro.
-  1. It'll get cheaper, bro.
-  1. Would the property of "slowness" be used to some kind of advantage?
-  1. I call this "layer -1" (because I am told layer zero is meatspace.)
-  1. If this is the cpu/memory, what is the interface?
-  1. Recall, these contracts can create arbitrarily many more contracts.
-  1. Could they exist solely for the purpose of foiling bad actors (mev?)
-  1. Could they grow like a fungus and destroy all life forms? (no, because "gas". But really? It'll necessarily get cheaper. It's an ever-changing balance: cost/reward.)
-  1. (Related?) Game of life on the block chain:
+  2. It'll get cheaper, bro.
+  3. Would the property of "slowness" be used to some kind of advantage?
+  4. I call this "layer -1" (because I am told layer zero is meatspace.)
+  5. If this is the cpu/memory, what is the interface?
+  6. Recall, these contracts can create arbitrarily many more contracts.
+  7. Could they exist solely for the purpose of foiling bad actors (mev?)
+  8. Could they grow like a fungus and destroy all life forms? (no, because "gas". But really? It'll necessarily get cheaper. It's an ever-changing balance: cost/reward.)
+  9. (Related?) Game of life on the block chain:
      1. You deploy contracts that have x, y coordinates and aliveness state, setting, "alive" on some to feed the initial pattern.
-     1. You gas up some contract that will pay for all of this.
-     1. Watch things unroll with each block (profit!)
+     2. You gas up some contract that will pay for all of this.
+     3. Watch things unroll with each block (profit!)
 - Blockchain stuff is iterative. state n+1 is derived from state n (and nothing else). It sure seems like there should be a lot of behavior that can be ...analyzed (?) with "chaos theory". Blockchain is a great big [[https://en.wikipedia.org/wiki/Recurrence_relation][recurrence relation]], which already has billions of human-hours of study and results that could be applied, but no one's thought to...?
 - What happens if, on contract creation, we use the address of a wallet we control? If it were allowed and worked, that would give me the private key for a contract! Why would I want that!?
 - Can one _convert_ an Ethereum wallet address to a contract address? Can a wallet become a contract? Visa versa? What happens to the private keys of a contract? What can you do if you produce a contract with a private key and then 'use' it?
