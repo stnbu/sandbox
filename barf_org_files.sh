@@ -1,4 +1,4 @@
-#!/bin/sh -xue
+#!/bin/sh -ue
 
 # ./this_script.sh <org_file_name> <dapps_url_relative_path>
 
