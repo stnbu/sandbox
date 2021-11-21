@@ -3,15 +3,6 @@
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
 
-* Org-Mode
-  - 
-  - M-RET
-  - C-c ^
-  - M-UP/DOWN
-  - org-catch-invisible-edits
-  - org-list-demote-modify
-  - org-insert-drawer, which is bound to C-c C-x d
-
 * You look lost. Can I help you?
 
 [[mailto:mb@unintuitive.org][I]] am Mike Burr. I'm transitioning "everything" to emacs' "org-mode". So, quite a mess/Watch this space.
@@ -78,7 +69,7 @@ Email? [[https://mikeburr.eth.link/][Ethereum]], somehow? Drop something in my w
 *** Fragment Shader
     - Varyings are variables that are declared by the vertex shader and used to pass data from the vertex shader to the fragment shader.
     - Uniforms are set by the JavaScript code and are available to both the vertex and fragment shaders.
-    
+
 ** Nuts That Were Hard To Crack
 
 - rustup database is here: =~/.rustup/settings.toml= (including default, overrides...)
@@ -135,7 +126,7 @@ I am thinking currently "fun" projects that are short, simple (and progressively
 - Could you make a nice "electronic book" that is just one file (executable) that you run and (/tada/) it displays a nice "ebook" UI on your desktop that's a joy to use and contains all the text. When you threatens to delete your book if you don't supply an email address of someone else to send it to (a download link). Um, as an added feature.
 - [Inspired by above] If you made a WASM app whose "init('path_to.wasm')" promise took control of the whole browser's screen, you could do "whole ebook in wasm", or better, other things. The idea could be, if you do the above init call, you are running an "app". There's no other JS garbage. It just creates a `window` and `document` and starts going to town. What are the limitations? Would you ever need to go back into JS land (yes for networking currently). This is probably why a lot of WASM stuff are "games" right now, and not "chat apps", say. Games can be self-contained and still fun/interesting.
 - [rando] -- if you had a match statement inside of a loop, and could match each byte and assign different values (for the next pass)... THING?
-- Can you make a program that takes "forever" to compile? Why does (or does) the "compiler" (pick your stage) /not/ have the halting problem? I thinking something that grows in memory or "storage" or binary size is cheating. Maybe. Because that seems easier. I /feel/ like this is related to why functions must return concrete types. That means all the piece of memory, the size of the binary, can be determined, um, deterministically. 
+- Can you make a program that takes "forever" to compile? Why does (or does) the "compiler" (pick your stage) /not/ have the halting problem? I thinking something that grows in memory or "storage" or binary size is cheating. Maybe. Because that seems easier. I /feel/ like this is related to why functions must return concrete types. That means all the piece of memory, the size of the binary, can be determined, um, deterministically.
 - It gets confusing: =docs.rs=, =crates.io= (but not =cargo.io=), =github.com= ... I think there are more. For most crates there are 3-4 (...or more) URLs that you can reliably deduce from =Cargo.io= and/or elsewhere. It would be nice to have a library that does that for you that's usable in a =cargo urls <package>= command. If it is a /package/ with multiple /crates/ and those have their own URLs...account for that. Just a "website" that does this would be useful /for me/. =crates.io= is supposed to be the launchpad for any given crate, but it lacks some stuff (no? I should learn how to use it.)
   - Make =cargo browser=
     - =cargo browser doc <fuzzy_identifier>=
@@ -288,16 +279,68 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 - "invariants" (what's [[https://doc.rust-lang.org/stable/book/ch14-02-publishing-to-crates-io.html][that]]?)
 - You skipped [[https://doc.rust-lang.org/stable/book/ch15-00-smart-pointers.html][smart pointers]]! Go back and read it!
 
-* Emacs
+* A Quick Dump
 
-  - Crack Nuts
-    - =ibuffer= -- "d" to set row for deletion, "x" to commit deletions
-  - The ideal authoring set-up-aroo. Probably js something.
-    1. Make some changes.
-    1. Push a button.
-    1. Preview pane, along with showing the usual, pretty, marked-up text, has a neat and unobtrusive way of showing diff-like info. Like: use the diff output species that shows light red/green for changed lines and dark red/green for changed characters /in/ a line. Using that info, just only do:
-      - Where things disappear: [light] red text background. Subtle!
-      - Where things appear: [light] green text background. Subtle!
+I am "getting back into" typing stuff down, having just got done vacationing.
+
+** [comp] HiddenHashTags
+
+I generate a very "dense" (large numeric base) hash for a "concept" that I want to write about publicly, I'm literally thinking: A hash of the human readable name of the "concept" (or any data at all, but just think: a text tag with a meaning, like "About my aunt Karen!". The idea is, the human text version and maybe even the hash algorithm used for the tag remain secret. You just use the hash function's text output, which is also "human-readable" in the sense that they are characters that someone might want to match up; "yup, these two are the same!" Say "About my aunt Karen!" generates the "sum" of "=n_$sX.%=". You can then post stuff and "tag", maybe in brackets, maybe in the blog entry title supplied to a blogging site, maybe using a fancy tagging system where you're allowed to add your own tag. Just use it, is the point. No one knows that the theme is "that Karen", and you are free to not give any hints with regard to this in the blog entry/youtube comment/reddit post/whatever. At any time in the future, you can point aunt karen to a web UI that shows,
+
+#+BEGIN_CODE
+=n_$sX.%= == =hash(About my aunt Karen!)=
+#+END_CODE
+
+/Accompanied by/ a link to a google search result for "=n_$sX.%=".
+
+In other words:
+
+1. Aunt Karen, you pissed me off so bad this time, I'm just going to do it: <links>
+1. All those google results are slams I made on you, <expletive>. Yeah, pretty damning, aren't they?
+
+Note that there are less evil and dramatic uses. Feel free to think of your own.
+
+** Allegorical
+
+*** Number 01
+
+You could: Write a sort of "allegory" about talking to people who are behind a glass wall, who are clearly representative of bitter past memories main character X has toward actual, extant (past or present) people. X is on one side of the infinite glass wall, and bitter-memory-people are on the other. They can hear each other, they can have just plain old conversations, they appear to just be "regular people".
+
+What's going on here, see, is the bitter-memory-people are the concept X has his interactions, feelings about a past memory. Those people /are/ the past. X keeps having these confusing arguments with these people on the other side of the infinite glass wall. They are still allowed to smoke on airplanes and they don't know about "internet" or "pokemon".
+
+And what's more, there's no touching. After all, there's an infinite glass wall. So if you want to punch cousin Larry in the nose, can't. All you can do is walk up to Larry (or not) and really tell him what's up.
+
+"I'm not a sissy now, am I, Larry? You, with your 7-11 Slurpee Slinger job and your 3 bastard kids... Larry, I'm a regional manager now. Did you know that? /Regional!/"
+
+Which makes /you/ the moron. Meanwhile Larry is watching The Price is Right in his stinky robe at the sad nursing home.
+
+It'd be nice to be able to sit down and have a "gee, what a life, eh?" conversations with these people, dead or alive. But that's up to you. You write the script.
+
+Really. Think on it.
+
+*** Number 02
+
+A weird/stupid metaphor for what its like to make it through life "emotionally":
+
+There is a down, and gravity, but there is nothing in the universe but a web of ropes and a rising tide of acid below (you). And you must keep going in one direction: up, because there is a rising tide of acid beneath you.
+
+It's 7 miles below you, but it doesn't matter. You just keep climbing up. If it's 6 ft below you then, yes, you are not worried about the impact of the fall. It's less scary that way. Just drop into the acid. Splish!
+
+So you keep climbing up.
+
+The ropes are just a great big mesh. There are knots that connect three or more ropes. It's a great big infinite 3-D sea of rope-graph; knots and spans instead of nodes and edges.
+
+The spans vary randomly from about a fist-with to 6 meters or so. It's all arranged in a frustrating way that inevitably leads you to having to make big leaps of faith, hoping to catch some other rope. Maybe you found yourself on top of a kind of "tree" that ends (in the upward direction) with a knot joining only very long spans.
+
+This kind of thing happens often, as you're compelled to climb upward at "sea of acid" rising speed or greater (in order to earn some rest or...)
+
+And you're just a regular flabby guy, who can't seem to develop cauleses and build muscle. So, you /can/ take an arm-over-arm path sometimes to nearby, more climbable places, but you balance that with the energy-saving benefits of a good leap followed by a painless, sure landing.
+
+It's rough up there.
+
+And, /sometimes/ you miss a handhold or misjudge your leap. You then risk tumbling far enough and picking up enough speed that you find yourself unable to stop. If you're 9 miles above the sea-of-acid, you will eventually have all of your parts minced up and dripping on the ropes beneath you, as you "re-enter" he rope atmosphere after picking up some speed. You don't stop, you just get cut in half, and then those halves get cut in half...
+
+Anyway, the point is, it's all up to you. There is no comfy break room where you can rub your feet and hands. It's just gonna be like this forever, sorry. Try having a good conversation with a climbing buddy.
 
 * Story Themes
 
@@ -305,10 +348,20 @@ The opt-level setting controls the number of optimizations Rust will apply to yo
 
 And don't fucking judge me. So help me, if you judge me, I will judge you back SO hard!
 
-- True Believer in Nixon's (or someone's) War-On-Drugs is abducted by aliens and questioned about his beliefs. Something something so he must be honest. Sodium Barbasol.
+- Dark dark dark /daark/ story theme: Mom is sweet as pie. Dad is a crazed Drill Sargent; an endless sea of disapproval. So it goes. But then much much later in life, you discover all at once (via somehow) that it's been flipped the whole time: Dad is pretty much mom's slave. Mom has been playing it cool, playing dumb. How the control...? -- Season to taste.
+- Dumb guy who's bragging about his "invention" (that he's probably trying to sell) keeps saying "patented". "/Take a look at this patented lever design. It turns a cam so the force increases as you turn./" With some effort, the other person works out that dumb guy doesn't realize what a patent is and thinks of it as just another superlative.
+- how long before we can "know" that there's a black hole at the center of a star? Does it gobble it up in seconds? minutes? days? Or is it like the photon that takes a million years to make it outward?
+- A good, I guess "movie" concept would be: Guy struggles through one brain-bending, anxiety-filled experience after another. There are portals, there are monsters, there are princesses, none of this makes sense. The character convinces us that he's just like you and has /nooo/ idea what's going on. Too much drugs? How did I get here? Why can't I remember how I got here? There's maybe some big, dramatic (non sequitur) ending -- A wise (cgi-realistic) 3x life size giraffe who talks like Morgan Friedman, wears a monocle, has gigantic roller skates, <more rando>. **THEN** we abruptly cut to a scene where it's just some guy (same guy as main dream guy?) casually describing his "weird dream". =#idontknowisstupid=. The point being emphasized is: when we remember a dream the next morning and think about it abstractly, there's usually (unless you are 5) no real emotion. But what about the dude "in" the dream? What about his experiences "when" this was happening?
+- Omg, gross: I don't know what movie this belongs in, but: A clitoris with a talon. Just swish it around in your head a bit. :hurl: I mean, y'ever look at the meat that surrounds a cat's claw?
+# v - hidden unicode on next line.
+- You have a truck and yet you will have no truck! 🤔
+- Take a HQ version of [[https://youtu.be/9pko_iTP4sQ][this commercial]], figure out a way to convincingly "re-skin" the trucks. And re-imagine this commercial making it for something called "Trump Trux!" Be sure to have a Trump Trux jingle with meaningful lyrics. One truck is orange and pale, the other truck is blond and pale (Pence [...fly?]). Jingle mentions Gawd maybe. Kids love Trump Trux! /They Krush Librils!/
+- [boratesque] Go to a bunch of trouble to arrange for your US flag to be properly disposed of. Make some phone calls, go to the VFW, meet solemnly at the church entrance, and them the "blue lives" sticker you scraped off your Mopar before sale.
+- (tailgating...) "He wants to stick his mopar up the back of your prius!"
+- True Believer in Nixon's (or someone's) War-On-Drugs is abducted by aliens and questioned about his beliefs. Something something so he must be honest. Sodium Barbasol. "But alcohol ok?", "Would you like a coffee?" "WHAT of the following molecule that has [elaborate effects]?" "WHAT about this other molecule that has other [elaborate] effects." "WHAT about this almost identical molecule that just gives you nightmares and no one wants to take...?"
 - Insert sharp object to reset device: stabs a gremlin, prompting better behavior.
 - Angry guy done wrong by land-speculator/politician building a highway though his land ('emenent domain'). He buys land adjacent to the fancy plantation of said politician. The friendly neighbors that owned 1000 empty acres on one side, rather close up, were just good people and could be relied upon to just let Senetor Eau de Bouffon gauze upon his land and enjoy the view at no charge. Guy Done Wrong, creates a Mule-Team class tractor-trailer tractor factory literally next to senator's house, having bought nice neighbor's land, where they just figure, let us scale everything up and sell these for austrualian roadtrains or something. Big, Loud, Deisel. He creates the world's largest industrial automotive testing treadmill and tests his loud semis right next to bad congo man.
-- Achritectural feature: The Hatrium 
+- Achritectural feature: The Haterium. "Join me in the haterium so I can yell at you."
 - [video] In the future, when all this is a bit less raw, we can have the following entertaining skit "on tv": A bunch of white men, of various ages, but none especially young, are milling around somewhere "conservative" being "conservative". They probably are all back-slappers who are skilled in the art of sarcastic-dog-whistling and all that. Real gladhanders, very aw-shucks. Maybe it's a "prayer breakfast" for Senator-Reverend Pat Bouffant, with guest speaker NASCAR driver Dank Mudferts. They are all milling around smiling, getting some sausages (the sausage tray is were all the muz-lim jokes are made) and French pastries (where all the fagit jokes are made), everyone has the identical diaper-load in their jeans. There is camo and monochrome american flags fucking everywhere. Shots of the parking lot show about 3 different makes of pickup trucks, with all kinds of stickers (sssstikerss!). Everyone is wearing a familiar-looking red hat with a familiar-looking white text on the front. From a distance, it's obvious that this is that same mandatory cult garb...except, no. On closer inspections, the white text says other things. As the camera captures some back-and-forth conversations, switching perspective from speaker to speaker, all with [in]sincere smiles, we can see and read the text. The red hats with white text say things like:
   - I was molested by my uncle.
   - I forced my rental Prius to have a fiery accident, to avoid being seen in it.
@@ -367,8 +420,117 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
     - Could well be the Queen's Purse with a different spin (instead of eccentric king).
     - Is there a whole series of these? King's Ransom? King's Rest? ...hapless squire...
 
+* Emacs
+
+** Cracked Nuts
+  - [[https://youtu.be/tw2-rI2bxSg?t=1510][eval: auto-save-hook]]
+  - e.g. ~$PATH~!! --> ~(setenv "ENVAR" "my string")~
+  - ~ibuffer~ -- "d" to set row for deletion, "x" to commit deletions
+  - The ideal authoring set-up-aroo. Probably js something.
+    1. Make some changes.
+    1. Push a button.
+    1. Preview pane, along with showing the usual, pretty, marked-up text, has a neat and unobtrusive way of showing diff-like info. Like: use the diff output species that shows light red/green for changed lines and dark red/green for changed characters /in/ a line. Using that info, just only do:
+      - Where things disappear: [light] red text background. Subtle!
+      - Where things appear: [light] green text background. Subtle!
+
+** Keys
+    - C-M-i :: [[https://www.youtube.com/watch?v=AyhPmypHDEw&t=1240s][org-mode completion at point]]
+    - M-: :: eval-expression !
+    - C-h <LETTER> :: Get help!! ~C-h k <your-mystery-key>~ will, all by itself, describe your mystery key.
+      - k :: describe-key
+      - f :: describe-function
+      - b :: describe-bindings
+    - C-c C-n :: Next heading.
+    - C-c C-p :: Previous heading.
+    - C-c C-f :: Next heading same level.
+    - C-c C-b :: Previous heading same level.
+    - C-c C-u :: Backward to higher level heading.
+    - C-c C-j :: Jump (interactive menu)
+    - M-LEFT :: Demote *current* heading by one.
+    - M-RIGHT :: Promote ''
+    - M-UP :: Move subtree up.
+    - M-DOWN :: '' down
+    - C-c @ :: Mark the subtree at point.
+    - C-c C-x C-w :: Kill subtree
+    - C-c C-x M-w :: Copy subtree to kill ring.
+    - C-c C-x C-y :: Yank subtree from kill ring.
+    - C-x n s :: Narrow buffer to current subtree.
+    - C-x n b :: Narrow buffer to current block.
+    - C-x n w :: Widen buffer to remove narrowing.
+    - C-x ^ :: Make the current window taller. (twin is "shrink-window")
+    - C-x } :: Makes it wider.
+    - C-x { :: Makes it narrower.
+
+*** Helpful Mnemonics
+
+    - C-t :: "Transpose" two characters.
+    - C-p :: "Previous" line
+    - C-n :: "Next" line
+    - M-f :: "Forward" one word
+    - C-M-f :: "Forward" one sentence (or...)
+    - M-} :: Forward one block
+    - M-{ :: Back one block
+
+*** Packages Mode
+
+  - TAB :: forward-button
+  - ESC :: Prefix Command
+  - SPC :: scroll-up-command
+  - ( :: package-menu-toggle-hiding
+  - - :: negative-argument
+  - / :: Prefix Command
+  - 0 .. 9 :: digit-argument
+  - < :: beginning-of-buffer
+  - > :: end-of-buffer
+  - ? :: package-menu-describe-package
+  - H :: package-menu-hide-package
+  - S :: tabulated-list-sort
+  - U :: package-menu-mark-upgrades
+  - d :: package-menu-mark-delete
+  - g :: revert-buffer
+  - h :: package-menu-quick-help
+  - i :: package-menu-mark-install
+  - n :: next-line
+  - p :: previous-line
+  - q :: quit-window
+  - r :: revert-buffer
+  - u :: package-menu-mark-unmark
+  - x :: package-menu-execute
+  - { :: tabulated-list-narrow-current-column
+  - } :: tabulated-list-widen-current-column
+  - ~ :: package-menu-mark-obsolete-for-deletion
+  - DEL :: package-menu-backup-unmark
+  - S-SPC :: scroll-down-command
+  - <backtab>	backward-button
+  - <follow-link>	mouse-face
+  - <remap> :: Prefix Command
+  - / / :: package-menu-clear-filter
+  - / k :: package-menu-filter-by-keyword
+  - / n :: package-menu-filter-by-name
+  - C-M-i :: backward-button
+    
+
+** Org-Mode
+*** Questions
+
+ What the heck is =@kbd{KBD}= (at the bottom of [[https://git.savannah.gnu.org/cgit/emacs/org-mode.git/tree/doc/doc-setup.org][doc-setup.org]])?
+
 * Random
 
+- r/HodlersOnly -- [why would we want this??] Not /just/ reddit, but it would be possible to have a contract that has you deposit N value to be "locked" in the contract (which stores your address as one of these depositors of N). Just having your address listed in this contract provides privileges: for example, talking practical crypto finance nonsense with others who you /know/ also were able to put up N; these people have proven that they have "skin in the game" and therefore their words can be given a /tiny/ bit more weight (if for example your asking for advice). The contract can be super simple and safe and, if folks are not satisfied that the money will be released back to you after X blocks (for example), the contract can include a self-destruct payable address that is widely regarded as "a good use for one's money". It /should/ be possible to tell that this address will not/cannot be used because the contract is super simple and auditable by the casual auditor. The self-destruct address could just be there for window dressing, or to signal: hey, you can tell by looking at the contract that you won't get ripped off, but check out what ultimately happens to the funds in the worst-worst case scenario. Ooor..maybe the self-destruct function can just loop through the addresses and pay them all back proportionally. All that the contract that /I/ am thinking of should do is: record addresses of folks who send N or more to the contract and release it back to them in a finite (short) period of time. Even if it's just for one block, you still "know" that the owner of that wallet has N or more and has interacted with this contract to demonstrate that fact. Maybe the protocol is:
+  1. Sign up for service with usual username/pass...but also provide an ethereum address. You are indicating "I /will/ deposit N to this contract to prove that I on the wallet and have N or more." Once the website/service confirms this fact, you get some kind of elevated privileges ["membership has its privileges"]
+- AbandonedAddresses++: You say "this new key is my new one" and along with the address of the "new" key, you store on the blockchain, permanently and publicly, your secret key!! This seems useful. There's no way you secretly "own" that wallet anymore. Your proof is, you've posted the secret key and users can /confirm/ this fact by looking at the matching wallet address -- "Yep, they are a pair. He is serious." You have proven it. Is it a thing? That wallet better be empty. Since your /new/ wallet address is there too, you can (I think) know with confidence -- "Yep, that's the new him. Or at least it's the intended forwarding address of the current owner of the now-expired key. Maybe this can be an "addendum" to any transaction; you just tack it on with a decorator or something: "If the sender wants to, they can provide me with a pub/sec keypair whose address corresponds to the address being used in this transaction. Send asset A from its current owner X to a new owner B, and then /atomically/, expire X by updating the AA++ contract with the secret, which I have confirmed matches the address. That addr's toast, yo." Or...OR, could we just attach the secret key in the simplest, cheapest way possible to the wallet as "metadata" that is associated with the account. Is there such a thing? Can a wallet have metadata? If it's `sec:XXXXXX...` and by convention, we all know that's the private key, it can just "be understood" that this person is abandoning their address; upon exit, they lit a match and threw it in the puddle of gasoline. /Noh mohr!/ Three possibities:
+   1. Stolen wallet was used to abandon itself but is now useless.
+   1. Wallet owner abandoned _to_ some random address or someone else's (to what end?)
+   1. Wallet owner has declared. "I really have moved to this new address; see?!"
+- Proposed purpose made wallet for: It would be nice if "your wallet" was capable of approving a transaction on your behalf long after you say "ok", but based only on gas prices. "Yes I want this to be sent if gas is X cheap." The wallet says "ok" and watches prices. This is not possible with a typical hardware wallet (and a HW with this feature is too scary to use). It'd be nise, tho. Another neat thing that "would be nice" is if you could 1) give a low, but not crazy gas price and then 2) set a ...5 day transaction expiration value. I don't think that's a thing. But.
+- Good idea, maybe: If you're running a "prediction market" and you're the bookie and you want to know how to set odds, you could start with: Using the most dense, but still accurate prose possible, and thinking of the sentence (statement of fact) as being a number where each word is a symbol (like "2") and the numeric base is count-of-all-words, which will be forever theoretical, but we _can_ estimate. So when asking, "who had '/alec baldwin shot and killed someone/'?", you can estimate the odds of seeing that headline in a fixed period of time would be one in E^6, where E is the count of every English word ever. Unlikely indeed. But "challenger explodes"? -- only one in E^2
+- Good book theme: "Why" (no colons or anything). Much like the word _know_ or _mean_, it's a real nugget. It's something we throw around to our detriment. It seems silly (to most) but, a deep dive into that one word and what's meant by it and the meaning of meaning and... If you had enough chimpanzees: A series of books, the next one being "know". If you're a real nerd you can reveal a /meaningful sentence/ as you publish them in-order (haah. the last book is called "period".) [but how do you agree, "yes, there was that headline today" without requiring an _identical_ headline? Let Al read the headlines and decide?
+- Is there, like, a mathematical world where "how", "why", "what" can be used as "operators" or "predicates" or "primitives"? (blush) Maybe not the actual literal English words, but some clearly defined "primitives". I feel like you could write some nice, simple sentences that ...dunno. literally.
+- Hash/ID encoding scheme that emphasizes human checkability. It should be easy for a human to check the number and compare it to another. This happens in crypto. An "identicon" is helpful. But you've got a "stack" of software that you're trusting, etc etc. Maybe instead, you could have the first N and the last M characters optimized for human confirmability. Heck, forget beginning and all that. Just, what happens if we choose an encoding that uses a character set that's optimized for human eyes (yes I'm sure it's been done)? And make more choices: these two never appear next to each other, Don't use all three of =I=, =1=, =|=, and =l=. Pick one. Output must alternate: roundish character, squarish character (=Q= vs =Y= or =0= vs =^=). Oor... Maybe instead of identicons, there could be a required "font" for (example) Bitcoin addresses. The font's are just unique and optimized for "ease of difference" identification by humans. We could map =7= to some arbitrary symbol: square divided diagonally, one half black, one half yellow. (do fonts ever have color specs?) Of course, this would not be usable at all for /inputting/ addresses (etc).
+- Hotswap.sol -- We need a nice, /simple/ contract+protocol to make buying some stuff from the guy on craigslist with ethcoin more straightforward and not scary like a drug deal. How can we "decentralize" escrow for example? I send you the money but you don't click "accept" (required) until you hand me the suitcase... (HOW!?) Can it be done better than just with cash? Can we do something to make things safer and therefore /appeal/ to the craigslist crowd? This could also apply to a storefront that takes crypto. If you fail to pay me, I cannot run to nanny-state, so how do I feel more comfortable? How do I dial the risk down to 0.0001?
+- FraudPrevention.sol -- does it even make sense?
+- Your crypto credit card: You have a rolling balance. You can run away with it any time, but XYZ(!!), you just pay off the balance regularly just like with a real CC. But this CC is a /magic dao/!! (HOW!?)
 - A shifty, thickly mustachioed white guy in a brown suit with a thick tie and possibly a bit of coke evident on his nose and/or fingers owns a car wash (in the year 2022) with all black employees, who also look like they came from 1979 plays "Car Wash" on a loop, loudly as all of his employees joyously wash the cars. There are no machines here. He is jiving along friendfully with his employees, doing the occasional hip-bump. There is lots of head-bobbing. For some reason the music abruptly stops. Everyone, including whitie, looks perplexed and very gradually more paranoid and angry, as everyone, frozen, looks suspiciously at the other. The black employees, start to get angry at the white guy. "Why the fuck are we out here washing cars for a dollar an hour!?" "I got better things to do than this." "When did I start thinking washing cars was fun?" Now angry white guy is getting defensive and, realizing he is operating a car wash apparently, starts telling people to get back to wor... SUDDENLY THE MUSIC STARTS AGAIN. Instant smiles, scrubbing and hip-bumps, shacka-shacka. (You-need-to-visualize-it-in-the-theater-of-your-mind-while-you-listen-to-the-song is why you think it's "stupid" or "racist")
 - There needs to be a framework that goes-all-the-way-down with regard to all the /possible/ places you could have money, given a single wallet (of any kind, really, but Ethereum in my example). If a hierarchical wallet, you have infinity accounts that could have a balance (I think), but by convention, they are ordered and by convention they are used in order (I think). So checking the first N of those might be a thing (applies to other chains). Then for any one chain species there are many potential places to check: Hardforks, side-chains, L2's, propriaary "semi-decentralized" scams, etc. And there are test networks that may not have "money" but might conceivably have value. And on most chains there are other /types/ of things to look for: Tokens, other contracts, wrapped coins, probably DEXes or some shit. It's super complicated. I doubt there will be "a software" for this, but a framework or an effort to at least clearly document and explain te chaos would be a good first step. It would be nice to have ONE wallet and not have to go bonkers thinking about what, what, what, where, what, why,...were's my money?
 - Some bank-like institution should give away NFTs when you "open an account", like a NFT toaster or an NFT mantle clock.
@@ -383,7 +545,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
   - All the vagueness needs to be scrubbed away but this is the general idea.
 - Which sounds more productive?
   1. As the owner of a mind, introspect the best you can to find out all the tricks and what makes your mind 'tick'. Maybe via some methods or chemicals or, yes, electrical probes you find ways to be ever more productive trying to understand how your mind works. As a "science" or maybe a "discipline". Maybe just an attempt to write down all the ideas: how would you yourself go about finding out how your mind works?
-  1. The owner of a mind uses it to make a bunch of physical tools and instruments to try and discover how the brain (which contains(?) the mind) works.
+  2. The owner of a mind uses it to make a bunch of physical tools and instruments to try and discover how the brain (which contains(?) the mind) works.
 - If you have too fuck with uploading shittons of cunt files to a server somewhere, and this is an ongoing task, maybe maybe there is still a call for a simple piece of network hardware (but not cheap because few people actually have this problem) that intercepts big file uploads, saves them _locally_ and then does the dirty work of making sure that they all eventually (hook or crook) make it to thier destination. Meanwhile, your upload took just a few seconds. Lots of holes in this. Authentication? Encryption? Also if you are using a site that has js code to do something when the upload completes, it will get confused. I think. In any case the UI of the site you're using won't match your computer's conception of what happened. Probably a big mess. Probably even wants to be a browser plugin, sadly. If anything. Maybe a better idea is, when forced to use some browser upload, what things can you do to ensure that it does its thing. One would probably be right in thinking that you can't just close the tab as the progress bar moves along...for example.
 - "Stumbleforth" ...heh lol wat (is there a call for "parody" sites that do silly things with your money?)
 - In addition to creating and using your own ENS system (BTW, it should be easy to find every occurrence of an ENS contract, shouldn't it?), it should also be possible to somehow only ...view...(?) it if your address is on a whitelist..."somehow er other!" It would solve the problem of "where are all the BitTorrent servers with the /Sony/ movies?!" (because those are the best!) If the special club you belonged to was just a contract, it would make organizing all this stuff easier. It is not a "natural smart contract idea" (i.e. it can done without blockchain) but there is the benefit of a one-stop-shop. Egh. =#idonnoisstupid=
@@ -417,17 +579,17 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
     - Confirming "productive" work has been done.
       - We could just have them sign their code with their private key. Proving
 	1. At least THEY signed it. It may only prove that they signed it but they did prove that they are the ones who did the signing.
-	1. If the code, signed by them, passes the smell test for N voters who attest such (or...something), that confirms:
+	2. If the code, signed by them, passes the smell test for N voters who attest such (or...something), that confirms:
 	   1. Code has value (part of their job)
-	   1. Code is original (also part of their job)
+	   2. Code is original (also part of their job)
     - Valuating that work.
       - Github or Git<code>X</code> could offer to cryptographically attest to various stats about the project.
 	- Effective downloads per unique repo path. Total, rate, history, average.
 	- Issue, Wiki, CI/CD, Pull Request activity and such.
 	- If the user has proven org/user account ownership, why can't we just "trust" whatever stats Github can provide. That could be a chainlink "adapter" probably.
-   - It'd be cool if this had a "social" aspect where folks could brows projects, and send "likes" that have a small amount of value...like Line's "stickers" but not a dead-loss :-| ... Your thumbs up could come with 5 microtokens. You could have a "slider" to adjust your like value...you could have a lot of things. But it could be thought of as a "game" if it's only using pennies a day or something. These token values (maybe/hopefully just a fraction of The One Token) will float in value just like any crypto asset, which, if everyone is a true belieber, should also go up in _desirability_ with time. Kind of like reddit, kind of like etsy, kind of like hot-or-not...but hopefully fun and productive. Like a thumbs up on Github that's monkey-patched in!!? how hard is that?!
-   - Maybe the plugin widget has a NxM set of pixels that the dev has control over. It can be periodically updated with anything at all, but imagine download graphs and various "proofs" of how useful the project is. Just voting on "it's cool" will not encourage the right things to happen.
-   - How the heck do you measure someone's work's value!? Age old question. Can you do it cryptographically? If it's an EVM contract, it can be analyzed for "originality" or something. But adoption has to drive it. That's objective. Why can't we measure that in a "good enough" way? Involving humans as little as possible.
+  - It'd be cool if this had a "social" aspect where folks could brows projects, and send "likes" that have a small amount of value...like Line's "stickers" but not a dead-loss :-| ... Your thumbs up could come with 5 microtokens. You could have a "slider" to adjust your like value...you could have a lot of things. But it could be thought of as a "game" if it's only using pennies a day or something. These token values (maybe/hopefully just a fraction of The One Token) will float in value just like any crypto asset, which, if everyone is a true belieber, should also go up in _desirability_ with time. Kind of like reddit, kind of like etsy, kind of like hot-or-not...but hopefully fun and productive. Like a thumbs up on Github that's monkey-patched in!!? how hard is that?!
+    - Maybe the plugin widget has a NxM set of pixels that the dev has control over. It can be periodically updated with anything at all, but imagine download graphs and various "proofs" of how useful the project is. Just voting on "it's cool" will not encourage the right things to happen.
+    - How the heck do you measure someone's work's value!? Age old question. Can you do it cryptographically? If it's an EVM contract, it can be analyzed for "originality" or something. But adoption has to drive it. That's objective. Why can't we measure that in a "good enough" way? Involving humans as little as possible.
 - Does [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate][this stuff]] actually run on the browser? If so, could you fetch a wasm file with JS and "install" and use it? It would allow bypassing of all the js "bindgen" glue code required. One succinct, obvious bit of JS code could be all that's required when "bundling" all your logic. Your website could be only "some http" and "some simple javascipt code" that could bootstrap itself into just about anything (right??)
 - A "fun" thing to do would be to make a sort of browser plugin factory, that lets you:
   - Make a small edit to someone's CSS (or JS...)
@@ -455,9 +617,9 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - Seems like MM as a "provider" is different from, e.g. http network providers in an important way: some thing or other about MM as a provider makes it easier to compile to wasm. Something about ...networking? ...threading? There are issues about it in the =rust-web3= Github repo. Sooo... would there be usefulness in a MM "proxy"? It behaves just like MM but talks to other provider on the other end.
 - Is there a task that is
   1. Is something that only a human can reasonably do. Most would agree "it'll be decades before a /machine/ can do it!".
-  1. Can be easily validated by a computer.
-  1. Assumes a closed system where the computer and the human start off with the same knowledge (I think.)
-  1. This could be a sort of proof-of-human-work for BT. If the work had actual value outside of BT, easy incentivization and bootstrapping.
+  2. Can be easily validated by a computer.
+  3. Assumes a closed system where the computer and the human start off with the same knowledge (I think.)
+  4. This could be a sort of proof-of-human-work for BT. If the work had actual value outside of BT, easy incentivization and bootstrapping.
 - See if you can adapt [[https://github.com/awalgarg/netmonitor/blob/master/static/background.js][this]] to notify you when someone downloads a =*.wasm= resource. It would be cool to know "who's using wasm?"
 - A genuinely weird thought: family metaphors are used to describe hierarchy (thinking mostly of filesystems here). Parent-child, sibling, grandparent... But this is a-sexual. Two files are siblings. Not brother/sister. Parent is "parent" not "mother" or "father"....what do sexual filesystems look like? (waka-waka).
 - > Another neat feature of Cargo is that you can run the cargo doc --open command, which will build documentation provided by all of your dependencies locally and open it in your browser.
@@ -471,17 +633,17 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - What about Conway's Game of Life meets weird (penrose?) tiling? i.e., non-square tiles with n neighbors.
 - (Would there be a use for...) Contracts that live on ethereum and interact with each other. I mean, let me re-phrase: Have an array/collection/library of /simple/ contracts that are not much more than transistors, say, each with an address (obviously). You could of course do arbitrarily complex things with this, and the "clock" would only tick at whatever rate blocks are created, but
   1. It'll get faster, bro.
-  1. It'll get cheaper, bro.
-  1. Would the property of "slowness" be used to some kind of advantage?
-  1. I call this "layer -1" (because I am told layer zero is meatspace.)
-  1. If this is the cpu/memory, what is the interface?
-  1. Recall, these contracts can create arbitrarily many more contracts.
-  1. Could they exist solely for the purpose of foiling bad actors (mev?)
-  1. Could they grow like a fungus and destroy all life forms? (no, because "gas". But really? It'll necessarily get cheaper. It's an ever-changing balance: cost/reward.)
-  1. (Related?) Game of life on the block chain:
+  2. It'll get cheaper, bro.
+  3. Would the property of "slowness" be used to some kind of advantage?
+  4. I call this "layer -1" (because I am told layer zero is meatspace.)
+  5. If this is the cpu/memory, what is the interface?
+  6. Recall, these contracts can create arbitrarily many more contracts.
+  7. Could they exist solely for the purpose of foiling bad actors (mev?)
+  8. Could they grow like a fungus and destroy all life forms? (no, because "gas". But really? It'll necessarily get cheaper. It's an ever-changing balance: cost/reward.)
+  9. (Related?) Game of life on the block chain:
      1. You deploy contracts that have x, y coordinates and aliveness state, setting, "alive" on some to feed the initial pattern.
-     1. You gas up some contract that will pay for all of this.
-     1. Watch things unroll with each block (profit!)
+     2. You gas up some contract that will pay for all of this.
+     3. Watch things unroll with each block (profit!)
 - Blockchain stuff is iterative. state n+1 is derived from state n (and nothing else). It sure seems like there should be a lot of behavior that can be ...analyzed (?) with "chaos theory". Blockchain is a great big [[https://en.wikipedia.org/wiki/Recurrence_relation][recurrence relation]], which already has billions of human-hours of study and results that could be applied, but no one's thought to...?
 - What happens if, on contract creation, we use the address of a wallet we control? If it were allowed and worked, that would give me the private key for a contract! Why would I want that!?
 - Can one _convert_ an Ethereum wallet address to a contract address? Can a wallet become a contract? Visa versa? What happens to the private keys of a contract? What can you do if you produce a contract with a private key and then 'use' it?
