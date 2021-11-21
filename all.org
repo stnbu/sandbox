@@ -420,6 +420,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
     - Could well be the Queen's Purse with a different spin (instead of eccentric king).
     - Is there a whole series of these? King's Ransom? King's Rest? ...hapless squire...
 
+# <<<<<<< HEAD
 * Emacs
 
 ** Cracked Nuts
@@ -539,6 +540,110 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - How hard would it be to add a "get out of my way" command to my roomba? Sure seems nearly smart enough.
 - Chevy -v Ford -- The "narcism of small differences" that always boils down to /two/ opposing choices have always, I mean since toddlerhood, /always/ fucking irked me. You know exactly what I'm talking about. Here's an observation, both have their bragging points, but they necessarally both have an equally heavy flaw: "If it is so great, why then, good sir, do you sill have any competition? The fact that there is still any question about wich-is-duh-best is a /bragging/ point for you? Oh, because it gives you an opportunity to go on about how much /they/ suck. Yay, your pointless game has reached equilibrium!!"
 - `DitchDigger.sol` -- a LoL Sol. Crypto whales and other large aquatic mamals fund people to do literally pointless stuff. Maybe you have to log in every day and type in a number. Egh. There is something down below here about FlashMob.sol ... which would be funner.
+# =======
+* My best ideas refined for Rahul, since he knows a thing or two.
+
+** Your wallet as your crypto key pair
+
+PGP/GPG was not a success. Now, because they are financially incentivized, crypto users in their tens of millions, all around the world are taking special care of their keys, buying specialized hardware to keep them safe, watching where backups go, even swapping out keys when they /suspect/ their current key might have been compromised /in theory/.
+
+I lost a lot of sleep worrying about these PGP keys that I used once every five months and for which there was really not much of a penalty for misplacement...or losing control of them. The fact that your keys, and the keys you could find and use that /supposedly/ matched up with an individual, were all /highly suspect/ made the "trust web" very flimsy and flacid. That's at least part of it. If you set up PGP for grandma, grandma never never never used it even once, for any given grandma. And if she /had to/ she would have no idea what became of the keys. Lost cause, really. If you're a hardcore nerd, you could and still can play crypto with other hardcore nerds.
+
+Now I've got a safe key pair (several in fact). I've even got my name attached to one in a global, trustless manor: =mikeburr.eth=
+
+I've also got tons and tons of tooling surrounding my key pair and its use.
+
+I can "sign" data with the click of a few buttons and know that I can prove that it was /I/ who signed it. I know with some confidence that I'll have that key pair solely and safely in my possession for a long time. Folks that resolve mikeburr.eth will get the (almost) public key that corresponds to /me/. They can use that (a complete stranger!) to easily encrypt data only to me (yes, some very simple tooling is missing here).
+
+Also, blockchain networks have lots of clever ways for nodes to find each other. If a node wants to send a message to a single node or to a group of nodes /privately/ and efficiently, it can do so. This is one step away from me and my wallet, but it sure seems like at minimum the same kind of peer-discovery/networking stuff that Ethereum nodes use could also be used for communication between wallet-havers. Ssomehow. Again, with not too much more tooling. There exist libraries that do all the heavy lifting for this kind of thing. It's already used by the Ethereum network. It's possibly not a huge step to even form a completely separate network.
+
+If we had these two things: 1) encryption using crypto keys and 2) messaging as described above, we could make a kick-ass p2p-encrypted p2p messaging system on top of the existing Ethereum infrastructure. All that would be required is adoption.
+
+Maybe as extra credit... since the above-described system could exist as a browser plugin (for example, use the plugin to sign text, metamask pops up to do the actual signing -- extension using extension), the same browser plugin could also examine all of the documents (html) you look at all day, identify signed or encrypted data (in some distinct format). If it's signed by someone else, it can let you know the address of the signer. If it's encrypted to /YOU/, the browser plugin can decrypt it and plop it back in as plain text, as appropriate (with a visual cue to the effect of: "Hey, this was encrypted to you. Only you can see the text in this green-bordered box."
+
+Someone pointed out [[https://eips.ethereum.org/EIPS/eip-712][this]] EIP, which might be somewhat central to all this.
+
+** There has got to be a way to "forward" addresses!
+
+As an exercise, I worked on a [[https://dapps.unintuitive.org/abandoned-addresses/][toy dapp]] to solve the problem of declaring your address "abandoned". A better thing to do would be to allow /forwarding/ in a way that is simple and universally understood.
+
+This might be better as an ERC-type thing. A "convention". For example, if you just somehow ('as metadata') attached your /private/ key to your address, on the public blockchain, that could serve as a pretty obvious way of declaring "this address abandoned".
+
+   1. People could easily confirm: yes, this /is/ the private key for this address.
+   1. It's dead-simple.
+   1. "metadata"? Got to read some docs. Surely! If not, it can just be a contract, or the above silly dapp.
+
+Forwarding is complicated.
+
+   * What about loops? Easy, right? -- just disallow forwarding to a forwardED address...? This assumes a single-source-of truth, though. What if there are two contracts that claim to have a list of forwards?
+   * Should logic that /was/ going to use your old address now just verbatim plug in your new address? Everywhere? Without asking you?
+
+Maybe the wallet holder deploys thier own contract that provides all of the forwarding logic. How would "an address" refer to this one contract? Metadata again?
+
+Uses:
+
+- Someone "air drops" something to an old address you no longer use. They pick up on the forward and use your new address.
+- Someone uses your old address to buy cocain prostitutes. You can point to the forwarding -- "See!? I signed this three years ago. Not my key."
+- It's hard to imagine ENS respecting any of this. They may already have overlapping plans. But, address forwarding could be thought of as an HTTP redirect. Some other "layer" can honor the forward. [BTW, should you have to have an ENS record for any address you end up needing to "forward"?]
+- Contracts! Again, some other "layer" is doing the forwarding. If you sign an address using Metamask, then Metamask would need to do the forwarding. Eth-the-network cannot and will not ever do this.
+
+BTW, if an "ENS" is an "NFT", perhaps "forwarding" wants to be some kind of NFT? Why? I do not know. Why are ENS records NFTs? I am not sure! My only point: look into it, Mike.
+
+** The Bazaar
+
+Buyers and sellers need to be connected!! That's all that is missing. There's a whole army of rich teenagers and nothing for them to buy!
+
+Make it simple: "Start a web page".
+
+You could get a lot of milage out of a very simple open database that contains only one table with three collums:
+
+- Ether address
+- "Location" (in whatever sense)
+- Data describing good/service.
+
+You could get a lot of milage /especially/ if you had some kind of way to message the address holder in the first column directly using p2p encryption (like magic).
+
+A huge missing piece is some kind of safe [[https://mburr.bearblog.dev/bt-escrow/][escrow]] mechanism. That really might be /the/ piece.
+
+OpenBazaar is worth a look, but it has kind of self-destructed. Looks like China owns it now.
+
+There are others. Let's all go to jail!
+
+** Make it easier for employers to pay salaries with crypto
+
+1. This is illegal
+1. So what?
+
+** Make a website or DAO or community whose explicit sole focus is tax evasion.
+
+1. This will become illegal
+1. Keep checking your law-feed
+
+** In light of where all this is going...
+
+Not an idea; more observations:
+
+- Chainlink has a very pluggable, fun ecosystem. Making your own Oracle is easy.
+- Polygon has a really amazing stack. If <project> belongs on L2, Polygon appears to be the bees knees.
+- I like Rust.
+- Any idea that somehow /spans/ chains, automatically gets 10 extra Success Points. Polygon is already such an idea.
+- The Dao of Mike: I think that purposely hunting for /profitable/ ideas is a mistake, even if profit is the goal (at least in crypto-space.)
+
+* Random
+
+- L1 is a busy highway. If you are not going to be making an overpass or a massive rest area with fuel for trucks, then you probably should be involving L2-ish type stuff. That said, L1 is way simpler and leverage for projects on L1 will be /greater/. It might be a more peiceful place to do business (despite being a busy highway.)
+- How can you make /yourself/ undeepfakeable? There's going to be an unending arms race between "make better deepfakes" and "detect better deepfakes". It's going to be another "war on" with no winners (hopefully undeclared; I don't see the state doing anything ground breaking in this field.) A better strategy, I think, would be to try to find ways to make /yourself/ undeepfakable. For example (rando, crazy, total gedankenexperiment) what if every time you made a statement of opinion (or maybe any "statement"), a little piece of hardware in your throat went "skreeech" -- a sound that can be decoded (lots of redundancy, like a modem from '95). "I think the people who do not like black people should be hanged" would be followed by a /signature/. And if you were the voice-signing guy, the above could not be altered to make you sound racist. Yes, crazy /and/ stupid. But are there less crazy things? Clever tattoos? LEDs flashing under the skin? 8-bit signature encoded in nose-twitches? If you had your face surgically altered to look nothing like a human face (great for picking up chicks), then the face-mapping bots would have to be specially trained for /your/ face. Which would definitely be done quickly. Trolls.
+- Even better and so practical, it gets its own bullet point: If you have a press conference, sure, let all the many microphones and cameras and journalists come with BUT, you (or your "organization") bring your own hardware. You have your own mic, your own camera, and lots of computing. A "display" of some sort displays a QR code pointing to the "official" location of the stream. Folks can "bleep" this QR code and go straight to your stream, which is necesarally delayed by a bit (maybe less than a second? hopefully?) Your magic hardware rig is recording and streaming /to/ some place. In the stream is the video and, periodically, digital signatures. Your rig signs automatically at intervals. It signs the last 10 minutes ever 1 minute...it signs the last minute every 5 seconds...whatever works best. The point is, you have "coverage", all your blatherings about "what we ought to do about" are signed. One can alter and create something, but that's not an "official press conference". It's only "official" if president Honest Bob brings his crypto rig and creates a corresponding stream. If some organization things Honest Bob is playing games, they can bring their own rig and using their own Highly Respected keypair, they can broadcast a signed stream from that same press conference. You can play the two side-by-side, note the differences, note that they were both signed, ponder about the credibility of one key vs the other...
+- Forget about "gas" specifically; all crypto transactions "cost" something. Importantly they cost the signer something. As things get more complex, it seems like there will always be a call for "optimizing", even if it's cheap, some big organization will want optimizatin because of their volume and time horizon. So: this needs to be mechanized, I think. And it is a /network/ of options. You could route transactions all over the place, hopping from chain to chain... maybe there is a path-optimizer out there. Maybe it can "search a space" of paths from A to B. Some /thing/ should be able to examine all the chains and their connections (if relevant to transaction), understand the cost of this and that (which is always application-specific), and try to find the "shortest" path. UPDATE: if you could include CEX fees in here, it'd be much more helpful.
+- RememberTheMilk.sol -- A contract stores blocknumber + ipfshash pairs. When blocknumber is the current block number, we know or "any compatible system knows": now is the time to process the data at ipfshash. Simple system #1 is RememberTheMilk.sol, where a host will watch the block chain send the contents of ipfshash to "your email" (where) for zero or more ipfshash's. ipfshash could instead contain something "executable" in some sense. Why? ...well, an eggtimer is not exciting, but it's useful.
+- Why can't blockchain project A store some checkpointing information on blockchain project B? For example, if I could get (forgets name) the data necessary to bootstrap an Ethereum node (without starting from genesis, is the point) from both Bitcoin and Solana, and then only have to calculate the last 20 blocks... can't I just forget about all the history before that? Can't we just chain these chains together for added safety, with no judgment? For selfish reasons?
+- What if you could safely swap say... gmail accounts with a stranger? What if you could swap a bunch more...like banks!!?... There MUST be a way of swapping two accounts that use username/password. MUST MUST. I suspect that the brand new "trustlesss" ecosystem can facilitate this. You could also talk in terms of exchanging money. YOU give up your gmail account plus some amount of money; positive or /negative/, in exchange you get someone else's account.
+  - You want to fake your own death.
+  - You are twelve and are able to get an account with that score in, like, a day.
+  - You want to pretend to be a 90 year old black man (substitude any age, race and gender you like...)
+  - You want to see what kind of interesting recommendation someone else's youtube gives
+  - You want to use netflix, just a bit, and someone has paid for a year and plans to throw away the account afters. (you just /pay/ in this case?)
+# >>>>>>> 4dabe7ec3ffebaef35c6ea69e6d95d01ab31579e
 - [100% obvious and already thought of 9000 times] It seems like, in addition to "making money" by hooking up a micro-payment system to something like Stackexchange would have a much /bigger/ (compare this to getting paid to suffer through extra ads or whatever) impact by incentivizing good answers and making it (more) possible for me to just pay, possibly "big" money and throw a question out on SE and expect to get an answer. It would cause an increase in overall engagement (maybe some CS school dropout is smart but frustrated and now needs an income! bigger pool.), raise the quality of answers (which is damned good already), and generally cause all kinds of compounding growth of SE quality and usefulness (again, both amazing already, which is amazing). Can something like this be tacked onto something entirely without the cooperation of the site/system? As in, a browser plugin that
   - For the answerer: Gives a place to add a pay address and connect it to their account.
   - For the questioner: Gives a place to enter a quantity and press the "thanks!" button.
@@ -546,7 +651,7 @@ And don't fucking judge me. So help me, if you judge me, I will judge you back S
 - Which sounds more productive?
   1. As the owner of a mind, introspect the best you can to find out all the tricks and what makes your mind 'tick'. Maybe via some methods or chemicals or, yes, electrical probes you find ways to be ever more productive trying to understand how your mind works. As a "science" or maybe a "discipline". Maybe just an attempt to write down all the ideas: how would you yourself go about finding out how your mind works?
   2. The owner of a mind uses it to make a bunch of physical tools and instruments to try and discover how the brain (which contains(?) the mind) works.
-- If you have too fuck with uploading shittons of cunt files to a server somewhere, and this is an ongoing task, maybe maybe there is still a call for a simple piece of network hardware (but not cheap because few people actually have this problem) that intercepts big file uploads, saves them _locally_ and then does the dirty work of making sure that they all eventually (hook or crook) make it to thier destination. Meanwhile, your upload took just a few seconds. Lots of holes in this. Authentication? Encryption? Also if you are using a site that has js code to do something when the upload completes, it will get confused. I think. In any case the UI of the site you're using won't match your computer's conception of what happened. Probably a big mess. Probably even wants to be a browser plugin, sadly. If anything. Maybe a better idea is, when forced to use some browser upload, what things can you do to ensure that it does its thing. One would probably be right in thinking that you can't just close the tab as the progress bar moves along...for example.
+- If you have to fuck with uploading shittons of cunt files to a server somewhere, and this is an ongoing task, maybe maybe there is still a call for a simple piece of network hardware (but not cheap because few people actually have this problem) that intercepts big file uploads, saves them _locally_ and then does the dirty work of making sure that they all eventually (hook or crook) make it to thier destination. Meanwhile, your upload took just a few seconds. Lots of holes in this. Authentication? Encryption? Also if you are using a site that has js code to do something when the upload completes, it will get confused. I think. In any case the UI of the site you're using won't match your computer's conception of what happened. Probably a big mess. Probably even wants to be a browser plugin, sadly. If anything. Maybe a better idea is, when forced to use some browser upload, what things can you do to ensure that it does its thing. One would probably be right in thinking that you can't just close the tab as the progress bar moves along...for example.
 - "Stumbleforth" ...heh lol wat (is there a call for "parody" sites that do silly things with your money?)
 - In addition to creating and using your own ENS system (BTW, it should be easy to find every occurrence of an ENS contract, shouldn't it?), it should also be possible to somehow only ...view...(?) it if your address is on a whitelist..."somehow er other!" It would solve the problem of "where are all the BitTorrent servers with the /Sony/ movies?!" (because those are the best!) If the special club you belonged to was just a contract, it would make organizing all this stuff easier. It is not a "natural smart contract idea" (i.e. it can done without blockchain) but there is the benefit of a one-stop-shop. Egh. =#idonnoisstupid=
 - A windowing idea: there be an ACL system that lets you decide just how much freedom apps have when running on your windows system. Maybe that's like in all of them. It probably is. But if the user had more direct access to that stuff, you could choose between "only make very sane windows with buttons and text" and the other extreme of "let an app create destroy (still only their own) windows at will and paint literally anything it them."
