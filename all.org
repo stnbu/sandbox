@@ -816,4 +816,13 @@ Not an idea; more observations:
 
 Not garbage, but definitely needs neatening/work.
 
+** Mike: You made a goddamn mess.
+
+- Don Rickles really seemed to have pushed the edge with regard to "racist comedy but-just-kidding". Like, was he? I guess: the whole audience wants him to stop and is cringing but he keeps going, which /is its own/ schick. Anyway, PBUH. A funny (cartoon?) skit would be: Rickles-like comedian is on a talk show next to a black guest (yes, like on Letterman with DINzle) and he's making increasingly overtly racist jokes. Really, really, going there relentlessly. Black guest laughs along with increasingly exaggerated hilarity. "Oh, I just can't! Oh, you!" and then with no transition suddenly snaps and beats the fuck out of Rickles-like comedian (a la Rick and Morty).
+Now I've got a safe key pair (several in fact). I've even got my name attached to one in a global, trustless manner -- =mikeburr.eth=
+- Contracts! Again, some other "layer" is doing the forwarding. If you sign an address using Metamask, then Metamask would need to do the forwarding. Eth-the-network cannot and will not ever do this. Upgrading contracts is scary and brittle. This would be a dead-simple "upgrade" mechanism that uses the same mechanism to "forward" account addresses.
+- Blockchain "education" and/or "onboarding" would be a neat and 'rewarding' place to be. I think. Lower technical requirements. Just smile and sell the textbooks. A learning experience that is "fully integrated" into all the stuff being taught is nice. e.g., in order to participate in class number =n=, you must have a multi-sig key (which lesson =n-1= covered.)
+- I believe that if you (even with the same wallet) deploy a contract on Ethereum mainnet, the contract address you end up with is "random". It may be deterministic and comprehensible, but you have no control over which one you are going to get, and if you perform the identical steps with the identical contract with the same wallet, you will get a random, and totally different address than you did with mainnet. If testnets are for testing, is there a "trick" that would allow contract addresses to match the corresponding mainnet address? One thing: what you'd really want is to deploy on testnet and then conveniently get the same contract address on mainnet, and if mucking about is required, I doubt that'll swing on mainnet. Why? Because test tooling can be simplified [which is probably not worth doing whatever it is I'm talking about.]
+
+
 #+INCLUDE: "./uncurated.org"
