@@ -641,6 +641,9 @@ Not an idea; more observations:
 
    Someone can send a copy of everything they post on this secret forum, but no one will know if it's accurate until after block =n=. 
 
+*** The rest
+
+- /The Sieve of Modern Number Theory/ or /Booring Numbers/ -- Wat would happen if (excluding, say "the evens" and "the odds" and "the multiples of prime $p$) you removed all of the "interesting" numbers from the number line, leaving only the /uninteresting/ numbers...? (and what the hell does that mean?) Or: "what is the most uninteresting finite number greater than 8?"
 - Could some kind of fancy contract plus a web UI exist to make it more plausible to just hand someone a hardware wallet, have them plug it in (usb), go to a website (on their computer that they trust) and actually convince them that they really are holding $X, as shown on the website. Signatures. Something? 
 - =Burn.sol= (is this a thing). Widespread use of =payable(address(0)).transfer(1)= could be made more efficient by "trustless batching": make an obvious contract that just collects....... this doesn't gain us anything does it...?
 - Make a python toy: You can use =python -m trace -t foo.py= to print executed lines. Can you print them with leading spaces?? Because if you can, the output should be a program that 1) works and 2) is only the "path" that you took through the program. Especially useful: if you are trying to understand an impossible codebase, do something simple, saving "executed lines with leading spaces" to a file. You can execute just that and disregard all the noise, annotate, yadda yadda. You can then do something slightly less simple, repeat.
