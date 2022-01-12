@@ -1,4 +1,8 @@
 
+def magic_map(n):
+
+    if n < 28:
+        
 class X:
 
     cache = {}
