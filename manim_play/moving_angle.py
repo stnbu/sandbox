@@ -5,35 +5,35 @@ class MovingAngle(Scene):
         rotation_center = LEFT
 
         theta_tracker = ValueTracker(110)
-        line1 = Line(LEFT, RIGHT).set_color(BLUE)
-        line_moving = Line(LEFT, RIGHT)
-        line_ref = line_moving.copy()
-        line_moving.rotate(
+        blue_line = Line(LEFT, RIGHT).set_color(BLUE)
+        green_line = Line(LEFT, RIGHT).set_color(GREEN)
+        red_line = green_line.copy().set_color(RED)
+        green_line.rotate(
             theta_tracker.get_value() * DEGREES, about_point=rotation_center
         )
-        a = Angle(line1, line_moving, radius=0.5, other_angle=False)
+        arc = Angle(blue_line, green_line, radius=0.5, other_angle=False).set_color(ORANGE)
         tex = MathTex(r"\theta").move_to(
             Angle(
-                line1, line_moving, radius=0.5 + 3 * SMALL_BUFF, other_angle=False
+                blue_line, green_line, radius=0.5 + 3 * SMALL_BUFF, other_angle=False
             ).point_from_proportion(0.5)
         )
 
-        self.add(line1, line_moving, a, tex)
+        self.add(blue_line, green_line, arc, tex)
         self.wait()
 
-        line_moving.add_updater(
-            lambda x: x.become(line_ref.copy()).rotate(
+        green_line.add_updater(
+            lambda x: x.become(red_line.copy()).rotate(
                 theta_tracker.get_value() * DEGREES, about_point=rotation_center
             )
         )
 
-        a.add_updater(
-            lambda x: x.become(Angle(line1, line_moving, radius=0.5, other_angle=False))
+        arc.add_updater(
+            lambda x: x.become(Angle(blue_line, green_line, radius=0.5, other_angle=False))
         )
         tex.add_updater(
             lambda x: x.move_to(
                 Angle(
-                    line1, line_moving, radius=0.5 + 3 * SMALL_BUFF, other_angle=False
+                    blue_line, green_line, radius=0.5 + 3 * SMALL_BUFF, other_angle=False
                 ).point_from_proportion(0.5)
             )
         )
