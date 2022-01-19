@@ -16,7 +16,7 @@ class MovingAngle(Scene):
             Angle(
                 blue_line, green_line, radius=0.5 + 3 * SMALL_BUFF, other_angle=False
             ).point_from_proportion(0.5)
-        )
+        ).set_color(PURPLE)
 
         self.add(blue_line, green_line, arc, tex)
         self.wait()
