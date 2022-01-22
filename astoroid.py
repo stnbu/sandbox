@@ -38,10 +38,6 @@ lines = []
 bar = root
 line = []
 
-def taint(arr):
-    arr.m += Decimal(0.01)
-    return arr
-    
 while True:
     ap.append(bar)
     if bar is None:
@@ -54,11 +50,9 @@ while True:
         end = p(bar.f + bar.modulus)
         end.m = bar.m
         end.f = bar.f
-        taint(end)
         line.append(end)
         lines.append(line)
         start = p(next_.f)
-        taint(start)
         line = [start]
     bar = next_ # last line
 
