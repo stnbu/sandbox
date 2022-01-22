@@ -18,12 +18,12 @@ class ModularDecimal:
             next_ = current.get_next()
             line.append(current)
             if next_ is not None and next_.mm != current.mm: # assumes positive monotonic
-                end = self.__class__(current.f + current.modulus)
+                end = self.__class__(current.f + current.modulus, self.modulus)
                 end.mm = current.mm
                 end.f = current.f
                 line.append(end)
                 lines.append(line)
-                start = self.__class__(next_.f)
+                start = self.__class__(next_.f, self.modulus)
                 line = [start]
             current = next_
         return lines # we can/should generator this mofo
@@ -55,7 +55,7 @@ for n in range(int(0*m), int(300*m), int(1.1*m)):
     previous = current
     if root is None:
         root = current
-        
+
 ap = []
 val = root
 while True:
