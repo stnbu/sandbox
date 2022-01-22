@@ -34,21 +34,17 @@ for n in range(int(0*m), int(300*m), int(1.1*m)):
     point = foo
 
 ap = []
-bar = root
-ccc = 0
-while bar is not None:
-    ap.append(bar)
-    bar = bar.get_next()
-
 lines = []
 bar = root
 line = []
 while True:
+    ap.append(bar)
     if bar is None:
         break
     next_ = bar.get_next() # first line
     if next_ is None:
         break
+    line.append(bar)
     if next_.m != bar.m:
         lines.append(line)
         line = []
