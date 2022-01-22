@@ -1,7 +1,6 @@
 from decimal import Decimal
 
 class p:
-
     modulus = Decimal(10)
 
     def __init__(self, x):
@@ -38,15 +37,11 @@ lines = []
 bar = root
 line = []
 
-while True:
+while bar is not None:
     ap.append(bar)
-    if bar is None:
-        break
-    next_ = bar.get_next() # first line
-    if next_ is None:
-        break
+    next_ = bar.get_next()
     line.append(bar)
-    if next_.m != bar.m: # assumes positive monotonic
+    if next_ is not None and next_.m != bar.m: # assumes positive monotonic
         end = p(bar.f + bar.modulus)
         end.m = bar.m
         end.f = bar.f
@@ -54,23 +49,11 @@ while True:
         lines.append(line)
         start = p(next_.f)
         line = [start]
-    bar = next_ # last line
+    bar = next_
 
 def eq(a, b):
     diff = abs(float(a) - float(b))
     return diff < 0.0001
-
-
-"""
-In [279]: ap[10]
-Out[279]: <9.900> (r=9.900, f=0.000, m=0.000)
-
-In [280]: ap[11]
-Out[280]: <11.000> (r=1.000, f=10.000, m=1.000)
-
-In [281]: ap[12]
-Out[281]: <12.100> (r=2.100, f=10.000, m=1.000)
-"""
 
 x = ap[10]
 assert eq(x.x, 9.9)
@@ -89,4 +72,3 @@ assert eq(x.x, 12.1)
 assert eq(x.r, 2.1)
 assert eq(x.f, 10.0)
 assert eq(x.m, 1.0)
-
