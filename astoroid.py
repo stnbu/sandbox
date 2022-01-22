@@ -39,13 +39,24 @@ ccc = 0
 while bar is not None:
     ap.append(bar)
     bar = bar.get_next()
-    print('.', end='')
-print('')
+
+lines = []
+bar = root
+line = []
+while True:
+    if bar is None:
+        break
+    next_ = bar.get_next() # first line
+    if next_ is None:
+        break
+    if next_.m != bar.m:
+        lines.append(line)
+        line = []
+    bar = next_ # last line
 
 def eq(a, b):
     diff = abs(float(a) - float(b))
-    if diff > 0.0001:
-        raise AssertionError
+    return diff < 0.0001
 
 
 """
@@ -60,20 +71,20 @@ Out[281]: <12.100> (r=2.100, f=10.000, m=1.000)
 """
 
 x = ap[10]
-eq(x.x, 9.9)
-eq(x.r, 9.9)
-eq(x.f, 0.0)
-eq(x.m, 0.0)
+assert eq(x.x, 9.9)
+assert eq(x.r, 9.9)
+assert eq(x.f, 0.0)
+assert eq(x.m, 0.0)
 
 x = ap[11]
-eq(x.x, 11.0)
-eq(x.r, 1.0)
-eq(x.f, 10.0)
-eq(x.m, 1.0)
+assert eq(x.x, 11.0)
+assert eq(x.r, 1.0)
+assert eq(x.f, 10.0)
+assert eq(x.m, 1.0)
 
 x = ap[12]
-eq(x.x, 12.1)
-eq(x.r, 2.1)
-eq(x.f, 10.0)
-eq(x.m, 1.0)
+assert eq(x.x, 12.1)
+assert eq(x.r, 2.1)
+assert eq(x.f, 10.0)
+assert eq(x.m, 1.0)
 
