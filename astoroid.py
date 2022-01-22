@@ -37,6 +37,11 @@ ap = []
 lines = []
 bar = root
 line = []
+
+def taint(pnt):
+    pnt.m += Decimal(0.001)
+    return pnt
+    
 while True:
     ap.append(bar)
     if bar is None:
@@ -46,8 +51,20 @@ while True:
         break
     line.append(bar)
     if next_.m != bar.m:
+        """
+        Out[324]: <10.0000> (r=0.0000, f=10.0000, m=1.0000)
+        In [325]: fake_last = p(L.m + L.modulus)
+        In [326]: fake_last.m = L.m
+        """
+        end = p(bar.f + bar.modulus)
+        end.m = bar.m
+        taint(end)
+        line.append(end)
         lines.append(line)
-        line = []
+        #start = p(bar.m + )
+        start = p(next_.f)
+        taint(start)
+        line = [start]
     bar = next_ # last line
 
 def eq(a, b):
