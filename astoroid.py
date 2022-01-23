@@ -2,17 +2,40 @@ from decimal import Decimal
 from collections import namedtuple
 from manim import *
 
-ModularNumber = namedtuple("ModularNumber", ["n", "r", "f", "mm"] )
+class ModularNumber:
+    def __init__(n, modulus, **kwargs):
+        modular_point = []
+        for n in point:
+            modular_number = ModularNumber(n)
+            modular_number.r = modular_number.n % modular_number.modulus
+            modular_number.f = modular_number.n - modular_number.r
+            modular_number.mm = modular_number.f // modular_number.modulus
+            modular_point.append(modular_number)
+        for key, value in kwargs:
+            if key not in [a for a in dir(self) if not a.startswith('_')]:
+                raise ValueError
+            setattr(self, key, value)
+        return modular_point
 
-def get_modular_point(point, modulus):
-    modular_point = []
-    for n in point:
-        modular_number = ModularNumber(n)
-        modular_number.r = modular_number.n % modular_number.modulus
-        modular_number.f = modular_number.n - modular_number.r
-        modular_number.mm = modular_number.f // modular_number.modulus
-        modular_point.append(modular_number)
-    return modular_point
+# def iter_lines(seq):
+#     line = []
+#     lines = []
+#     current = self
+#     seq = list(seq)
+#     for i, current in enumerate(seq):
+#         next_ = seq[i+1]
+#         line.append(current.r)
+#         if next_.mm != current.mm:
+#             end = current.f + current.modulus, self.modulus
+#             end.mm = current.mm
+#             end.f = current.f
+#             line.append(end.r)
+#             lines.append(line)
+#             start = self.__class__(next_.f, self.modulus)
+#             line = [start.r]
+#         current = next_
+#     return lines  # we can/should generator this mofo
+
 
 def iter_modular_points(seq, modulus):
     # FIXME: different moduli per-dimension?
