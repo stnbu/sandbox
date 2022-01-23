@@ -34,10 +34,10 @@ class ModularPoint:
 def get_lines(modular_points, modulus):
     seq = list(modular_points)
     new_points = []
-    import ipdb; ipdb.set_trace()
     for i, point in enumerate(seq):
         new_point = []
         for j, number in enumerate(point.point):
+            #import ipdb; ipdb.set_trace()
             try:
                 next_ = seq[i+1].point[j]
             except IndexError:
@@ -47,7 +47,7 @@ def get_lines(modular_points, modulus):
             ######
             ######
             ######
-            new_point.append(number.f)
+            new_point.append(number.r)
         new_points.append(new_point)
     return new_points
 
@@ -88,7 +88,7 @@ points = []
         
 m = 10
 modulus = 10
-for n in fdrange(0, 20, 0.1):
+for n in fdrange(0, 20, 0.089):
     points.append((n, n**2))
 
 
