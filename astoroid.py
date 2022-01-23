@@ -78,18 +78,21 @@ if __name__ == "__main__":
     points = []
     m = 10
     modulus = 10
+
     for n in fdrange(0, 20, 0.089):
         points.append((n, n ** 2))
+
     modular_points = [ModularPoint(p, modulus) for p in points]
     lines = get_lines(modular_points, modulus)
-    regular_porabola = VGroup(color=GREEN)
-    regular_porabola.set_points_as_corners(
-        [(float(p[0]), float(p[1]), 0) for p in points]
-    )
-    scene.add(regular_porabola)
     for line in lines:
         modular_porabola = VGroup(color=RED)
         myline = [(float(l[0]), float(l[1]), 0) for l in line]
         modular_porabola.set_points_as_corners(myline)
         scene.add(modular_porabola)
+
+    regular_porabola = VGroup(color=GREEN)
+    regular_porabola.set_points_as_corners(       [(float(p[0]), float(p[1]), 0) for p in points]    )
+                  
+                
+    scene.add(regular_porabola)
     scene.render()
