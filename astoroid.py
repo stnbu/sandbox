@@ -3,25 +3,54 @@ from collections import namedtuple
 from manim import *
 
 class ModularNumber:
-    def __init__(n, modulus, **kwargs):
-        modular_point = []
-        for n in point:
-            modular_number = ModularNumber(n)
-            modular_number.r = modular_number.n % modular_number.modulus
-            modular_number.f = modular_number.n - modular_number.r
-            modular_number.mm = modular_number.f // modular_number.modulus
-            modular_point.append(modular_number)
+    def __init__(self, n, modulus, **kwargs):
+        r = kwargs.get("r")
+        f = kwargs.get("f")
+        m = kwargs.get("m")
+
+        self.n = n
+        self.modulus = modulus
+        self.r = r if r is not None else self.n % self.modulus
+        self.f = f if f is not None else self.n - self.r
+        self.m = m if m is not None else self.f // self.modulus
         for key, value in kwargs:
             if key not in [a for a in dir(self) if not a.startswith('_')]:
                 raise ValueError
             setattr(self, key, value)
-        return modular_point
+
+    def __repr__(self):
+        return "%.3f(r=%.3f,f=%.3f,m=%.3f)" % (self.n, self.r, self.f, self.m)
+
+class ModularPoint:
+    def __init__(self, point, modulus):
+        self.point = [ModularNumber(n, modulus) for n in point]
 
 # def iter_lines(seq):
 #     line = []
 #     lines = []
 #     current = self
 #     seq = list(seq)
+
+def get_lines(modular_points, modulus):
+    seq = list(modular_points)
+    new_points = []
+    import ipdb; ipdb.set_trace()
+    for i, point in enumerate(seq):
+        new_point = []
+        for j, number in enumerate(point.point):
+            try:
+                next_ = seq[i+1].point[j]
+            except IndexError:
+                # fixme
+                break
+            ######
+            ######
+            ######
+            ######
+            new_point.append(number.f)
+        new_points.append(new_point)
+    return new_points
+
 #     for i, current in enumerate(seq):
 #         next_ = seq[i+1]
 #         line.append(current.r)
@@ -36,11 +65,6 @@ class ModularNumber:
 #         current = next_
 #     return lines  # we can/should generator this mofo
 
-
-def iter_modular_points(seq, modulus):
-    # FIXME: different moduli per-dimension?
-    for point in seq:
-        yield get_modular_point(point, modulus)
 
 regular_porabola = VGroup(color=GREEN)
 modular_porabola = VGroup(color=RED)
@@ -66,6 +90,11 @@ m = 10
 modulus = 10
 for n in fdrange(0, 20, 0.1):
     points.append((n, n**2))
+
+
+modular_points = [ModularPoint(p, modulus) for p in points]
+
+fooo = get_lines(modular_points, modulus)
 
 #modular_points = list(iter_modular_points(points, modulus))
 
