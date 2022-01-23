@@ -1,5 +1,4 @@
 from decimal import Decimal
-from manim import *
 
 START = 0
 END = 1
@@ -11,37 +10,35 @@ def get_lines(modular_points, modulus):
     lines = []
     for i, point in enumerate(seq):
         new_point = []
-        fake_points = None
+        will_wrap = {}
         for j, number in enumerate(point.point):
             try:
                 next_ = seq[i + 1].point[j]
             except IndexError:
-                break
+                return lines
             if next_.m != number.m:
-                if fake_points is None:
-                    fake_points = [
-                        [None] * len(point.point),
-                        [None] * len(point.point),
-                    ]  # FIXME
-                # FIXME -- "detect" direcation, act approprately
-                fake_points[START][j] = 0
-                fake_points[END][j] = modulus
+                if next_.m > number.m:
+                    will_wrap[j] = 1
+                else:
+                    will_wrap[j] = -1                    
             new_point.append(number.r)
-        else:
-            line.append(new_point)
-        if fake_points is not None:
-
-            for j in range(0, len(point.point)):
-                if fake_points[START][j] is None:
-                    fake_points[START][j] = seq[i + 1].point[j].n
-                if fake_points[END][j] is None:
-                    fake_points[END][j] = seq[i].point[j].n
-            line.append(fake_points[END])
+        line.append(new_point)
+        if will_wrap:
+            line_end_point = new_point[:]
+            line_start_point = [n.r for n in seq[i + 1].point]
+            for j, direction in will_wrap.items():
+                if direction == 1:
+                    line_end_point[j] = modulus
+                    line_start_point[j] = 0
+                if direction == -1:
+                    line_end_point[j] = 0
+                    line_start_point[j] = modulus
+            line.append(line_end_point)
             lines.append(line)
-            line = [fake_points[START]]
-            fake_points = None
-    else:
-        lines.append(line)
+            line = [line_start_point]
+            will_wrap = {}
+
+    raise Exception("wat")
     return lines
 
 
@@ -76,6 +73,7 @@ class ModularPoint:
 
 
 if __name__ == "__main__":
+    from manim import *
     scene = Scene()
     points = []
     m = 10
@@ -83,13 +81,13 @@ if __name__ == "__main__":
     for n in fdrange(0, 20, 0.089):
         points.append((n, n ** 2))
     modular_points = [ModularPoint(p, modulus) for p in points]
-    fooo = get_lines(modular_points, modulus)
+    lines = get_lines(modular_points, modulus)
     regular_porabola = VGroup(color=GREEN)
     regular_porabola.set_points_as_corners(
         [(float(p[0]), float(p[1]), 0) for p in points]
     )
     scene.add(regular_porabola)
-    for line in fooo[0:12]:  # first wrapping of x happens with [0:12]
+    for line in lines:
         modular_porabola = VGroup(color=RED)
         myline = [(float(l[0]), float(l[1]), 0) for l in line]
         modular_porabola.set_points_as_corners(myline)
