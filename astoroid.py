@@ -130,13 +130,12 @@ fooo = get_lines(modular_points, modulus)
 #modular_points = list(iter_modular_points(points, modulus))
 
 regular_porabola.set_points_as_corners([(float(p[0]), float(p[1]), 0) for p in points])
-for line in fooo:
+#import ipdb; ipdb.set_trace()
+for line in fooo[0:12]: # first wrapping of x happens with [0:12]
     modular_porabola = VGroup(color=RED)
     myline = [(float(l[0]), float(l[1]), 0) for l in line]
-    #import ipdb; ipdb.set_trace()
     modular_porabola.set_points_as_corners(myline)
     scene.add(modular_porabola)
-    #break
 
 #scene.add(regular_porabola, modular_porabola)
 #scene.add(modular_porabola)
