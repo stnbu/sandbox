@@ -20,7 +20,7 @@ def get_lines(modular_points, modulus):
                 if next_.m > number.m:
                     will_wrap[j] = 1
                 else:
-                    will_wrap[j] = -1                    
+                    will_wrap[j] = -1
             new_point.append(number.r)
         line.append(new_point)
         if will_wrap:
@@ -74,6 +74,7 @@ class ModularPoint:
 
 if __name__ == "__main__":
     from manim import *
+
     scene = Scene()
     points = []
     m = 10
@@ -85,11 +86,15 @@ if __name__ == "__main__":
     modular_points = [ModularPoint(p, modulus) for p in points]
     for line in get_lines(modular_points, modulus):
         modular_porabola = VGroup(color=RED)
-        modular_porabola.set_points_as_corners([(float(l[0]), float(l[1]), 0) for l in line])
+        modular_porabola.set_points_as_corners(
+            [(float(l[0]), float(l[1]), 0) for l in line]
+        )
         scene.add(modular_porabola)
 
     regular_porabola = VGroup(color=GREEN)
-    regular_porabola.set_points_as_corners(       [(float(p[0]), float(p[1]), 0) for p in points]    )
+    regular_porabola.set_points_as_corners(
+        [(float(p[0]), float(p[1]), 0) for p in points]
+    )
     scene.add(regular_porabola)
 
     scene.render()
