@@ -13,10 +13,6 @@ class ModularNumber:
         self.r = r if r is not None else self.n % self.modulus
         self.f = f if f is not None else self.n - self.r
         self.m = m if m is not None else self.f // self.modulus
-        for key, value in kwargs:
-            if key not in [a for a in dir(self) if not a.startswith('_')]:
-                raise ValueError
-            setattr(self, key, value)
 
     def __repr__(self):
         return "%.3f(r=%.3f,f=%.3f,m=%.3f)" % (self.n, self.r, self.f, self.m)
@@ -24,6 +20,9 @@ class ModularNumber:
 class ModularPoint:
     def __init__(self, point, modulus):
         self.point = [ModularNumber(n, modulus) for n in point]
+
+START = 0
+END = 1
 
 # def iter_lines(seq):
 #     line = []
@@ -33,23 +32,54 @@ class ModularPoint:
 
 def get_lines(modular_points, modulus):
     seq = list(modular_points)
-    new_points = []
+    line = []
+    lines = []
     for i, point in enumerate(seq):
         new_point = []
+        fake_points = None
         for j, number in enumerate(point.point):
             #import ipdb; ipdb.set_trace()
             try:
                 next_ = seq[i+1].point[j]
             except IndexError:
-                # fixme
+                #line.append(new_point)
+                #import ipdb; ipdb.set_trace()
                 break
             ######
             ######
+            if next_.m != number.m:
+                if fake_points is None:
+                    fake_points = [
+                        [None] * len(point.point),
+                        [None] * len(point.point)
+                    ] # FIXME
+                # FIXME -- "detect" direcation, act approprately
+                fake_points[START][j] = 0
+                fake_points[END][j] = modulus
+                #import ipdb; ipdb.set_trace()
             ######
             ######
             new_point.append(number.r)
-        new_points.append(new_point)
-    return new_points
+        else:
+            line.append(new_point)
+        if fake_points is not None:
+            
+            for j in range(0, len(point.point)):
+                if fake_points[START][j] is None:
+                    fake_points[START][j] = seq[i+1].point[j].n
+                if fake_points[END][j] is None:
+                    fake_points[END][j] = seq[i].point[j].n
+                #import ipdb; ipdb.set_trace()
+            #import ipdb; ipdb.set_trace()
+            line.append(fake_points[END])
+            lines.append(line)
+            line = [fake_points[START]]
+            fake_points = None
+    else:
+        #import ipdb; ipdb.set_trace()
+        lines.append(line)
+    #import ipdb; ipdb.set_trace()
+    return lines
 
 #     for i, current in enumerate(seq):
 #         next_ = seq[i+1]
@@ -93,12 +123,14 @@ for n in fdrange(0, 20, 0.089):
 
 
 modular_points = [ModularPoint(p, modulus) for p in points]
-
+#import ipdb; ipdb.set_trace()
 fooo = get_lines(modular_points, modulus)
-
+#import ipdb; ipdb.set_trace()
+import sys; sys.exit(0)
 #modular_points = list(iter_modular_points(points, modulus))
 
 regular_porabola.set_points_as_corners([(float(p[0]), float(p[1]), 0) for p in points])
+modular_porabola.set_points_as_corners([(float(p[0]), float(p[1]), 0) for p in fooo])
 
 scene.add(regular_porabola)
 
