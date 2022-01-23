@@ -90,7 +90,6 @@ if __name__ == "__main__":
 
     regular_porabola = VGroup(color=GREEN)
     regular_porabola.set_points_as_corners(       [(float(p[0]), float(p[1]), 0) for p in points]    )
-    regular_porabola.align_to(modular_porabola, LEFT)
     scene.add(regular_porabola)
 
     scene.render()
