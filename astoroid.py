@@ -16,11 +16,10 @@ def get_lines(modular_points, modulus):
                 next_ = seq[i + 1][j]
             except IndexError:
                 return lines
-            if next_.m != number.m:
-                if next_.m > number.m:
-                    will_wrap[j] = 1
-                else:
-                    will_wrap[j] = -1
+            if next_.m > number.m:
+                will_wrap[j] = 1
+            if next_.m < number.m:
+                will_wrap[j] = -1
             new_point.append(number.r)
         line.append(new_point)
         if will_wrap:
