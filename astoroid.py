@@ -11,9 +11,9 @@ def get_lines(modular_points, modulus):
     for i, point in enumerate(seq):
         new_point = []
         will_wrap = {}
-        for j, number in enumerate(point.point):
+        for j, number in enumerate(point):
             try:
-                next_ = seq[i + 1].point[j]
+                next_ = seq[i + 1][j]
             except IndexError:
                 return lines
             if next_.m != number.m:
@@ -25,7 +25,7 @@ def get_lines(modular_points, modulus):
         line.append(new_point)
         if will_wrap:
             line_end_point = new_point[:]
-            line_start_point = [n.r for n in seq[i + 1].point]
+            line_start_point = [n.r for n in seq[i + 1]]
             for j, direction in will_wrap.items():
                 if direction == 1:
                     line_end_point[j] = modulus
@@ -67,11 +67,6 @@ class ModularNumber:
         return "%.3f(r=%.3f,f=%.3f,m=%.3f)" % (self.n, self.r, self.f, self.m)
 
 
-class ModularPoint:
-    def __init__(self, point, modulus):
-        self.point = [ModularNumber(n, modulus) for n in point]
-
-
 if __name__ == "__main__":
     from manim import *
 
@@ -83,7 +78,7 @@ if __name__ == "__main__":
     for n in fdrange(0, 20, 0.01):
         points.append((n, n ** 2))
 
-    modular_points = [ModularPoint(p, modulus) for p in points]
+    modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
     for line in get_lines(modular_points, modulus):
         modular_porabola = VGroup(color=RED)
         modular_porabola.set_points_as_corners(
