@@ -38,9 +38,6 @@ def get_lines(modular_points, modulus):
             line = [line_start_point]
             will_wrap = {}
 
-    raise Exception("wat")
-    return lines
-
 
 def fdrange(x, y, step):
     x = Decimal(x)
@@ -53,15 +50,11 @@ def fdrange(x, y, step):
 
 class ModularNumber:
     def __init__(self, n, modulus, **kwargs):
-        r = kwargs.get("r")
-        f = kwargs.get("f")
-        m = kwargs.get("m")
-
         self.n = n
         self.modulus = modulus
-        self.r = r if r is not None else self.n % self.modulus
-        self.f = f if f is not None else self.n - self.r
-        self.m = m if m is not None else self.f // self.modulus
+        self.r = self.n % self.modulus
+        self.f = self.n - self.r
+        self.m = self.f // self.modulus
 
     def __repr__(self):
         return "%.3f(r=%.3f,f=%.3f,m=%.3f)" % (self.n, self.r, self.f, self.m)
