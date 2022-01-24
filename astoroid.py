@@ -1,41 +1,36 @@
 from decimal import Decimal
 
-START = 0
-END = 1
-
+POSITIVE = True
+NEGATIVE = False
 
 def get_lines(modular_points, modulus):
-    seq = list(modular_points)
     line = []
     lines = []
-    for i, point in enumerate(seq):
+    for current, next in zip(modular_points, modular_points[1:]):
         new_point = []
         will_wrap = {}
-        for j, number in enumerate(point):
-            try:
-                next_ = seq[i + 1][j]
-            except IndexError:
-                return lines
-            if next_.m > number.m:
-                will_wrap[j] = 1
-            if next_.m < number.m:
-                will_wrap[j] = -1
+        for j, number in enumerate(current):
+            if next[j].m > number.m:
+                will_wrap[j] = POSITIVE
+            if next[j].m < number.m:
+                will_wrap[j] = NEGATIVE
             new_point.append(number.r)
         line.append(new_point)
         if will_wrap:
             line_end_point = new_point[:]
-            line_start_point = [n.r for n in seq[i + 1]]
+            line_start_point = [n.r for n in next]
             for j, direction in will_wrap.items():
-                if direction == 1:
+                if direction == POSITIVE:
                     line_end_point[j] = modulus
                     line_start_point[j] = 0
-                if direction == -1:
+                if direction == NEGATIVE:
                     line_end_point[j] = 0
                     line_start_point[j] = modulus
             line.append(line_end_point)
             lines.append(line)
             line = [line_start_point]
             will_wrap = {}
+    return lines
 
 
 def fdrange(x, y, step):
