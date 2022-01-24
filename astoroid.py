@@ -3,6 +3,7 @@ from decimal import Decimal
 POSITIVE = True
 NEGATIVE = False
 
+
 def get_lines(modular_points, modulus):
     line = []
     lines = []
