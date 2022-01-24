@@ -63,7 +63,7 @@ if __name__ == "__main__":
     m = 10
     modulus = 10
 
-    for n in fdrange(0, 20, 0.01):
+    for n in fdrange(0, 10, 0.01):
         points.append((n, n ** 2))
 
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
