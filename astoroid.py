@@ -11,13 +11,16 @@ def get_lines(modular_points, modulus):
         new_point = []
         will_wrap = {}
         for j, number in enumerate(current):
-            if next[j].m > number.m:
-                will_wrap[j] = POSITIVE
-            if next[j].m < number.m:
-                will_wrap[j] = NEGATIVE
+            if number.n % modulus > 0.001:
+                if next[j].m > number.m:
+                    will_wrap[j] = POSITIVE
+                if next[j].m < number.m:
+                    will_wrap[j] = NEGATIVE
             new_point.append(number.r)
+        #import ipdb; ipdb.set_trace()
         line.append(new_point)
         if will_wrap:
+            
             line_end_point = new_point[:]
             line_start_point = [n.r for n in next]
             for j, direction in will_wrap.items():
@@ -28,9 +31,12 @@ def get_lines(modular_points, modulus):
                     line_end_point[j] = 0
                     line_start_point[j] = modulus
             line.append(line_end_point)
+            if abs(line[0][1] - line[-1][1]) < 0.01:
+                pass # import ipdb; ipdb.set_trace()
             lines.append(line)
             line = [line_start_point]
             will_wrap = {}
+    
     return lines
 
 
@@ -45,6 +51,8 @@ def fdrange(x, y, step):
 
 class ModularNumber:
     def __init__(self, n, modulus, **kwargs):
+        # if abs(modulus + n) < 0.001:
+        #     import ipdb; ipdb.set_trace()
         self.n = n
         self.modulus = modulus
         self.r = self.n % self.modulus
@@ -58,20 +66,39 @@ class ModularNumber:
 if __name__ == "__main__":
     from manim import *
 
+    #config.frame_height = 20
+    #config.frame_width = 20
     scene = Scene()
     points = []
     m = 10
-    modulus = 10
+    modulus = Decimal(10)
 
-    for n in fdrange(0, 10, 0.01):
+    class Foo(Scene):
+        def contstruct(self):
+            axes = Axes(x_range=[-21, 11, 1], y_range=[21, 11, 1]).add_coordinates()
+            self.add(axes)
+
+
+    foo = Foo()
+    foo.render()
+    import sys ; sys.exit(0)
+
+    for n in fdrange(-19.8, 19.8, 0.01):
+        if abs(n % modulus) < 0.01:
+            continue
         points.append((n, n ** 2))
 
+    #line = VGroup(color=WHITE, stroke_width=1.5)
+    #line.set_points_as_corners([[-20, 1, 0], [20, 1, 0]])
+    #line.to_edge(DOWN)
+    #scene.add(line)
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
     for line in get_lines(modular_points, modulus):
-        modular_porabola = VGroup(color=RED)
+        modular_porabola = VGroup(color=PURPLE)
         modular_porabola.set_points_as_corners(
             [(float(l[0]), float(l[1]), 0) for l in line]
         )
+        #modular_porabola.to_edge(DOWN)
         scene.add(modular_porabola)
 
     regular_porabola = VGroup(color=GREEN)
