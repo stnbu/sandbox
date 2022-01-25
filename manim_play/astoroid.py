@@ -84,30 +84,39 @@ def get_ith_color(i):
     ]
     return colors[i % len(colors)]
 
+def to_xyz(xy_point):
+    return np.array([
+        float(xy_point[0]),
+        float(xy_point[1]),
+        0
+    ])
+
 if __name__ == "__main__":
+
     from manim import *
 
     scene = Scene()
     points = []
-    m = 10
     modulus = Decimal(10)
 
     for n in fdrange(-10.1, -9.9, 0.07):
         print(n)
         points.append((n, n**2))
 
-    #line = VGroup(color=WHITE, stroke_width=1.5)
-    #line.set_points_as_corners([[-20, 1, 0], [20, 1, 0]])
-    #line.to_edge(DOWN)
-    #scene.add(line)
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
+    dotpacity = 0.5
     for i, line in enumerate(get_lines(modular_points, modulus)):
         modular_porabola = VGroup(color=get_ith_color(i))
         modular_porabola.set_points_as_corners(
-            [(float(l[0]), float(l[1]), 0) for l in line]
+            [to_xyz(l) for l in line]
         )
-        #modular_porabola.to_edge(DOWN)
         scene.add(modular_porabola)
+        for p in line:
+            circle = Circle(radius=0.05, color=GREEN, fill_opacity=dotpacity, stroke_opacity=dotpacity)
+            circle.move_to(np.array(to_xyz(p)))
+            label = Text("%.2f,%.2f" % (p[0], p[1])).scale(0.15)
+            label.next_to(circle, (UP+RIGHT)*0.5)
+            scene.add(circle, label)
 
     regular_porabola = VGroup(color=GREEN)
     regular_porabola.set_points_as_corners(
