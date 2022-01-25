@@ -14,22 +14,17 @@ def get_lines(modular_points):
                 point.append(current[i].r)
                 continue
             wraps = True
-            direction = 1 if next[i].r > current[i].r else -1
-            sign = current[i].r/abs(current[i].r)
-            if direction == 1 and sign > 0:
+            if next[i].m - current[i].m > 0 and next[i].r > current[i].r:
                 point.append(modulus)
-            elif direction == -1 and sign < 0:
-                point.append(modulus * -1)
-            elif direction == 1 and sign < 0:
-                point.append(0)
-            elif direction == -1 and sign > 0:
-                point.append(0)
+            elif next[i].m - current[i].m < 0 and next[i].r < current[i].r:
+                point.append(-modulus)
             else:
-                raise Exception
+                point.append(current[i].r)
         line.append(point)
         if wraps:
             lines.append(line)
             line = []
+    #import ipdb; ipdb.set_trace()
     return lines
 
 
@@ -75,6 +70,10 @@ def get_ith_color(i):
 
 def to_xyz(xy_point):
     return np.array([float(xy_point[0]), float(xy_point[1]), 0])
+    # try:
+    #     return np.array([float(xy_point[0]), float(xy_point[1]), 0])
+    # except:
+    #     import ipdb; ipdb.set_trace()
 
 
 if __name__ == "__main__":
@@ -88,12 +87,13 @@ if __name__ == "__main__":
     points = []
     modulus = Decimal(10)
 
-    for i, n in enumerate(fdrange(-7, 7, 0.01)):
+    for i, n in enumerate(fdrange(0, 7, 0.01)):
         points.append((n, n ** 3))
 
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
     dotpacity = 0.5
     for line in get_lines(modular_points):
+        #import ipdb; ipdb.set_trace()
         modular_porabola = VGroup(color=get_ith_color(i))
         modular_porabola.set_points_as_corners([to_xyz(l) for l in line])
         scene.add(modular_porabola)
