@@ -18,6 +18,10 @@ def get_lines(modular_points):
                 point.append(modulus)
             elif next[i].m - current[i].m < 0 and next[i].r < current[i].r:
                 point.append(-modulus)
+            elif next[i].m - current[i].m > 0 and next[i].r < current[i].r:
+                point.append(0)
+            elif next[i].m - current[i].m < 0 and next[i].r > current[i].r:
+                point.append(0)
             else:
                 point.append(current[i].r)
         line.append(point)
@@ -87,7 +91,7 @@ if __name__ == "__main__":
     points = []
     modulus = Decimal(10)
 
-    for i, n in enumerate(fdrange(0, 7, 0.01)):
+    for i, n in enumerate(fdrange(-7, 7, 0.01)):
         points.append((n, n ** 3))
 
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
