@@ -12,14 +12,12 @@ def get_lines(modular_points, modulus):
     for current, next in zip(modular_points, modular_points[1:]):
         new_point = []
         will_wrap = {}
-        #import ipdb; ipdb.set_trace()
         for j, number in enumerate(current):
             if next[j].m > number.m:
                 will_wrap[j] = _POSITIVE
             if next[j].m < number.m:
                 will_wrap[j] = _NEGATIVE
             new_point.append(number.r)
-        #import ipdb; ipdb.set_trace()
         line.append(new_point)
         if will_wrap:
 
@@ -29,7 +27,6 @@ def get_lines(modular_points, modulus):
                 if direction == _POSITIVE:
                     # Special surgery.
                     if new_point[j] == 0:
-                        import ipdb; ipdb.set_trace()
                         line[-1][j] = modulus
                     line_end_point[j] = modulus
                     line_start_point[j] = 0
@@ -40,7 +37,7 @@ def get_lines(modular_points, modulus):
             lines.append(line)
             line = [line_start_point]
             will_wrap = {}
-    
+
     return lines
 
 
@@ -55,8 +52,6 @@ def fdrange(x, y, step):
 
 class ModularNumber:
     def __init__(self, n, modulus, **kwargs):
-        # if abs(modulus + n) < 0.001:
-        #     import ipdb; ipdb.set_trace()
         self.n = n
         self.modulus = modulus
         self.r = self.n % self.modulus
@@ -65,6 +60,7 @@ class ModularNumber:
 
     def __repr__(self):
         return "%.3f(r=%.3f,f=%.3f,m=%.3f)" % (self.n, self.r, self.f, self.m)
+
 
 def get_ith_color(i):
     colors = [
@@ -84,12 +80,10 @@ def get_ith_color(i):
     ]
     return colors[i % len(colors)]
 
+
 def to_xyz(xy_point):
-    return np.array([
-        float(xy_point[0]),
-        float(xy_point[1]),
-        0
-    ])
+    return np.array([float(xy_point[0]), float(xy_point[1]), 0])
+
 
 if __name__ == "__main__":
 
@@ -101,21 +95,24 @@ if __name__ == "__main__":
 
     for n in fdrange(-10.1, -9.9, 0.07):
         print(n)
-        points.append((n, n**2))
+        points.append((n, n ** 2))
 
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
     dotpacity = 0.5
     for i, line in enumerate(get_lines(modular_points, modulus)):
         modular_porabola = VGroup(color=get_ith_color(i))
-        modular_porabola.set_points_as_corners(
-            [to_xyz(l) for l in line]
-        )
+        modular_porabola.set_points_as_corners([to_xyz(l) for l in line])
         scene.add(modular_porabola)
         for p in line:
-            circle = Circle(radius=0.05, color=GREEN, fill_opacity=dotpacity, stroke_opacity=dotpacity)
+            circle = Circle(
+                radius=0.05,
+                color=GREEN,
+                fill_opacity=dotpacity,
+                stroke_opacity=dotpacity,
+            )
             circle.move_to(np.array(to_xyz(p)))
             label = Text("%.2f,%.2f" % (p[0], p[1])).scale(0.15)
-            label.next_to(circle, (UP+RIGHT)*0.5)
+            label.next_to(circle, (UP + RIGHT) * 0.5)
             scene.add(circle, label)
 
     regular_porabola = VGroup(color=GREEN)
