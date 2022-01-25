@@ -2,6 +2,7 @@
 
 from decimal import Decimal
 
+
 def get_lines(modular_points):
     line = []
     lines = []
@@ -22,6 +23,7 @@ def fdrange(x, y, step):
     while x < y:
         yield x
         x += step
+
 
 class ModularNumber:
     def __init__(self, n, modulus, **kwargs):
@@ -53,6 +55,7 @@ def get_ith_color(i):
     ]
     return colors[i % len(colors)]
 
+
 def to_xyz(xy_point):
     return np.array([float(xy_point[0]), float(xy_point[1]), 0])
 
@@ -69,7 +72,7 @@ if __name__ == "__main__":
     modulus = Decimal(10)
 
     for i, n in enumerate(fdrange(-7, 7, 0.07)):
-        points.append((n, n**2))
+        points.append((n, n ** 2))
 
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
     dotpacity = 0.5
