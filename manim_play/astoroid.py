@@ -9,6 +9,7 @@ _NEGATIVE = False
 def get_lines(modular_points, modulus):
     line = []
     lines = []
+    #import ipdb; ipdb.set_trace()
     for current, next in zip(modular_points, modular_points[1:]):
         new_point = []
         will_wrap = {}
@@ -20,24 +21,31 @@ def get_lines(modular_points, modulus):
             new_point.append(number.r)
         line.append(new_point)
         if will_wrap:
+            #import ipdb; ipdb.set_trace()
 
-            line_end_point = new_point[:]
-            line_start_point = [n.r for n in next]
+            line_end_point = new_point[:] #+ ["end"]
+            line_start_point = [n.r for n in next] #+ ["start"]
             for j, direction in will_wrap.items():
+                #import ipdb; ipdb.set_trace()
+                sign = 1
+                if new_point[j] < 0:
+                    sign = -1
                 if direction == _POSITIVE:
                     # Special surgery.
                     if new_point[j] == 0:
                         line[-1][j] = modulus
-                    line_end_point[j] = modulus
+                    line_end_point[j] = modulus * sign
                     line_start_point[j] = 0
                 if direction == _NEGATIVE:
                     line_end_point[j] = 0
-                    line_start_point[j] = modulus
-            line.append(line_end_point)
+                    line_start_point[j] = modulus * sign
+            #line.append(line_end_point)
             lines.append(line)
-            line = [line_start_point]
+            #line = [line_start_point] # what if this is the end of the loop? isolated points. discard?
+            line = []
             will_wrap = {}
 
+    #import ipdb; ipdb.set_trace()
     return lines
 
 
@@ -93,11 +101,15 @@ if __name__ == "__main__":
     points = []
     modulus = Decimal(10)
 
-    for n in fdrange(-10.1, -9.9, 0.07):
-        print(n)
-        points.append((n, n ** 2))
+    for i, n in enumerate(fdrange(-10.1, -1, 0.07)):
+        points.append((n, n**2))
+        if i > 1:
+            pass #break
+
 
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
+    get_lines(modular_points, modulus)
+    #import ipdb; ipdb.set_trace()
     dotpacity = 0.5
     for i, line in enumerate(get_lines(modular_points, modulus)):
         modular_porabola = VGroup(color=get_ith_color(i))
@@ -119,6 +131,6 @@ if __name__ == "__main__":
     regular_porabola.set_points_as_corners(
         [(float(p[0]), float(p[1]), 0) for p in points]
     )
-    scene.add(regular_porabola)
+    #scene.add(regular_porabola)
 
     scene.render()
