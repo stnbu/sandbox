@@ -7,9 +7,26 @@ def get_lines(modular_points):
     line = []
     lines = []
     for current, next in zip(modular_points, modular_points[1:]):
-        new_point = []
-        wraps = any([p.m != q.m for (p, q) in zip(current, next)])
-        line.append([n.r for n in current])
+        point = []
+        wraps = False
+        for i in range(0, len(current)):
+            if current[i].m == next[i].m:
+                point.append(current[i].r)
+                continue
+            wraps = True
+            direction = 1 if next[i].r > current[i].r else -1
+            sign = current[i].r/abs(current[i].r)
+            if direction == 1 and sign > 0:
+                point.append(modulus)
+            elif direction == -1 and sign < 0:
+                point.append(modulus * -1)
+            elif direction == 1 and sign < 0:
+                point.append(0)
+            elif direction == -1 and sign > 0:
+                point.append(0)
+            else:
+                raise Exception
+        line.append(point)
         if wraps:
             lines.append(line)
             line = []
@@ -71,12 +88,12 @@ if __name__ == "__main__":
     points = []
     modulus = Decimal(10)
 
-    for i, n in enumerate(fdrange(-7, 7, 0.07)):
-        points.append((n, n ** 2))
+    for i, n in enumerate(fdrange(-7, 7, 0.01)):
+        points.append((n, n ** 3))
 
     modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
     dotpacity = 0.5
-    for i, line in enumerate(get_lines(modular_points)):
+    for line in get_lines(modular_points):
         modular_porabola = VGroup(color=get_ith_color(i))
         modular_porabola.set_points_as_corners([to_xyz(l) for l in line])
         scene.add(modular_porabola)
