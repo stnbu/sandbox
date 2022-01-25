@@ -6,7 +6,7 @@ from decimal import Decimal
 def get_lines(modular_points):
     line = []
     lines = []
-    for current, next in zip(modular_points, modular_points[1:]):
+    for previous, current, next in zip([None] + modular_points, modular_points, modular_points[1:]):
         point = []
         wraps = False
         for i in range(0, len(current)):
