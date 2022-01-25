@@ -2,10 +2,6 @@
 
 from decimal import Decimal
 
-_POSITIVE = True
-_NEGATIVE = False
-
-
 def get_lines(modular_points):
     line = []
     lines = []
@@ -26,7 +22,6 @@ def fdrange(x, y, step):
     while x < y:
         yield x
         x += step
-
 
 class ModularNumber:
     def __init__(self, n, modulus, **kwargs):
