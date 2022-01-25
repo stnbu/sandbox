@@ -2,11 +2,11 @@
 
 from decimal import Decimal
 
-
 def get_lines(modular_points):
+    # FIXME: we need to adjust/fit the _start_ of lines too.
     line = []
     lines = []
-    for previous, current, next in zip([None] + modular_points, modular_points, modular_points[1:]):
+    for current, next in zip(modular_points, modular_points[1:]):
         point = []
         wraps = False
         for i in range(0, len(current)):
@@ -28,7 +28,6 @@ def get_lines(modular_points):
         if wraps:
             lines.append(line)
             line = []
-    #import ipdb; ipdb.set_trace()
     return lines
 
 
@@ -45,6 +44,7 @@ class ModularNumber:
     def __init__(self, n, modulus, **kwargs):
         self.n = n
         self.modulus = modulus
+        print(self.n, self.modulus)
         self.r = self.n % self.modulus
         self.f = self.n - self.r
         self.m = self.f // self.modulus
@@ -71,6 +71,7 @@ def get_ith_color(i):
     ]
     return colors[i % len(colors)]
 
+import numpy as np
 
 def to_xyz(xy_point):
     return np.array([float(xy_point[0]), float(xy_point[1]), 0])
@@ -94,7 +95,7 @@ if __name__ == "__main__":
     for i, n in enumerate(fdrange(-7, 7, 0.01)):
         points.append((n, n ** 3))
 
-    modular_points = [[ModularNumber(n, modulus) for n in point] for point in points]
+    modular_points = [[ModularNumber(Decimal(n), Decimal(modulus)) for n in point] for point in points]
     dotpacity = 0.5
     for line in get_lines(modular_points):
         #import ipdb; ipdb.set_trace()
