@@ -61,6 +61,9 @@ def fdrange(x, y, step):
         yield x
         x += step
 
+def get_units(camera, mobj):
+    origin, unit_slope = camera.points_to_pixel_coords(mobj, points=[[0, 0, 0], [1, 1, 0]])
+    return abs(unit_slope[0] - origin[0]), abs(unit_slope[1] - origin[1])
 
 class ModularNumber:
     def __init__(self, n, modulus, **kwargs):
