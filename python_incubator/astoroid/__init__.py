@@ -5,21 +5,24 @@ import numpy as np
 
 
 def rgb_to_hex(*channels):
-    return "#" + ''.join([hex(c)[2:].zfill(2) for c in channels])
+    return "#" + "".join([hex(c)[2:].zfill(2) for c in channels])
+
 
 def gen_color_gradient(s, e, n):
     sr, sg, sb = s
     er, eg, eb = e
     for i in range(n):
-        delta = float(i)/float(n)
+        delta = float(i) / float(n)
         yield rgb_to_hex(
             sr + round(delta * (er - sr)),
             sg + round(delta * (eg - sg)),
             sb + round(delta * (eb - sb)),
         )
 
+
 def to_manim_point(x, y, z=0):
     return np.array([float(x), float(y), float(z)])
+
 
 def get_lines(modular_points, modulus):
     line = []
