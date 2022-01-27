@@ -152,3 +152,7 @@ if __name__ == "__main__":
     rootable = Polynomial(-1, 0, 1)
     assert rootable.is_root(1)
     assert rootable.is_root(-1)
+
+    has_complex_roots = Polynomial(1, 0, 1)
+    assert has_complex_roots.is_root(1j)
+    assert has_complex_roots.is_root(-1j)
