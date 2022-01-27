@@ -6,13 +6,12 @@ def combine(a, b):
 
 class Polynomial:
     def __init__(self, *coefficients):
-        self.coefficients = dict(enumerate(coefficients))
-
+        self.coefficients = list(coefficients)
     
     def __mul__(self, other):
         if not isinstance(other, Polynomial):
-            new_coefficients = {}
-            for i, coefficient in self.coefficients.items:
+            new_coefficients = []
+            for coefficient in self.coefficients:
                 new_coefficients.append(other * coefficient)
             return Polynomial(*new_coefficients)
         else:
@@ -31,11 +30,11 @@ class Polynomial:
             return Polynomial(*new_coefficients)
 
     def eval(self, x):
-        return sum([c * x**i for i, c in self.coefficients.items()])
+        return sum([c * x**i for i, c in enumerate(self.coefficients)])
 
     @property
     def degree(self):
-        return max(self.coefficients)
+        return len(self.coefficients) - 1
 
     def __repr__(self):
         def get_term(i, c):
