@@ -18,7 +18,6 @@ class Polynomial:
         return self + Polynomial(as_dict=new_coefficients)
 
     def __div__(self, other):
-        raise Exception
         remainder = None
         result = self
         while True:
@@ -110,3 +109,6 @@ if __name__ == "__main__":
     p10 = Polynomial(1, 1)
     p11 = Polynomial(-1, 1)
     print("(%s) * (%s) = %s" % (p10, p11, p10 * p11))
+
+
+    p10 / p10
