@@ -5,50 +5,74 @@ def combine(a, b):
     return a[0] + b[0], a[1] * b[1]
 
 class Polynomial:
-    def __init__(self, *coefficients):
-        self.coefficients = list(coefficients)
+    def __init__(self, *coefficients, as_dict=None):
+        if as_dict is None:
+            self.coefficients = dict(enumerate(coefficients))
+        else:
+            self.coefficients = as_dict
+
+    def __sub__(self, other):
+        if not isinstance(other, Polynomial):
+            other = Polynomial(other)
+        new_coefficients = {i:-1 * c for (i,c) in other.coefficients.items()}
+        return self + Polynomial(as_dict=new_coefficients)
+
+    def __add__(self, other):
+        if not isinstance(other, Polynomial):
+            other = Polynomial(other)
+        indicies = set(
+            list(self.coefficients.keys()) +
+            list(other.coefficients.keys())
+        )
+        new_coefficients = {}
+        for index in indicies:
+            self_c = self.coefficients.get(index, 0)
+            other_c = other.coefficients.get(index, 0)
+            new_coefficients[index] = self_c + other_c
+        return Polynomial(as_dict=new_coefficients)
     
     def __mul__(self, other):
         if not isinstance(other, Polynomial):
-            new_coefficients = []
-            for coefficient in self.coefficients:
-                new_coefficients.append(other * coefficient)
-            return Polynomial(*new_coefficients)
+            return Polynomial(as_dict={i:other*c for (i, c) in self.coefficients.items()})
         else:
-            degree_diff = abs(len(self.coefficients) - len(other.coefficients))
-            padded_self = Polynomial(*(self.coefficients + [0] * (len(self.coefficients) - degree_diff)))
-            padded_other = Polynomial(*(other.coefficients + [0] * (len(other.coefficients) - degree_diff)))
-            expanded = [combine(a, b) for (a, b) in product(
-                enumerate(padded_self.coefficients),
-                enumerate(padded_other.coefficients)
-            )]
+            expanded = [combine(a, b)
+                        for (a, b) in product(
+                                self.coefficients.items(),
+                                other.coefficients.items())
+                        ]
             max_index = max(i for (i, c) in expanded)
-            new_coefficients = []
+            new_coefficients = {}
             for index in range(0, max_index + 1):
-                new_coeff = sum([c for (i, c) in expanded if i == index])
-                new_coefficients.append(new_coeff)
-            return Polynomial(*new_coefficients)
+                new_coefficients[index] = sum([c for (i, c) in expanded if i == index])
+            return Polynomial(as_dict=new_coefficients)
 
     def eval(self, x):
-        return sum([c * x**i for i, c in enumerate(self.coefficients)])
+        return sum([c * x**i for i, c in self.coefficients.items()])
 
     @property
     def degree(self):
-        return len(self.coefficients) - 1
+        return max(self.coefficients)
+
+    def _get_term_repr(self, i):
+        "how to implement shitty human syntax"
+        c = self.coefficients.get(i, 0)
+        if c == 0:
+            return ""
+        exponent = "" if i < 2 else "^%s" % i
+        coefficient = "" if i > 0 and c == 1 else str(c)
+        variable = "" if i < 1 else "x"
+        oper = "" if i == self.degree else " + "
+        if c < 0:
+            oper = "-" if i == self.degree else " - "
+            if len(coefficient) > 0:
+                coefficient = coefficient.lstrip("-")
+        return oper + coefficient + variable + exponent
 
     def __repr__(self):
-        def get_term(i, c):
-            "how to implement shitty human syntax"
-            exponent = "" if i < 2 else "^%s" % i
-            coefficient = "" if i > 0 and c == 1 else str(c)
-            variable = "" if i < 1 else "x"
-            oper = " + "
-            if c < 0:
-                oper = "-" if i == self.degree else " - "
-            return oper + coefficient + variable + exponent
-        return "".join(
-            reversed([get_term(i, c) for (i, c) in enumerate(self.coefficients) if c != 0])
-        ).lstrip(" +")
+        result = []
+        for i in sorted(self.coefficients, reverse=True):
+            result.append(self._get_term_repr(i))
+        return "".join(result).lstrip(" +")
 
     
 if __name__ == "__main__":
@@ -57,7 +81,20 @@ if __name__ == "__main__":
     p2 = Polynomial(1, 0, 2)
     print("p2 = %s" % p2)
     p3 = p1 * p2
-    print("p1 * p2 = %s" % p3)
+    print("p3 = p1 * p2 = %s" % p3)
+    p4 = p3 + p2
+    print("p4 = p3 + p2 = %s" % p4)
+    p5 = p4 + 8
+    print("p5 = p4 + 8 = %s" % p5)
+    p6 = p3 - 8
+    print("p6 = p3 - 8 = %s" % p6)
+    p7 = p4 - p3
+    print("p7 = p4 - p3 = %s" % p7)
+
+    assert 36 == p3.eval(2)
     assert 4 == p1.eval(2)
     assert 9 == p2.eval(2)
-    assert 36 == p3.eval(2)
+
+    x1 = Polynomial(1, 1)
+    x2 = Polynomial(1, 1)
+    print("(%s) * (%s) = %s" % (x1, x2, x1 * x2))
