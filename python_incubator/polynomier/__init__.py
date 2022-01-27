@@ -17,6 +17,14 @@ class Polynomial:
         new_coefficients = {i:-1 * c for (i,c) in other.coefficients.items()}
         return self + Polynomial(as_dict=new_coefficients)
 
+    def __div__(self, other):
+        raise Exception
+        remainder = None
+        result = self
+        while True:
+            import ipdb; ipdb.set_trace()
+            result -= other
+
     def __add__(self, other):
         if not isinstance(other, Polynomial):
             other = Polynomial(other)
@@ -95,6 +103,10 @@ if __name__ == "__main__":
     assert 4 == p1.eval(2)
     assert 9 == p2.eval(2)
 
-    x1 = Polynomial(1, 1)
-    x2 = Polynomial(1, 1)
-    print("(%s) * (%s) = %s" % (x1, x2, x1 * x2))
+    p8 = Polynomial(1, 1)
+    p9 = Polynomial(1, 1)
+    print("(%s) * (%s) = %s" % (p8, p9, p8 * p9))
+
+    p10 = Polynomial(1, 1)
+    p11 = Polynomial(-1, 1)
+    print("(%s) * (%s) = %s" % (p10, p11, p10 * p11))
