@@ -1,8 +1,9 @@
-
 from itertools import product
+
 
 def combine(a, b):
     return a[0] + b[0], a[1] * b[1]
+
 
 class Polynomial:
     def __init__(self, *coefficients, as_dict=None):
@@ -14,7 +15,7 @@ class Polynomial:
     def __sub__(self, other):
         if not isinstance(other, Polynomial):
             other = Polynomial(other)
-        new_coefficients = {i:-1 * c for (i,c) in other.coefficients.items()}
+        new_coefficients = {i: -1 * c for (i, c) in other.coefficients.items()}
         return self + Polynomial(as_dict=new_coefficients)
 
     def __eq__(self, other):
@@ -29,9 +30,12 @@ class Polynomial:
         remainder = self
         quotient = Polynomial()
         while remainder.degree > 0:
-            term = Polynomial(as_dict={
-                remainder.degree - other.degree: remainder.coefficients[remainder.degree]
-            })
+            term = Polynomial(
+                as_dict={
+                    remainder.degree
+                    - other.degree: remainder.coefficients[remainder.degree]
+                }
+            )
             quotient += term
             remainder -= other * term
         return quotient, remainder
@@ -51,26 +55,26 @@ class Polynomial:
     def __add__(self, other):
         if not isinstance(other, Polynomial):
             other = Polynomial(other)
-        indicies = set(
-            list(self.coefficients.keys()) +
-            list(other.coefficients.keys())
-        )
+        indicies = set(list(self.coefficients.keys()) + list(other.coefficients.keys()))
         new_coefficients = {}
         for index in indicies:
             self_c = self.coefficients.get(index, 0)
             other_c = other.coefficients.get(index, 0)
             new_coefficients[index] = self_c + other_c
         return Polynomial(as_dict=new_coefficients)
-    
+
     def __mul__(self, other):
         if not isinstance(other, Polynomial):
-            return Polynomial(as_dict={i:other*c for (i, c) in self.coefficients.items()})
+            return Polynomial(
+                as_dict={i: other * c for (i, c) in self.coefficients.items()}
+            )
         else:
-            expanded = [combine(a, b)
-                        for (a, b) in product(
-                                self.coefficients.items(),
-                                other.coefficients.items())
-                        ]
+            expanded = [
+                combine(a, b)
+                for (a, b) in product(
+                    self.coefficients.items(), other.coefficients.items()
+                )
+            ]
             max_index = max(i for (i, c) in expanded)
             new_coefficients = {}
             for index in range(0, max_index + 1):
@@ -78,7 +82,7 @@ class Polynomial:
             return Polynomial(as_dict=new_coefficients)
 
     def eval(self, x):
-        return sum([c * x**i for i, c in self.coefficients.items()])
+        return sum([c * x ** i for i, c in self.coefficients.items()])
 
     def is_root(self, x):
         return self.eval(x) == 0
@@ -108,7 +112,7 @@ class Polynomial:
             result.append(self._get_term_repr(i))
         return "".join(result).lstrip(" +")
 
-    
+
 if __name__ == "__main__":
     p1 = Polynomial(0, 0, 1)
     print("p1 = %s" % p1)
@@ -136,7 +140,6 @@ if __name__ == "__main__":
     p10 = Polynomial(1, 1)
     p11 = Polynomial(-1, 1)
     print("(%s) * (%s) = %s" % (p10, p11, p10 * p11))
-
 
     dividend = Polynomial(-4, 0, -2, 1)
     divisor = Polynomial(-3, 1)
