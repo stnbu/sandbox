@@ -3,12 +3,32 @@ from decimal import Decimal
 
 from pprint import pprint
 
+class p:
+
+    modulus = Decimal(10)
+
+    def __init__(self, x, y):
+        self.next = None
+        self.x = x if isinstance(x, Decimal) else Decimal(x)
+        self.y = y if isinstance(y, Decimal) else Decimal(y)
+        self.x_remainder = self.x % self.modulus
+        self.y_remainder = self.y % self.modulus
+        self.x_floor = self.x - self.x_remainder
+        self.y_floor = self.y - self.y_remainder
+        self.x_muls = self.x_floor // self.modulus
+        self.y_muls = self.y_floor // self.modulus
+
+    def get_next(self):
+        return self.next
+
+    def get_float_points(self):
+        return float(self.x), float(self.y)
+
 class W(Scene):
     def construct(self):
         modulus = 10
         axis_config = {}  #{"scaling": WrappedScale(Decimal(modulus))}
         t_range = [-10, 10, 1]
-        #import ipdb; ipdb.set_trace()
         ax = Axes(
             x_range=t_range,
             y_range=t_range,
@@ -23,10 +43,12 @@ class W(Scene):
         modulus = Decimal(10)
         lines = []
         m = 100
-        points = []
+        y_zones = {}
         for n in range(int(0.01*m), int(30*m), int(0.2*m)):
             x = n / 100
             y = x ** 2
+
+            
 
             if len(points) > 1 and y > modulus:
                 points.append((x, float(modulus)))
@@ -51,6 +73,32 @@ class W(Scene):
             self.add(vline)
 
 if __name__ == "__main__":
+    point = p(0, 0)
+    root = point
+    m = 100
+    c = 0
+    for n in range(int(0.01*m), int(30*m), int(1.2*m)):
+        c += 1
+        x = n / 100
+        y = x ** 2
+        foo = p(x, y)
+        point.next = foo
+        point = foo
+
+    print(">>> %s" % c)
+
+    bar = root
+    ccc = 0
+    while bar is not None:
+        print(bar)
+        bar = bar.get_next()
+        ccc += 1
+        if ccc > 20:
+            import ipdb; ipdb.set_trace()
+    #import ipdb; ipdb.set_trace()
+    import sys; sys.exit(0)
+
+    
     #import ipdb; ipdb.set_trace()
     config.quality = "low_quality"
     #config.aspect_ratio = 1
