@@ -17,12 +17,36 @@ class Polynomial:
         new_coefficients = {i:-1 * c for (i,c) in other.coefficients.items()}
         return self + Polynomial(as_dict=new_coefficients)
 
-    def __div__(self, other):
-        remainder = None
-        result = self
-        while True:
-            import ipdb; ipdb.set_trace()
-            result -= other
+    def __eq__(self, other):
+        if self.degree != other.degree:
+            return False
+        for i in range(0, self.degree):
+            if self.coefficients.get(i, 0) != other.coefficients.get(i, 0):
+                return False
+        return True
+
+    def _div(self, other):
+        remainder = self
+        quotient = Polynomial()
+        while remainder.degree > 0:
+            term = Polynomial(as_dict={
+                remainder.degree - other.degree: remainder.coefficients[remainder.degree]
+            })
+            quotient += term
+            remainder -= other * term
+        return quotient, remainder
+
+    def __floordiv__(self, other):
+        quotient, _ = self._div(other)
+        return quotient
+
+    def __truediv__(self, other):
+        quotient, remainder = self._div(other)
+        return quotient + remainder
+
+    def __mod__(self, other):
+        _, remainder = self._div(other)
+        return remainder
 
     def __add__(self, other):
         if not isinstance(other, Polynomial):
@@ -56,9 +80,12 @@ class Polynomial:
     def eval(self, x):
         return sum([c * x**i for i, c in self.coefficients.items()])
 
+    def is_root(self, x):
+        return self.eval(x) == 0
+
     @property
     def degree(self):
-        return max(self.coefficients)
+        return max([i for (i, c) in self.coefficients.items() if c != 0])
 
     def _get_term_repr(self, i):
         "how to implement shitty human syntax"
@@ -111,4 +138,14 @@ if __name__ == "__main__":
     print("(%s) * (%s) = %s" % (p10, p11, p10 * p11))
 
 
-    p10 / p10
+    dividend = Polynomial(-4, 0, -2, 1)
+    divisor = Polynomial(-3, 1)
+    quotient = dividend // divisor
+    remainder = dividend % divisor
+    assert dividend == divisor * quotient + remainder
+
+    assert dividend / divisor == quotient + remainder
+
+    rootable = Polynomial(-1, 0, 1)
+    assert rootable.is_root(1)
+    assert rootable.is_root(-1)
