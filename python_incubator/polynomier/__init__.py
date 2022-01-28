@@ -150,6 +150,10 @@ if __name__ == "__main__":
     assert 36 == p3(2)
     assert 4 == p1(2)
     assert 9 == p2(2)
+    assert Polynomial(1, 0, 3, 0, 2) == p4
+    assert Polynomial(as_dict={4: 2, 2: 3, 0: 9}) == p5
+    assert Polynomial(as_dict={4:2, 2: 1, 0: -8}) == p6
+    assert p7 == Polynomial(0, 0, 1) * 2 + 1
 
     p8 = Polynomial(1, 1)
     p9 = Polynomial(1, 1)
