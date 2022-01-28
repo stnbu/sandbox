@@ -58,7 +58,6 @@ class Polynomial:
             )
             quotient += term
             remainder -= other * term
-            print("--> %s" % remainder)
         return quotient, remainder
 
     def __floordiv__(self, other):
@@ -132,24 +131,6 @@ class Polynomial:
 
 
 if __name__ == "__main__":
-    dividend = Polynomial(5, 2, 1, 3)
-    divisor = Polynomial(1, 2, 1)
-    quotient = dividend // divisor
-    remainder = dividend % divisor
-    assert dividend == divisor * quotient + remainder
-    assert dividend / divisor == quotient + remainder
-
-    dividend = Polynomial(-10, -3, 1)
-    divisor = Polynomial(2, 1)
-    print("dividend %s\ndivisor %s" % (dividend, divisor))
-    quotient = dividend // divisor
-    remainder = dividend % divisor
-    print(
-        "dividend %s\ndivisor %s\nquotient %s\nremainder%s"
-        % (dividend, divisor, quotient, remainder)
-    )
-    assert dividend == divisor * quotient + remainder
-    assert dividend / divisor == quotient + remainder
 
     p1 = Polynomial(0, 0, 1)
     print("p1 = %s" % p1)
@@ -178,12 +159,16 @@ if __name__ == "__main__":
     p11 = Polynomial(-1, 1)
     print("(%s) * (%s) = %s" % (p10, p11, p10 * p11))
 
-    dividend = Polynomial(-4, 0, -2, 1)
-    divisor = Polynomial(-3, 1)
-    quotient = dividend // divisor
-    remainder = dividend % divisor
-    assert dividend == divisor * quotient + remainder
-    assert dividend / divisor == quotient + remainder
+    division = [
+        (Polynomial(5, 2, 1, 3), Polynomial(1, 2, 1)),
+        (Polynomial(-10, -3, 1), Polynomial(2, 1)),
+        (Polynomial(-4, 0, -2, 1), Polynomial(-3, 1)),
+    ]
+    for dividend, divisor in division:
+        quotient = dividend // divisor
+        remainder = dividend % divisor
+        assert dividend == divisor * quotient + remainder
+        assert dividend / divisor == quotient + remainder
 
     rootable = Polynomial(-1, 0, 1)
     assert rootable.is_root(1)
