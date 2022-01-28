@@ -4,9 +4,9 @@ from itertools import product, chain
 def super_int(num_string):
     lookup = {
         0: chr(0x2070),
-        1: chr(0x00b9),
-        2: chr(0x00b2),
-        3: chr(0x00b3),
+        1: chr(0x00B9),
+        2: chr(0x00B2),
+        3: chr(0x00B3),
         4: chr(0x2074),
         5: chr(0x2075),
         6: chr(0x2076),
@@ -18,6 +18,7 @@ def super_int(num_string):
     for c in num_string:
         result += lookup[int(c)]
     return result
+
 
 class Polynomial:
     def __init__(self, *coeff, as_dict=None):
@@ -50,8 +51,7 @@ class Polynomial:
         while remainder.degree > 0:
             term = Polynomial(
                 as_dict={
-                    remainder.degree
-                    - other.degree: remainder.coeff[remainder.degree]
+                    remainder.degree - other.degree: remainder.coeff[remainder.degree]
                 }
             )
             quotient += term
@@ -81,22 +81,17 @@ class Polynomial:
 
     def __mul__(self, other):
         if not isinstance(other, Polynomial):
-            return Polynomial(
-                as_dict={i: other * c for (i, c) in self.coeff_items()}
-            )
+            return Polynomial(as_dict={i: other * c for (i, c) in self.coeff_items()})
         else:
             expanded = [
                 (a[0] + b[0], a[1] * b[1])
-                for (a, b) in product(
-                    self.coeff_items(), other.coeff_items()
-                )
+                for (a, b) in product(self.coeff_items(), other.coeff_items())
             ]
             max_index = max(i for (i, c) in expanded)
             new_coeff = {}
             for index in range(0, max_index + 1):
                 new_coeff[index] = sum([c for (i, c) in expanded if i == index])
             return Polynomial(as_dict=new_coeff)
-
 
     def __call__(self, x):
         return sum([c * x ** i for i, c in self.coeff_items()])
