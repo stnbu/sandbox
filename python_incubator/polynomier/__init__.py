@@ -1,39 +1,57 @@
-from itertools import product
+from itertools import product, chain
 
 
-def combine(a, b):
-    return a[0] + b[0], a[1] * b[1]
-
+def super_int(num_string):
+    lookup = {
+        0: chr(0x2070),
+        1: chr(0x00b9),
+        2: chr(0x00b2),
+        3: chr(0x00b3),
+        4: chr(0x2074),
+        5: chr(0x2075),
+        6: chr(0x2076),
+        7: chr(0x2077),
+        8: chr(0x2078),
+        9: chr(0x2079),
+    }
+    result = ""
+    for c in num_string:
+        result += lookup[int(c)]
+    return result
 
 class Polynomial:
-    def __init__(self, *coefficients, as_dict=None):
+    def __init__(self, *coeff, as_dict=None):
         if as_dict is None:
-            self.coefficients = dict(enumerate(coefficients))
+            self.coeff = dict(enumerate(coeff))
         else:
-            self.coefficients = as_dict
+            self.coeff = as_dict
+
+    def coeff_items(self):
+        for index, coeff in self.coeff.items():
+            if coeff != 0:
+                yield index, coeff
 
     def __sub__(self, other):
         if not isinstance(other, Polynomial):
             other = Polynomial(other)
-        new_coefficients = {i: -1 * c for (i, c) in other.coefficients.items()}
-        return self + Polynomial(as_dict=new_coefficients)
+        return self + Polynomial(as_dict={i: -1 * c for (i, c) in other.coeff_items()})
 
     def __eq__(self, other):
         if self.degree != other.degree:
             return False
         for i in range(0, self.degree):
-            if self.coefficients.get(i, 0) != other.coefficients.get(i, 0):
+            if self.coeff.get(i, 0) != other.coeff.get(i, 0):
                 return False
         return True
 
-    def _div(self, other):
+    def div(self, other):
         remainder = self
         quotient = Polynomial()
         while remainder.degree > 0:
             term = Polynomial(
                 as_dict={
                     remainder.degree
-                    - other.degree: remainder.coefficients[remainder.degree]
+                    - other.degree: remainder.coeff[remainder.degree]
                 }
             )
             quotient += term
@@ -41,74 +59,73 @@ class Polynomial:
         return quotient, remainder
 
     def __floordiv__(self, other):
-        quotient, _ = self._div(other)
+        quotient, _ = self.div(other)
         return quotient
 
     def __truediv__(self, other):
-        quotient, remainder = self._div(other)
+        quotient, remainder = self.div(other)
         return quotient + remainder
 
     def __mod__(self, other):
-        _, remainder = self._div(other)
+        _, remainder = self.div(other)
         return remainder
 
     def __add__(self, other):
         if not isinstance(other, Polynomial):
             other = Polynomial(other)
-        indicies = set(list(self.coefficients.keys()) + list(other.coefficients.keys()))
-        new_coefficients = {}
+        indicies = set([i for (i, _) in chain(self.coeff_items(), other.coeff_items())])
+        new_coeff = {}
         for index in indicies:
-            self_c = self.coefficients.get(index, 0)
-            other_c = other.coefficients.get(index, 0)
-            new_coefficients[index] = self_c + other_c
-        return Polynomial(as_dict=new_coefficients)
+            new_coeff[index] = self.coeff.get(index, 0) + other.coeff.get(index, 0)
+        return Polynomial(as_dict=new_coeff)
 
     def __mul__(self, other):
         if not isinstance(other, Polynomial):
             return Polynomial(
-                as_dict={i: other * c for (i, c) in self.coefficients.items()}
+                as_dict={i: other * c for (i, c) in self.coeff_items()}
             )
         else:
             expanded = [
-                combine(a, b)
+                (a[0] + b[0], a[1] * b[1])
                 for (a, b) in product(
-                    self.coefficients.items(), other.coefficients.items()
+                    self.coeff_items(), other.coeff_items()
                 )
             ]
             max_index = max(i for (i, c) in expanded)
-            new_coefficients = {}
+            new_coeff = {}
             for index in range(0, max_index + 1):
-                new_coefficients[index] = sum([c for (i, c) in expanded if i == index])
-            return Polynomial(as_dict=new_coefficients)
+                new_coeff[index] = sum([c for (i, c) in expanded if i == index])
+            return Polynomial(as_dict=new_coeff)
 
-    def eval(self, x):
-        return sum([c * x ** i for i, c in self.coefficients.items()])
+
+    def __call__(self, x):
+        return sum([c * x ** i for i, c in self.coeff_items()])
 
     def is_root(self, x):
-        return self.eval(x) == 0
+        return self(x) == 0
 
     @property
     def degree(self):
-        return max([i for (i, c) in self.coefficients.items() if c != 0])
+        return max([i for (i, _) in self.coeff_items()])
 
     def _get_term_repr(self, i):
         "how to implement shitty human syntax"
-        c = self.coefficients.get(i, 0)
+        c = self.coeff.get(i, 0)
         if c == 0:
             return ""
-        exponent = "" if i < 2 else "^%s" % i
-        coefficient = "" if i > 0 and c == 1 else str(c)
+        exponent = "" if i < 2 else super_int(str(i))
+        coeff = "" if i > 0 and c == 1 else str(c)
         variable = "" if i < 1 else "x"
         oper = "" if i == self.degree else " + "
         if c < 0:
             oper = "-" if i == self.degree else " - "
-            if len(coefficient) > 0:
-                coefficient = coefficient.lstrip("-")
-        return oper + coefficient + variable + exponent
+            if len(coeff) > 0:
+                coeff = coeff.lstrip("-")
+        return oper + coeff + variable + exponent
 
     def __repr__(self):
         result = []
-        for i in sorted(self.coefficients, reverse=True):
+        for i in sorted(self.coeff, reverse=True):
             result.append(self._get_term_repr(i))
         return "".join(result).lstrip(" +")
 
@@ -129,9 +146,9 @@ if __name__ == "__main__":
     p7 = p4 - p3
     print("p7 = p4 - p3 = %s" % p7)
 
-    assert 36 == p3.eval(2)
-    assert 4 == p1.eval(2)
-    assert 9 == p2.eval(2)
+    assert 36 == p3(2)
+    assert 4 == p1(2)
+    assert 9 == p2(2)
 
     p8 = Polynomial(1, 1)
     p9 = Polynomial(1, 1)
