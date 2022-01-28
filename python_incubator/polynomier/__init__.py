@@ -48,14 +48,17 @@ class Polynomial:
     def div(self, other):
         remainder = self
         quotient = Polynomial()
-        while remainder.degree > 0:
+        while remainder.degree > 1:
             term = Polynomial(
                 as_dict={
-                    remainder.degree - other.degree: remainder.coeff[remainder.degree]
+                    remainder.degree
+                    - other.degree: remainder.coeff[remainder.degree]
+                    / divisor.coeff[divisor.degree]
                 }
             )
             quotient += term
             remainder -= other * term
+            print("--> %s" % remainder)
         return quotient, remainder
 
     def __floordiv__(self, other):
@@ -101,7 +104,10 @@ class Polynomial:
 
     @property
     def degree(self):
-        return max([i for (i, _) in self.coeff_items()])
+        indicies = [i for (i, _) in self.coeff_items()]
+        if len(indicies) == 0:
+            raise ValueError("Zero polynomial has undefined degree.")
+        return max(indicies)
 
     def _get_term_repr(self, i):
         "how to implement shitty human syntax"
@@ -126,6 +132,25 @@ class Polynomial:
 
 
 if __name__ == "__main__":
+    dividend = Polynomial(5, 2, 1, 3)
+    divisor = Polynomial(1, 2, 1)
+    quotient = dividend // divisor
+    remainder = dividend % divisor
+    assert dividend == divisor * quotient + remainder
+    assert dividend / divisor == quotient + remainder
+
+    dividend = Polynomial(-10, -3, 1)
+    divisor = Polynomial(2, 1)
+    print("dividend %s\ndivisor %s" % (dividend, divisor))
+    quotient = dividend // divisor
+    remainder = dividend % divisor
+    print(
+        "dividend %s\ndivisor %s\nquotient %s\nremainder%s"
+        % (dividend, divisor, quotient, remainder)
+    )
+    assert dividend == divisor * quotient + remainder
+    assert dividend / divisor == quotient + remainder
+
     p1 = Polynomial(0, 0, 1)
     print("p1 = %s" % p1)
     p2 = Polynomial(1, 0, 2)
@@ -158,7 +183,6 @@ if __name__ == "__main__":
     quotient = dividend // divisor
     remainder = dividend % divisor
     assert dividend == divisor * quotient + remainder
-
     assert dividend / divisor == quotient + remainder
 
     rootable = Polynomial(-1, 0, 1)
