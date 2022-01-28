@@ -45,6 +45,16 @@ class Polynomial:
                 return False
         return True
 
+    def __pow__(self, n):
+        if not isinstance(n, int):
+            raise ValueError("Only positive integer exponenents supported.")
+        if n == 0:
+            return 1  # really?
+        result = self
+        for _ in range(0, n - 1):
+            result *= result
+        return result
+
     def div(self, other):
         remainder = self
         quotient = Polynomial()
@@ -53,7 +63,7 @@ class Polynomial:
                 as_dict={
                     remainder.degree
                     - other.degree: remainder.coeff[remainder.degree]
-                    / divisor.coeff[divisor.degree]
+                    / other.coeff[other.degree]
                 }
             )
             quotient += term
@@ -181,3 +191,10 @@ if __name__ == "__main__":
     has_complex_roots = Polynomial(1, 0, 1)
     assert has_complex_roots.is_root(1j)
     assert has_complex_roots.is_root(-1j)
+
+    # see:
+    # https://en.wikipedia.org/wiki/Polynomial_long_division#Finding_tangents_to_polynomial_functions
+    r = 1
+    divisor = Polynomial(-1, r) ** 2
+    dividend = Polynomial(-42, 0, -12, 1)
+    assert dividend % divisor == Polynomial(-32, -21)
