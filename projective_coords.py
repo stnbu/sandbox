@@ -67,4 +67,3 @@ slopes = {slopes}
         points=points,
     )
 )
-# """.format(*globals(), P=P, A=A, B=B))
