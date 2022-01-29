@@ -2,6 +2,10 @@
 
 from itertools import product
 
+def get_gcd(x: int, y: int):
+    if y == 0:
+        return x
+    return get_gcd(y, x%y)
 
 def get_slope(a, b, P):
     return (b[1] - b[0]) % P, (a[1] - b[0]) % P
@@ -18,10 +22,13 @@ def get_points(A, B, P):
 
 def get_slopes(points, P):
     slopes = set()
-    for a, b in product(points, points):
-        if (a, b) in slopes or (b, a) in slopes:
-            continue
-        slopes.add(get_slope(a, b, P))
+    for x, y in product(points, points):
+        a, b = get_slope(x, y, P)
+        gcd = get_gcd(a, b)
+        a = int(a / gcd)
+        b = int(b / gcd)
+        if (a, b) not in slopes and (b, a) not in slopes:
+            slopes.add((a, b))
     return slopes
 
 
@@ -32,6 +39,13 @@ P = 17
 points = get_points(A, B, P)
 slopes = get_slopes(points, P)
 
+intersection = set()
+for slope in slopes:
+    if slope in points:
+        intersection.add(slope)
+    rslope = tuple(reversed(list(slope)))
+    if rslope in points:
+        intersection.add(rslope)
 
 print(
     """
@@ -48,7 +62,7 @@ slopes = {slopes}
         P=P,
         len_points=len(points),
         len_slopes=len(slopes),
-        intersection=points & slopes,
+        intersection=intersection,
         slopes=slopes,
         points=points,
     )
