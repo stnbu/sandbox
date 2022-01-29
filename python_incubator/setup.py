@@ -4,6 +4,6 @@ from setuptools import setup
 
 setup(
     name="python_incubator",
-    version="0.0.3",
-    packages=["astoroid", "polynomier"],
+    version="0.0.4",
+    packages=["astoroid", "polynomier", "optigraph"],
 )
