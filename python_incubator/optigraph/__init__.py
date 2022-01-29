@@ -1,4 +1,3 @@
-
 import os
 import math
 import hashlib
@@ -7,16 +6,20 @@ import subprocess
 from decimal import Decimal
 
 import sys, io
-sys.stdout = open(os.devnull, 'w')  # SHUT
+
+sys.stdout = open(os.devnull, "w")  # SHUT
 import manim
+
 sys.stdout = sys.__stdout__  # ...UUP!
 
 phi = (1 + math.sqrt(5)) / 2
+
 
 def do_config():
     manim.config.verbosity = "ERROR"
     manim.config.quality = "low_quality"
     manim.config.media_dir = os.path.expanduser("~/.optigraph")
+
 
 def fdrange(start, stop, step):
     start = Decimal(start)
@@ -26,11 +29,14 @@ def fdrange(start, stop, step):
         yield start
         start += step
 
+
 def graph_parameterized(func, t_range):
     do_config()
     name = "optigraph_" + hashlib.sha224(pickle.dumps((t_range))).hexdigest()  # meh
+
     class Scene_(manim.Scene):
         pass
+
     Scene_.__name__ = name
     scene = Scene_()
     start, stop, step = t_range
@@ -66,10 +72,13 @@ def graph_parameterized(func, t_range):
     scene.render()
 
     # FIXME: make the image_file_path/scene_name depend only upon input; no redoing entire files.
-    subprocess.Popen(["qlmanage", "-p", scene.renderer.file_writer.image_file_path],
-                     stdout=subprocess.DEVNULL,
-                     stderr=subprocess.DEVNULL)
+    subprocess.Popen(
+        ["qlmanage", "-p", scene.renderer.file_writer.image_file_path],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
 
 if __name__ == "__main__":
 
-    graph_parameterized(lambda t: (t, t**2), [-5, 5, 0.1])
+    graph_parameterized(lambda t: (t, t ** 2), [-5, 5, 0.1])
