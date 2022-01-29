@@ -2,10 +2,12 @@
 
 from itertools import product
 
+
 def get_gcd(x: int, y: int):
     if y == 0:
         return x
-    return get_gcd(y, x%y)
+    return get_gcd(y, x % y)
+
 
 def get_slope(a, b, P):
     return (b[1] - b[0]) % P, (a[1] - b[0]) % P
