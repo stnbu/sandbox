@@ -22,6 +22,14 @@ def super_int(num_string):
 
 
 class Polynomial:
+    """The required terms dictionary takes the form
+
+    {
+        <exponent>: (set(<symbols>), <coefficient>)
+    }
+
+    Examples: 
+    """
     def __init__(self, *coeff, as_dict=None):
         if as_dict is None:
             self.coeff = dict(enumerate(coeff))
@@ -141,29 +149,31 @@ class Polynomial:
         return "".join(result).lstrip(" +")
 
 def parse_term(term):
-    result = re.search('(?P<coeff>[-]?\d+(\.\d*))(?P<vars>(?:[^\d]?).*)', '-3.1x^2y^2')
+    #import ipdb; ipdb.set_trace()
+    result = re.search('(?P<coeff>[-]?\d+(\.\d+)?)(?P<symbols>(?:[^\d]?).*)', term)
     coeff = float(result.group('coeff'))
-    vars = result.group('vars').strip(' )(')
-    indexes = set(re.findall('\^(\d+)', vars))
+    symbols = result.group('symbols').strip(' )(')
+    indexes = set(re.findall('\^(\d+)', symbols))
     index = 1
     if len(indexes) > 1:
         raise ValueError
     if len(indexes) > 0:
         index = int(indexes.pop())
-    vars = set(re.sub('[\d^]', '', vars))    
-    return index, vars, coeff
+    symbols = set(re.sub('[\d^]', '', symbols))
+    return index, symbols, coeff
 
 def str_to_poly(string):
     results = string.replace(' ', '')
     results = results.replace('-', '@-')
     results = results.replace('+', '@+')
-    return [parse_term(term) for term in results.split('@')][1:]
+    return [parse_term(term) for term in results.split('@')]
 
 if __name__ == "__main__":
 
-    # terms = str_to_poly('-3x^2z^2')
-    # term = parse_term(terms[0])
-    # print(term)
+    #terms = str_to_poly('-3x^2z^2')
+    terms = str_to_poly('3x^2')
+    #term = parse_term(terms[0])
+    print(terms)
 
     p1 = Polynomial(0, 0, 1)
     print("p1 = %s" % p1)
