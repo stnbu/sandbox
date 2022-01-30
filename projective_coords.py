@@ -10,7 +10,7 @@ def get_gcd(x: int, y: int):
 
 
 def get_slope(a, b, P):
-    return (b[1] - b[0]) % P, (a[1] - b[0]) % P
+    return (b[1] - b[0]) % P, (a[1] - a[0]) % P
 
 
 def get_points(A, B, P):
