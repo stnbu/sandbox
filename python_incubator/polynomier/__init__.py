@@ -150,6 +150,11 @@ class Polynomial:
 
 def parse_term(term):
     #import ipdb; ipdb.set_trace()
+    if not re.search(r'\d', term):
+        if term.startswith('-'):
+            term = '-1' + term.lstrip(' -')
+        else:
+            term = '1' + term.lstrip(' +')
     result = re.search('(?P<coeff>[-]?\d+(\.\d+)?)(?P<symbols>(?:[^\d]?).*)', term)
     coeff = float(result.group('coeff'))
     symbols = result.group('symbols').strip(' )(')
@@ -165,15 +170,17 @@ def parse_term(term):
 def str_to_poly(string):
     results = string.replace(' ', '')
     results = results.replace('-', '@-')
-    results = results.replace('+', '@+')
+    results = results.replace('+', '@+').lstrip('@')
     return [parse_term(term) for term in results.split('@')]
 
 if __name__ == "__main__":
 
-    #terms = str_to_poly('-3x^2z^2')
-    terms = str_to_poly('3x^2')
-    #term = parse_term(terms[0])
-    print(terms)
+    assert str_to_poly('3x^2') == [(2, {'x'}, 3.0)]
+    assert str_to_poly('-3x^3y^3') == [(3, {'x', 'y'}, -3.0)]
+    assert str_to_poly('-3x^3y^3 + 2y^2') == [(3, {'x', 'y'}, -3.0), (2, {'y'}, 2.0)]
+    assert str_to_poly('-3x^3y^3 + 2y^2 - y') == [(3, {'x', 'y'}, -3.0), (2, {'y'}, 2.0), (1, {'y'}, -1.0)]
+    assert str_to_poly('-3x^3y^3 + 2y^2 - y + 3') == [(3, {'x', 'y'}, -3.0), (2, {'y'}, 2.0),
+                                                      (1, {'y'}, -1.0), (1, set(), 3.0)]
 
     p1 = Polynomial(0, 0, 1)
     print("p1 = %s" % p1)
