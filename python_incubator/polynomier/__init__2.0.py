@@ -31,16 +31,8 @@ class Polynomial:
     Examples:
     """
 
-    def __init__(self, *coeff, as_dict=None):
-        if as_dict is None:
-            self.coeff = dict(enumerate(coeff))
-        else:
-            self.coeff = as_dict
-
-    def coeff_items(self):
-        for index, coeff in self.coeff.items():
-            if coeff != 0:
-                yield index, coeff
+    def __init__(self, terms):
+        self.terms = terms
 
     def __sub__(self, other):
         if not isinstance(other, Polynomial):
@@ -94,12 +86,18 @@ class Polynomial:
 
     def __add__(self, other):
         if not isinstance(other, Polynomial):
-            other = Polynomial(other)
-        indicies = set([i for (i, _) in chain(self.coeff_items(), other.coeff_items())])
-        new_coeff = {}
-        for index in indicies:
-            new_coeff[index] = self.coeff.get(index, 0) + other.coeff.get(index, 0)
-        return Polynomial(as_dict=new_coeff)
+            other = Polynomial({(0, frozenset()): other})
+        common_terms = set(self.terms) & set(other.terms)
+        self_remainder = set(self.terms) - common_terms
+        other_remainder = set(self.terms) - common_terms
+        new_terms = {}
+        for term in common_terms:
+            new_terms[term] = self.terms[term] + other.terms[term]
+        for term in self_remainder:
+            new_terms[term] = self.terms[term]
+        for term in other_remainder:
+            new_terms[term] = other.terms[term]
+        return Polynomial(new_terms)
 
     def __mul__(self, other):
         if not isinstance(other, Polynomial):
@@ -144,6 +142,7 @@ class Polynomial:
         return oper + coeff + variable + exponent
 
     def __repr__(self):
+        return repr(self.terms) ### FIXME
         result = []
         for i in sorted(self.coeff, reverse=True):
             result.append(self._get_term_repr(i))
@@ -151,21 +150,25 @@ class Polynomial:
 
 
 def parse_term(term):
-    if not re.search(r"\d", term):
-        if term.startswith("-"):
-            term = "-1" + term.lstrip(" -")
-        else:
-            term = "1" + term.lstrip(" +")
-    result = re.search("(?P<coeff>[-]?\d+(\.\d+)?)(?P<symbols>(?:[^\d]?).*)", term)
-    coeff = float(result.group("coeff"))
-    symbols = result.group("symbols").strip(" )(")
+    #import ipdb; ipdb.set_trace()
+
+    coeff = re.search('[-+0-9\.]*', term).group()
+    symbols_offset = len(coeff)
+    if coeff == '-':
+        coeff = -1
+    elif coeff == '+' or coeff == '':
+        coeff = 1
+    else:
+        coeff = float(coeff)
+    
+    symbols = term[symbols_offset:].strip(" )(")
     indexes = set(re.findall("\^(\d+)", symbols))
     index = 1
     if len(indexes) > 1:
         raise ValueError
     if len(indexes) > 0:
         index = int(indexes.pop())
-    symbols = set(re.sub("[\d^]", "", symbols))
+    symbols = frozenset(re.sub("[\d^]", "", symbols))
     return index, symbols, coeff
 
 
@@ -173,10 +176,20 @@ def str_to_poly(string):
     results = string.replace(" ", "")
     results = results.replace("-", "@-")
     results = results.replace("+", "@+").lstrip("@")
-    return [parse_term(term) for term in results.split("@")]
+    poly_dict = {}
+    for term in results.split("@"):
+        index, symbols, coeff = parse_term(term)
+        if index in poly_dict:
+            raise ValueError("uncombined terms of degree %d: %s" % (index, string))
+        poly_dict[(index, symbols)] = coeff
+    return poly_dict
 
 
 if __name__ == "__main__":
+
+    d = str_to_poly('x^2')
+    p1 = Polynomial(d)
+    import ipdb; ipdb.set_trace()
 
     assert str_to_poly("3x^2") == [(2, {"x"}, 3.0)]
     assert str_to_poly("-3x^3y^3") == [(3, {"x", "y"}, -3.0)]
@@ -196,7 +209,7 @@ if __name__ == "__main__":
     p1 = Polynomial(0, 0, 1)
     print("p1 = %s" % p1)
     p2 = Polynomial(1, 0, 2)
-    print("p2 = %s" % p2)
+    prin("p2 = %s" % p2)
     p3 = p1 * p2
     print("p3 = p1 * p2 = %s" % p3)
     p4 = p3 + p2
