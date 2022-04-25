@@ -19,32 +19,35 @@ def do_connect(ssid, password):
 
 
 # works
-from machine import Pin
-import time
-led = Pin(3, Pin.OUT)
-for _ in range(0, 100):
-    led.on()
-    time.sleep(0.5)
-    led.off()
-    time.sleep(0.5)
+def _flash_pin():
+    from machine import Pin
+    import time
+    led = Pin(3, Pin.OUT)
+    for _ in range(0, 100):
+        led.on()
+        time.sleep(0.5)
+        led.off()
+        time.sleep(0.5)
 
 
 # works
-from machine import Pin, Timer
-led = Pin(3, Pin.OUT)
-flash = Timer(0)
-def flash_led(timer):
-    led.value(not led.value())
-flash.init(period=500, mode=Timer.PERIODIC, callback=flash_led)
-# flash.deinit()
+def _flash_pin_w_timer():
+    from machine import Pin, Timer
+    led = Pin(3, Pin.OUT)
+    flash = Timer(0)
+    def flash_led(timer):
+        led.value(not led.value())
+    flash.init(period=500, mode=Timer.PERIODIC, callback=flash_led)
+    # flash.deinit()
 
 # works
-from machine import Pin
-led = Pin(3, Pin.OUT)
-button = Pin(1, Pin.IN)
-def button_press(pin):
-    led.value(not led.value())
-button.irq(trigger=Pin.IRQ_FALLING, handler=button_press)
+def _toggle_led_button():
+    from machine import Pin
+    led = Pin(3, Pin.OUT)
+    button = Pin(1, Pin.IN)
+    def button_press(pin):
+        led.value(not led.value())
+    button.irq(trigger=Pin.IRQ_FALLING, handler=button_press)
 
 ############################################################
 ############################################################
@@ -79,18 +82,41 @@ From ssd1306.c --
 #define LCD_BPP  1  // <--- does this mean "bytes per packet"?
 """
 
-# lcd dispay
-from machine import Pin, SPI
-from ssd1306 import SSD1306_SPI
-width = 128
-height = 64
-SPI2_HOST = 2  # appears in esp-who/components/modules/lcd/who_lcd.c
-hspi = SPI(SPI2_HOST)
-dc = Pin(7)
-rst = Pin(11)
-cs = Pin(8)
-display = SSD1306_SPI(width, height, hspi, dc, rst, cs)
+def _dud1():
+    # lcd dispay
+    from machine import Pin, SPI
+    from ssd1306 import SSD1306_SPI
+    width = 128
+    height = 64
+    SPI2_HOST = 2  # appears in esp-who/components/modules/lcd/who_lcd.c
+    hspi = SPI(SPI2_HOST)
+    dc = Pin(7)
+    rst = Pin(11)
+    cs = Pin(8)
+    display = SSD1306_SPI(width, height, hspi, dc, rst, cs)
 
+# i2c@lcd
+def do_lcd():
+    i2c_pins = [
+        (6, 9),
+    ]
+    from machine import Pin, I2C
+    import ssd1306
+    for sda, scl in i2c_pins:
+        try:
+            i2c = I2C(sda=Pin(sda), scl=Pin(scl))
+        except:
+            print("failed at I2C: sda=%s,sdb=%s" % (sda, scl))
+            continue
+        try:
+            display = ssd1306.SSD1306_I2C(128, 64, i2c)
+        except:
+            print("failed at SSD1306: sda=%s,scl=%s" % (sda, scl))
+            continue
+        print("OMG WE GOT THIS FAR! SDA=%s,SLC=%S" % (sda, scl))
+        display.text('Hello, World!', 0, 0, 1) ; display.show()
+        break
+    
 ############################################################
 ############################################################
 ############################################################
@@ -122,6 +148,7 @@ driver used by esp-who: https://github.com/espressif/esp-who/tree/master/compone
 	qma7981_handle = i2c_bus_device_create(i2c_bus_handle, 0x12, clk_speed);
 ////////
 """
-# accelerometer: does not choke but might be wrong
-from machine import SoftI2C, Pin
-i2c = SoftI2C(scl=Pin(5), sda=Pin(4), freq=400000)
+def _dud2():
+    # accelerometer: does not choke but might be wrong
+    from machine import SoftI2C, Pin
+    i2c = SoftI2C(scl=Pin(5), sda=Pin(4), freq=400000)
