@@ -32,7 +32,7 @@ def _flash_pin():
 
 # works
 def _flash_pin_w_timer():
-    from machine import Pin, Timer
+    from microcontroller import Pin, Timer
     led = Pin(3, Pin.OUT)
     flash = Timer(0)
     def flash_led(timer):
@@ -95,14 +95,30 @@ def _dud1():
     cs = Pin(8)
     display = SSD1306_SPI(width, height, hspi, dc, rst, cs)
 
+
+def _play_w_lcd():
+    from machine import Pin, I2C
+    import ssd1306
+    i2c = I2C(sda=Pin(21), scl=Pin(22))
+    display = ssd1306.SSD1306_I2C(128, 64, i2c)
+    display.text('Hello, World!', 0, 0, 1)
+    display.show()
+
+###### NEXT: try with SoftI2C
 # i2c@lcd
 def do_lcd():
     i2c_pins = [
-        (6, 9),
+        # These from https://github.com/espressif/esp-who/blob/7199eb1619cffbae91f1f0199c6aae9c7ac08dc7/components/bus/test/test_i2c_bus.c#L24
+        (21, 22), # confirmed by https://youtu.be/LY-1DHTxRAk
+        (16, 17),
+        # These from here 
+        (19, 18), # bus #0
+        (26, 25), # bus #1 -- slave?
     ]
     from machine import Pin, I2C
     import ssd1306
     for sda, scl in i2c_pins:
+        print("trying: sda=%s,sdb=%s" % (sda, scl))
         try:
             i2c = I2C(sda=Pin(sda), scl=Pin(scl))
         except:
