@@ -35,10 +35,6 @@ class Monty:
         self.R1 = modinv (R, N)
         self.N1 = (self.R1 * R) // N
         self.R2N = (R * R) % N
-        print ("N = %r R = %r" % (N, R))
-        print ("N' = %r R' = %r" % (self.N1, self.R1))
-        print ("RR' - NN' = %r" % (self.R * self.R1 - self.N * self.N1))
-        print ("R^2N = %r" % (self.R2N,))
 
     def redc (self, T):
         m = mod (mod (T, self.R) * self.N1, self.R)
@@ -69,26 +65,13 @@ def tNP (n):
     return mP.tm (mN.tm (n))
 
 b = 700
-#c = 800
 c = 731
-
-print ('b = %r' % (b,))
-print ('c = %r' % (c,))
 
 Pb = mP.tm (b)
 Pc = mP.tm (c)
-print ('Pb = %r' % (Pb,))
-print ('Pc = %r' % (Pc,))
-print ('fm(Pb + Pc) = %r' % (mP.fm (Pb + Pc),))
-print ('(b+c)%%P = %r' % ((b + c) % 1021),)
 
 NPb = tNP (b)
 NPc = tNP (c)
-print ('NPb = %r' % (NPb,))
-print ('NPc = %r' % (NPc,))
-print ('fNP (NPb + NPc) = %r' % (fNP (NPb + NPc),))
-print ('b + c %% 1009    = %r' % ((b + c) % 1009),)
-
 
 def t0():
     # do a complete test of operations with monty (1021, 1024)
@@ -113,6 +96,8 @@ def t1():
             if x != y:
                 raise ValueError ((i,j))
 
-#t0()
-t1()
+if __name__ == '__main__':
+    pass
+    #t0()
+    #t1()
 
