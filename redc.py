@@ -44,6 +44,9 @@ def mod (n, m):
     else:
         return r
 
+def i2b(i):
+    return format(i, '#016b')
+
 class Monty:
     def __init__ (self, N, R):
         self.N = N
@@ -51,6 +54,7 @@ class Monty:
         self.R1 = modinv (R, N)
         self.N1 = (self.R1 * R) // N
         self.R2N = (R * R) % N
+        print("N = %s" % i2b(self.N))
 
     def redc (self, T):
         m = mod (mod (T, self.R) * self.N1, self.R)
@@ -61,10 +65,6 @@ class Monty:
         else:
             return t
 
-    #def tm (self, a):
-    #    return self.redc (mod (a, self.N) * self.R2N)
-
-    # equivalent to the above
     def tm (self, a):
         return mod (a * self.R, self.N)
 
@@ -113,16 +113,4 @@ def t1():
                 raise ValueError ((i,j))
 
 if __name__ == '__main__':
-    #t0()
-    #t1()
-
-    # actual correct euclid algo for gcd
-    a = 102
-    b = 38
-    a=1914
-    b=899
-    while b > 0:
-        q, r = a//b, a%b
-        a = b
-        b = r
-    print(q);
+    t1()
