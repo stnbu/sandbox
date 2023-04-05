@@ -1,5 +1,21 @@
 # -*- Mode: Python
 
+# GCD of 102 and 38
+#
+# divmod(102, 38) == (2, 26)
+# divmod(38, 26) == (1, 12)
+# divmod(26, 12) == (2, 2)
+# divmod(12, 2) == (6, 0)
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
 def egcd (a, b):
     if a == 0:
         return b, 0, 1
@@ -97,7 +113,16 @@ def t1():
                 raise ValueError ((i,j))
 
 if __name__ == '__main__':
-    pass
     #t0()
     #t1()
 
+    # actual correct euclid algo for gcd
+    a = 102
+    b = 38
+    a=1914
+    b=899
+    while b > 0:
+        q, r = a//b, a%b
+        a = b
+        b = r
+    print(q);
